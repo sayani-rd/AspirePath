@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             checkLoginStatus()
-            delay(1000) // Optional delay for splash visibility
+            delay(2000) // Optional delay for splash visibility
             keepSplash = false
         }
     }

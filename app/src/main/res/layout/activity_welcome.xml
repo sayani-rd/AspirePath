@@ -10,8 +10,8 @@
 
     <!-- App Logo -->
     <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@mipmap/ic_launcher"
         android:layout_marginBottom="32dp"/>
 
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome to Aspire Path"
-        android:textSize="32sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="@color/blue"
         android:layout_marginBottom="12dp"/>
@@ -47,7 +47,7 @@
         android:id="@+id/btnWelcomeSignUp"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:text="Sign Up"
+        android:text="Create Account"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
@@ -64,7 +64,7 @@
         android:textAllCaps="false"
         android:textColor="#0073e6"
         android:textSize="16sp"
-        android:backgroundTint="@android:color/white"
+        android:backgroundTint="@android:color/transparent"
         app:cornerRadius="26dp"
         app:strokeColor="#0073e6"
         app:strokeWidth="2dp"/>
