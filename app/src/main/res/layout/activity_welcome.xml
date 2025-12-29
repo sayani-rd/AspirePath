@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradient_bg"
+    android:gravity="center"
+    android:padding="32dp">
+
+    <!-- App Logo -->
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginBottom="32dp"/>
+
+    <!-- Welcome Text -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to Aspire Path"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="@color/blue"
+        android:layout_marginBottom="12dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start your journey towards a"
+        android:textSize="16sp"
+        android:textColor="#666666"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Successful Career"
+        android:textSize="16sp"
+        android:textColor="#666666"
+        android:gravity="center"
+        android:layout_marginBottom="48dp"/>
+
+    <!-- Sign Up Button -->
+    <Button
+        android:id="@+id/btnWelcomeSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="Sign Up"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:backgroundTint="#0073e6"
+        app:cornerRadius="26dp"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Sign In Button -->
+    <Button
+        android:id="@+id/btnWelcomeSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="Sign In"
+        android:textAllCaps="false"
+        android:textColor="#0073e6"
+        android:textSize="16sp"
+        android:backgroundTint="@android:color/white"
+        app:cornerRadius="26dp"
+        app:strokeColor="#0073e6"
+        app:strokeWidth="2dp"/>
+
+</LinearLayout>

@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         } else {
             // User not logged in, go to SignUp/SignIn
-            val intent = Intent(this, SignUpActivity::class.java)
+            val intent = Intent(this, WelcomeActivity::class.java)
             startActivity(intent)
         }
         finish()
