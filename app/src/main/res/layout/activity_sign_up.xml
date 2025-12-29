@@ -16,7 +16,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="125dp"
+
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:text="Sign Up"
             android:textColor="@android:color/black"
@@ -58,48 +59,9 @@
             android:layout_height="52dp"
             android:layout_marginTop="32dp"
             android:backgroundTint="#0073e6"
-            android:text="Sign Up"
+            android:text="Create Account"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            app:cornerRadius="26dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1"
-                android:background="@android:color/darker_gray" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="or"
-                android:textColor="@android:color/darker_gray" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1"
-                android:background="@android:color/darker_gray" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btnGoogleSignIn"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="@android:color/white"
-            android:text="Sign in with Google"
-            android:textAllCaps="false"
-            android:textColor="@android:color/black"
             app:cornerRadius="26dp" />
 
         <LinearLayout
