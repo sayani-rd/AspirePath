@@ -12,12 +12,12 @@
         android:layout_height="?attr/actionBarSize"
         android:background="#0073e6"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" 
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/profile"
-        app:title=" Welcome to Aspire Path"
+        app:title="Aspire Path"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
         app:titleTextColor="@android:color/white" />
 

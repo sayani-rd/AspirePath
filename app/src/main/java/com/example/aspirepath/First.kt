@@ -47,6 +47,11 @@ class First : AppCompatActivity() {
                 replaceFragment(Profile())
                 true
             }
+            R.id.manage_account -> {
+                val intent = Intent(this, ManageAccountActivity::class.java)
+                startActivity(intent)
+                true
+            }
             R.id.logout -> {
                 // Clear login state from SharedPreferences
                 val sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
@@ -54,8 +59,8 @@ class First : AppCompatActivity() {
                 editor.putBoolean("isLoggedIn", false)
                 editor.apply()
 
-                // Navigate back to the sign-up screen and clear the task stack
-                val intent = Intent(this, SignUpActivity::class.java)
+                // Navigate back to the welcome screen and clear the task stack
+                val intent = Intent(this, WelcomeActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 finish()

@@ -12,9 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AspirePath">
         <activity
-            android:name=".WelcomeActivity"
-            android:exported="true" />
-        <activity
             android:name=".First"
             android:exported="true" />
         <activity
@@ -22,6 +19,57 @@
             android:exported="true"/>
         <activity
             android:name=".SignUpActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".InterestActivity"
+            android:exported="false"
+            android:parentActivityName=".First"/>
+        <activity
+            android:name=".AnalysisActivity"
+            android:exported="false"
+            android:parentActivityName=".First"/>
+        <activity
+            android:name=".QuizActivity"
+            android:exported="false"
+            android:parentActivityName=".First"/>
+        <activity
+            android:name=".Post10thActivity"
+            android:exported="false"
+            android:parentActivityName=".QuizActivity"/>
+        <activity
+            android:name=".Post12thActivity"
+            android:exported="false"
+            android:parentActivityName=".QuizActivity"/>
+        <activity
+            android:name=".UndergraduateActivity"
+            android:exported="false"
+            android:parentActivityName=".QuizActivity"/>
+        <activity
+            android:name=".PostGraduationActivity"
+            android:exported="false"
+            android:parentActivityName=".QuizActivity"/>
+        <activity
+            android:name=".PostgraduateActivity"
+            android:exported="false"
+            android:parentActivityName=".QuizActivity"/>
+        <activity
+            android:name=".BeyondMastersActivity"
+            android:exported="false"
+            android:parentActivityName=".QuizActivity"/>
+        <activity
+            android:name=".GuidanceActivity"
+            android:exported="false"
+            android:parentActivityName=".First"/>
+        <activity
+            android:name=".ChatbotActivity"
+            android:exported="false"
+            android:parentActivityName=".First"/>
+        <activity
+            android:name=".ManageAccountActivity"
+            android:exported="false"
+            android:parentActivityName=".First"/>
+        <activity
+            android:name=".WelcomeActivity"
             android:exported="true"/>
         <activity
             android:name=".MainActivity"
