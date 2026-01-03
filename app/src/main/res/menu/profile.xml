@@ -7,6 +7,9 @@
         android:icon="@drawable/baseline_perm_identity_24"
         app:showAsAction="ifRoom"/>
     <item
+        android:id="@+id/manage_account"
+        android:title="Manage Account" />
+    <item
         android:id="@+id/logout"
         android:title="Logout" />
 </menu>

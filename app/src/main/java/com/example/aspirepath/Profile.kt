@@ -1,59 +1,101 @@
 package com.example.aspirepath
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [Profile.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Profile : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
+
+        // Get user data from SharedPreferences
+        val sharedPreferences = requireActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        val email = sharedPreferences.getString("current_user_email", "")
+        
+        // Get all user details
+        val name = sharedPreferences.getString("user_name", "User")
+        val dob = sharedPreferences.getString("user_dob", "N/A")
+        val age = sharedPreferences.getInt("user_age", 0)
+        val eligibility = sharedPreferences.getString("user_eligibility", "N/A")
+        val stream = sharedPreferences.getString("user_stream", "")
+        val course = sharedPreferences.getString("user_course", "")
+        val certificate = sharedPreferences.getString("user_certificate", "N/A")
+        val collegeSchool = sharedPreferences.getString("user_college_school", "N/A")
+
+        // Set initials
+        val tvInitials = view.findViewById<TextView>(R.id.tvInitials)
+        val initials = getInitials(name ?: "U")
+        tvInitials.text = initials
+
+        // Set user details
+        view.findViewById<TextView>(R.id.tvProfileName).text = name
+        view.findViewById<TextView>(R.id.tvProfileEmail).text = email
+        
+        // DOB field (conditional)
+        if (dob.isNullOrEmpty() || dob == "N/A") {
+            view.findViewById<View>(R.id.layoutDOB).visibility = View.GONE
+            view.findViewById<View>(R.id.dividerDOB).visibility = View.GONE
+        } else {
+            view.findViewById<TextView>(R.id.tvProfileDOB).text = dob
+        }
+        
+        // Age field (conditional)
+        if (age == 0) {
+            view.findViewById<View>(R.id.layoutAge).visibility = View.GONE
+            view.findViewById<View>(R.id.dividerAge).visibility = View.GONE
+        } else {
+            view.findViewById<TextView>(R.id.tvProfileAge).text = age.toString()
+        }
+        
+        view.findViewById<TextView>(R.id.tvProfileEligibility).text = eligibility
+
+        // Stream field (conditional)
+        if (stream.isNullOrEmpty() || stream == "Select Stream") {
+            view.findViewById<View>(R.id.layoutStream).visibility = View.GONE
+        } else {
+            view.findViewById<TextView>(R.id.tvProfileStream).text = stream
+        }
+
+        // Course field (conditional)
+        if (course.isNullOrEmpty()) {
+            view.findViewById<View>(R.id.layoutCourse).visibility = View.GONE
+        } else {
+            view.findViewById<TextView>(R.id.tvProfileCourse).text = course
+        }
+
+        // Certificate field (conditional)
+        if (certificate.isNullOrEmpty() || certificate == "N/A") {
+            view.findViewById<View>(R.id.layoutCertificate).visibility = View.GONE
+            view.findViewById<View>(R.id.dividerCertificate).visibility = View.GONE
+        } else {
+            view.findViewById<TextView>(R.id.tvProfileCertificate).text = certificate
+        }
+        
+        // College/School field (conditional)
+        if (collegeSchool.isNullOrEmpty() || collegeSchool == "N/A") {
+            view.findViewById<View>(R.id.layoutCollegeSchool).visibility = View.GONE
+            view.findViewById<View>(R.id.dividerCollegeSchool).visibility = View.GONE
+        } else {
+            view.findViewById<TextView>(R.id.tvProfileCollegeSchool).text = collegeSchool
+        }
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Profile.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Profile().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun getInitials(name: String): String {
+        val parts = name.trim().split(" ")
+        return when {
+            parts.size >= 2 -> "${parts[0][0]}${parts[1][0]}".uppercase()
+            parts.isNotEmpty() -> parts[0].take(2).uppercase()
+            else -> "U"
+        }
     }
 }

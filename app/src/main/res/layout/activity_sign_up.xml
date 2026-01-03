@@ -5,86 +5,294 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_bg"
+    android:fillViewport="true"
     tools:context=".SignUpActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="28dp">
+        android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="Sign Up"
+        android:textColor="@android:color/black"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="2dp"
+        android:text="Find your right career path"
+        android:textColor="#666666"
+        android:textSize="14sp" />
+
+    <!-- Full Name -->
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/edit_text_background_transparent"
+        android:hint="Full Name"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:drawableStart="@drawable/baseline_person_24"
+        android:drawablePadding="8dp" />
+
+    <!-- Date of Birth and Eligibility - Side by Side -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <!-- Date of Birth -->
+        <EditText
+            android:id="@+id/etDateOfBirth"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="@drawable/edit_text_background_transparent"
+            android:hint="Date of Birth"
+            android:focusable="false"
+            android:clickable="true"
+            android:padding="10dp"
+            android:drawableStart="@drawable/ic_calendar"
+            android:drawablePadding="8dp" />
+
+        <!-- Eligibility -->
+        <EditText
+            android:id="@+id/etEligibility"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/edit_text_background_transparent"
+            android:hint="Qualification"
+            android:focusable="false"
+            android:clickable="true"
+            android:padding="10dp"
+            android:drawableStart="@drawable/ic_graduation"
+            android:drawablePadding="8dp"
+            />
+
+    </LinearLayout>
+
+    <!-- Stream (Conditional - for 12th, UG, PG) -->
+    <EditText
+        android:id="@+id/etStream"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_text_background_transparent"
+        android:hint="Select Stream"
+        android:focusable="false"
+        android:clickable="true"
+        android:padding="10dp"
+        android:drawableStart="@drawable/ic_school"
+        android:drawablePadding="8dp"
+        android:drawableEnd="@android:drawable/arrow_down_float"
+        android:visibility="gone" />
+
+    <!-- Stream Other (Conditional - when Other is selected) -->
+    <EditText
+        android:id="@+id/etStreamOther"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_text_background_transparent"
+        android:hint="Please specify stream"
+        android:padding="10dp"
+        android:drawableStart="@drawable/ic_school"
+        android:drawablePadding="8dp"
+        android:visibility="gone" />
+
+    <!-- Course (Conditional - for UG, PG) -->
+    <EditText
+        android:id="@+id/etCourse"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_text_background_transparent"
+        android:hint="Course Name"
+        android:padding="10dp"
+        android:drawableStart="@drawable/ic_graduation"
+        android:drawablePadding="8dp"
+        android:visibility="gone" />
+
+    <!-- Certificate Courses -->
+    <EditText
+        android:id="@+id/etCertificate"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_text_background_transparent"
+        android:hint="Certificate Courses (Optional)"
+        android:padding="10dp"
+        android:drawableStart="@drawable/ic_certificate"
+        android:drawablePadding="8dp" />
+
+    <!-- Current College/School -->
+    <EditText
+        android:id="@+id/etCollegeSchool"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_text_background_transparent"
+        android:hint="Current College/School Name"
+        android:padding="10dp"
+        android:drawableStart="@drawable/ic_school"
+        android:drawablePadding="8dp" />
+
+    <!-- Checkbox for not enrolled -->
+    <CheckBox
+        android:id="@+id/cbNotEnrolled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I'm not currently enrolled in any School/College"
+        android:textColor="#666666"
+        android:textSize="13sp" />
+
+    <!-- Email -->
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/edit_text_background_transparent"
+        android:hint="E-mail Address"
+        android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:drawableStart="@drawable/ic_email"
+        android:drawablePadding="8dp" />
+
+    <!-- OTP Section (Initially hidden) -->
+    <LinearLayout
+        android:id="@+id/layoutOTP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:id="@+id/etOTP"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="@drawable/edit_text_background_transparent"
+            android:hint="Enter OTP"
+            android:inputType="number"
+            android:maxLength="6"
+            android:padding="10dp" />
+
+        <Button
+            android:id="@+id/btnVerifyOTP"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginStart="6dp"
+            android:text="Verify"
+            android:textAllCaps="false"
+            android:backgroundTint="#0073e6"
+            app:cornerRadius="10dp" />
+    </LinearLayout>
+
+    <!-- Password -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:passwordToggleEnabled="true">
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/edit_text_background_transparent"
+                android:hint="Set Password"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:drawableStart="@drawable/ic_lock"
+                android:drawablePadding="8dp"
+                android:paddingEnd="45dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </RelativeLayout>
+
+    <!-- Confirm Password -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:passwordToggleEnabled="true">
+
+            <EditText
+                android:id="@+id/etConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/edit_text_background_transparent"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:drawableStart="@drawable/ic_lock"
+                android:drawablePadding="8dp"
+                android:paddingEnd="45dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    </RelativeLayout>
+
+    <!-- Sign Up Button -->
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#0073e6"
+        android:text="Create Account"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        app:cornerRadius="24dp" />
+
+    <!-- Sign In Link -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Already have an Account? "
+            android:textColor="#666" />
 
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:text="Sign Up"
-            android:textColor="@android:color/black"
-            android:textSize="26sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/etName"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/edit_text_background_rounded"
-            android:hint="Enter Full Name"
-            android:padding="12dp" />
-
-        <EditText
-            android:id="@+id/etEmail"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/edit_text_background_rounded"
-            android:hint="Enter E-mail Address"
-            android:inputType="textEmailAddress"
-            android:padding="12dp" />
-
-        <EditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/edit_text_background_rounded"
-            android:hint="Enter Password"
-            android:inputType="textPassword"
-            android:padding="12dp" />
-
-        <Button
-            android:id="@+id/btnSignUp"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="32dp"
-            android:backgroundTint="#0073e6"
-            android:text="Create Account"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            app:cornerRadius="26dp" />
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Already have an Account? "
-                android:textColor="#666" />
-
-            <TextView
-                android:id="@+id/tvSignIn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sign In"
-                android:textColor="#0073e6"
-                android:textStyle="bold" />
-        </LinearLayout>
+            android:text="Sign In"
+            android:textColor="#0073e6"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

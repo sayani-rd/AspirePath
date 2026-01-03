@@ -37,7 +37,9 @@ android {
 
 dependencies {
 
+    implementation("com.google.firebase:firebase-auth-ktx:22.0.0")
     implementation("androidx.core:core-splashscreen:1.0.0")
+    implementation("androidx.cardview:cardview:1.0.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
