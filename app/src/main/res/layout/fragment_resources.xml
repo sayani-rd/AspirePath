@@ -14,15 +14,15 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Page Title -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Career Resources"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/blue"
-            android:layout_marginBottom="20dp"/>
+<!--        &lt;!&ndash; Page Title &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Career Resources"-->
+<!--            android:textSize="24sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textColor="@color/blue"-->
+<!--            android:layout_marginBottom="20dp"/>-->
 
         <!-- NEP Information Card -->
         <androidx.cardview.widget.CardView
