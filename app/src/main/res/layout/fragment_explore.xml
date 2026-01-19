@@ -8,141 +8,51 @@
     android:background="@drawable/gradient_bg"
     tools:context=".Explore">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" Explore Colleges and Higher Secondary in Goa"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/blue"
+        android:padding="16dp"
+        android:gravity="center"/>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <GridLayout
+            android:id="@+id/gridLayoutTalukas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:columnCount="2"
+            android:padding="8dp"
+            android:alignmentMode="alignMargins"
+            android:columnOrderPreserved="false">
 
-            <!-- Page Title -->
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Explore"-->
-<!--                android:textSize="24sp"-->
-<!--                android:textStyle="bold"-->
-<!--                android:textColor="@color/blue"-->
-<!--                android:layout_marginBottom="16dp"/>-->
-
-            <!-- Search Bar -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
+            <Button
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
-                android:layout_marginBottom="16dp">
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:backgroundTint="@android:color/white"
+                android:tag="Pernem"
+                android:text="Pernem"
+                android:textColor="@android:color/black" />
+            <Button android:text="Bardez" android:tag="Bardez" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
+            <Button android:text="Dharbandora" android:tag="Dharbandora" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
+            <Button android:text="Mormugao" android:tag="Mormugao" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
+            <Button android:text="Salcete" android:tag="Salcete" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
+            <Button android:text="Quepem" android:tag="Quepem" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
+            <Button android:text="Sanguem" android:tag="Sanguem" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
+            <Button android:text="Ponda" android:tag="Ponda" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
+            <Button android:text="Canacona" android:tag="Canacona" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
+            <Button android:text="Bicholim" android:tag="Bicholim" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
+            <Button android:text="Sattari" android:tag="Sattari" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
+            <Button android:text="Tiswadi" android:tag="Tiswadi" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
 
-                <SearchView
-                    android:id="@+id/searchView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:queryHint="Search for colleges or programs..."
-                    android:iconifiedByDefault="false"
-                    android:background="@android:color/white"/>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Filter Chips -->
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none"
-                android:layout_marginBottom="16dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chipColleges"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Colleges"
-                        android:layout_marginEnd="8dp"
-                        app:chipBackgroundColor="#0073e6"
-                        android:textColor="@android:color/white"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chipSchools"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Higher Secondary"
-                        android:layout_marginEnd="8dp"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chipPrograms"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Programs"
-                        android:layout_marginEnd="8dp"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chipLocation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Location"
-                        android:layout_marginEnd="8dp"/>
-                </LinearLayout>
-            </HorizontalScrollView>
-
-            <!-- Empty State / Results Section -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="32dp"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🔍"
-                        android:textSize="64sp"
-                        android:layout_marginBottom="16dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Search for Educational Institutions"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/blue"
-                        android:gravity="center"
-                        android:layout_marginBottom="8dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Find colleges, schools, and programs\nthat match your career goals"
-                        android:textSize="14sp"
-                        android:textColor="#666666"
-                        android:gravity="center"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Database Coming Soon"
-                        android:textSize="12sp"
-                        android:textStyle="italic"
-                        android:textColor="#FF9800"
-                        android:background="#FFF3E0"
-                        android:padding="8dp"
-                        android:layout_marginTop="16dp"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
+        </GridLayout>
     </ScrollView>
 
 </LinearLayout>

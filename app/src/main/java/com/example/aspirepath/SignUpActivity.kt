@@ -10,12 +10,10 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
-import kotlin.random.Random
 
 class SignUpActivity : AppCompatActivity() {
 
     private var selectedDate: Calendar = Calendar.getInstance()
-    private var generatedOTP: String = ""
     private var isEmailVerified = false
     private var isPasswordVisible = false
     private var isConfirmPasswordVisible = false
@@ -31,35 +29,19 @@ class SignUpActivity : AppCompatActivity() {
         val etEligibility = findViewById<EditText>(R.id.etEligibility)
         val etStream = findViewById<EditText>(R.id.etStream)
         val etStreamOther = findViewById<EditText>(R.id.etStreamOther)
-        val etCourse = findViewById<EditText>(R.id.etCourse)
-        val etCertificate = findViewById<EditText>(R.id.etCertificate)
-        val etCollegeSchool = findViewById<EditText>(R.id.etCollegeSchool)
-        val cbNotEnrolled = findViewById<CheckBox>(R.id.cbNotEnrolled)
         val etEmail = findViewById<EditText>(R.id.etEmail)
+        val btnVerify = findViewById<Button>(R.id.btnVerify)
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val etConfirmPassword = findViewById<EditText>(R.id.etConfirmPassword)
         val btnSignUp = findViewById<Button>(R.id.btnSignUp)
         val tvSignIn = findViewById<TextView>(R.id.tvSignIn)
-        val btnVerifyOTP = findViewById<Button>(R.id.btnVerifyOTP)
-        val layoutOTP = findViewById<LinearLayout>(R.id.layoutOTP)
-        val etOTP = findViewById<EditText>(R.id.etOTP)
 
         // Setup Eligibility options
-        val eligibilityOptions = arrayOf("10th Completed", "12th Completed", "Undergraduate", "Graduate", "Postgraduate")
-
-        // Checkbox listener for "Not Enrolled"
-        cbNotEnrolled.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                etCollegeSchool.visibility = View.GONE
-                etCollegeSchool.text.clear()
-            } else {
-                etCollegeSchool.visibility = View.VISIBLE
-            }
-        }
+        val eligibilityOptions = arrayOf("10th Completed", "12th Completed", "Graduate", "Postgraduate")
 
         // Eligibility Click Listener
         etEligibility.setOnClickListener {
-            showEligibilityDialog(eligibilityOptions, etEligibility, etStream, etCourse)
+            showEligibilityDialog(eligibilityOptions, etEligibility, etStream)
         }
 
         // Setup Stream options
@@ -75,27 +57,19 @@ class SignUpActivity : AppCompatActivity() {
             showDatePicker(etDateOfBirth)
         }
 
-        // Show OTP field when email is clicked
-        etEmail.setOnClickListener {
-            if (!isEmailVerified && layoutOTP.visibility == View.GONE) {
+        // Verify button listener
+        btnVerify.setOnClickListener {
+             if (!isEmailVerified) {
                 val email = etEmail.text.toString().trim()
                 if (email.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    generatedOTP = Random.nextInt(100000, 999999).toString()
-                    layoutOTP.visibility = View.VISIBLE
-                    Toast.makeText(this, "OTP sent to $email: $generatedOTP", Toast.LENGTH_LONG).show()
+                    // Simulate sending verification email
+                    Toast.makeText(this, "Verification email sent", Toast.LENGTH_LONG).show()
+                    isEmailVerified = true
+                } else {
+                    Toast.makeText(this, "Please enter a valid email", Toast.LENGTH_SHORT).show()
                 }
-            }
-        }
-
-        // Verify OTP
-        btnVerifyOTP.setOnClickListener {
-            val enteredOTP = etOTP.text.toString().trim()
-            if (enteredOTP == generatedOTP) {
-                isEmailVerified = true
-                layoutOTP.visibility = View.GONE
-                Toast.makeText(this, "Email verified successfully", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Invalid OTP. Please try again.", Toast.LENGTH_SHORT).show()
+                 Toast.makeText(this, "Already sent verification email! Please check", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -108,9 +82,6 @@ class SignUpActivity : AppCompatActivity() {
             val stream = if (etStream.visibility == View.VISIBLE) {
                 if (etStreamOther.visibility == View.VISIBLE) etStreamOther.text.toString().trim() else etStream.text.toString().trim()
             } else ""
-            val course = if (etCourse.visibility == View.VISIBLE) etCourse.text.toString().trim() else ""
-            val certificate = etCertificate.text.toString().trim()
-            val collegeSchool = etCollegeSchool.text.toString().trim()
             val email = etEmail.text.toString().trim()
             val password = etPassword.text.toString().trim()
             val confirmPassword = etConfirmPassword.text.toString().trim()
@@ -118,12 +89,6 @@ class SignUpActivity : AppCompatActivity() {
             // Validation
             if (name.isEmpty() || dob.isEmpty() || eligibility.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            // Check if college/school is required (when checkbox is not checked)
-            if (!cbNotEnrolled.isChecked && collegeSchool.isEmpty()) {
-                Toast.makeText(this, "Please fill current college/school name or check the option", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -161,9 +126,6 @@ class SignUpActivity : AppCompatActivity() {
                 editor.putString("user_dob", dob)
                 editor.putString("user_eligibility", eligibility)
                 editor.putString("user_stream", stream)
-                editor.putString("user_course", course)
-                editor.putString("user_certificate", certificate)
-                editor.putString("user_college_school", collegeSchool)
                 editor.putInt("user_age", age)
                 editor.putBoolean("isLoggedIn", true)
                 editor.apply()
@@ -212,9 +174,9 @@ class SignUpActivity : AppCompatActivity() {
         return age
     }
 
-    private fun showEligibilityDialog(options: Array<String>, editText: EditText, etStream: EditText, etCourse: EditText) {
+    private fun showEligibilityDialog(options: Array<String>, editText: EditText, etStream: EditText) {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Select Eligibility")
+        builder.setTitle("Select Qualification")
         builder.setItems(options) { dialog, which ->
             selectedEligibility = options[which]
             editText.setText(selectedEligibility)
@@ -223,16 +185,12 @@ class SignUpActivity : AppCompatActivity() {
             when (selectedEligibility) {
                 "10th Completed" -> {
                     etStream.visibility = View.GONE
-                    etCourse.visibility = View.GONE
                 }
                 "12th Completed" -> {
                     etStream.visibility = View.VISIBLE
-                    etCourse.visibility = View.GONE
                 }
-                "Undergraduate", "Graduate", "Postgraduate" -> {
+                "Graduate", "Postgraduate" -> {
                     etStream.visibility = View.VISIBLE
-                    etCourse.visibility = View.VISIBLE
-                    etCourse.hint = if (selectedEligibility == "Undergraduate") "Course Chosen" else "Course Completed"
                 }
             }
             dialog.dismiss()
