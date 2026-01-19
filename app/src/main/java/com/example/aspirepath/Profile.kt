@@ -26,9 +26,6 @@ class Profile : Fragment() {
         val age = sharedPreferences.getInt("user_age", 0)
         val eligibility = sharedPreferences.getString("user_eligibility", "N/A")
         val stream = sharedPreferences.getString("user_stream", "")
-        val course = sharedPreferences.getString("user_course", "")
-        val certificate = sharedPreferences.getString("user_certificate", "N/A")
-        val collegeSchool = sharedPreferences.getString("user_college_school", "N/A")
 
         // Set initials
         val tvInitials = view.findViewById<TextView>(R.id.tvInitials)
@@ -62,29 +59,6 @@ class Profile : Fragment() {
             view.findViewById<View>(R.id.layoutStream).visibility = View.GONE
         } else {
             view.findViewById<TextView>(R.id.tvProfileStream).text = stream
-        }
-
-        // Course field (conditional)
-        if (course.isNullOrEmpty()) {
-            view.findViewById<View>(R.id.layoutCourse).visibility = View.GONE
-        } else {
-            view.findViewById<TextView>(R.id.tvProfileCourse).text = course
-        }
-
-        // Certificate field (conditional)
-        if (certificate.isNullOrEmpty() || certificate == "N/A") {
-            view.findViewById<View>(R.id.layoutCertificate).visibility = View.GONE
-            view.findViewById<View>(R.id.dividerCertificate).visibility = View.GONE
-        } else {
-            view.findViewById<TextView>(R.id.tvProfileCertificate).text = certificate
-        }
-        
-        // College/School field (conditional)
-        if (collegeSchool.isNullOrEmpty() || collegeSchool == "N/A") {
-            view.findViewById<View>(R.id.layoutCollegeSchool).visibility = View.GONE
-            view.findViewById<View>(R.id.dividerCollegeSchool).visibility = View.GONE
-        } else {
-            view.findViewById<TextView>(R.id.tvProfileCollegeSchool).text = collegeSchool
         }
 
         return view

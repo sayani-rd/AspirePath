@@ -40,8 +40,13 @@ class First : AppCompatActivity() {
             override fun handleOnBackPressed() {
                 val currentFragment = supportFragmentManager.findFragmentById(R.id.frameLayout)
                 if (currentFragment is Profile) {
-                    replaceFragment(Home())
-                    bottomNavigationView.selectedItemId = R.id.home
+                    when (bottomNavigationView.selectedItemId) {
+                        R.id.home -> replaceFragment(Home())
+                        R.id.explore -> replaceFragment(Explore())
+                        R.id.resources -> replaceFragment(Resources())
+                        R.id.progress -> replaceFragment(Progress())
+                        else -> replaceFragment(Home())
+                    }
                 } else {
                     isEnabled = false
                     onBackPressedDispatcher.onBackPressed()
