@@ -57,6 +57,12 @@
             android:exported="false"
             android:parentActivityName=".QuizActivity"/>
         <activity
+            android:name=".CompetitiveExamsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ExamCategoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".GuidanceActivity"
             android:exported="false"
             android:parentActivityName=".First"/>

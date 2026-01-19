@@ -29,7 +29,8 @@ class Resources : Fragment() {
         }
 
         cardEntranceExams.setOnClickListener {
-            Toast.makeText(requireContext(), "Entrance Exams - Coming Soon", Toast.LENGTH_SHORT).show()
+            val intent = android.content.Intent(requireContext(), CompetitiveExamsActivity::class.java)
+            startActivity(intent)
         }
 
         return view
