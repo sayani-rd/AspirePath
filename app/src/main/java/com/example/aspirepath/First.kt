@@ -30,7 +30,7 @@ class First : AppCompatActivity() {
                 R.id.home -> replaceFragment(Home())
                 R.id.explore -> replaceFragment(Explore())
                 R.id.resources -> replaceFragment(Resources())
-                R.id.progress -> replaceFragment(Progress())
+                R.id.careers -> replaceFragment(Progress())
                 else -> false
             }
             true
@@ -44,7 +44,7 @@ class First : AppCompatActivity() {
                         R.id.home -> replaceFragment(Home())
                         R.id.explore -> replaceFragment(Explore())
                         R.id.resources -> replaceFragment(Resources())
-                        R.id.progress -> replaceFragment(Progress())
+                        R.id.careers -> replaceFragment(Progress())
                         else -> replaceFragment(Home())
                     }
                 } else {

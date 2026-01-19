@@ -14,7 +14,7 @@
         android:title="Resources"
         android:icon="@drawable/baseline_more_24"/>
     <item
-        android:id="@+id/progress"
-        android:title="Progress"
-        android:icon="@drawable/baseline_moving_24"/>
+        android:id="@+id/careers"
+        android:title="Careers"
+        android:icon="@drawable/baseline_work_24"/>
 </menu>

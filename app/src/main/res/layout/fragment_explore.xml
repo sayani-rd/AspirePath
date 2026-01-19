@@ -8,6 +8,18 @@
     android:background="@drawable/gradient_bg"
     tools:context=".Explore">
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:layout_margin="16dp"
+        app:queryHint="Search colleges..."
+        app:iconifiedByDefault="false"
+        app:defaultQueryHint="Search colleges..."
+        android:elevation="4dp"
+        app:queryBackground="@android:color/transparent"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +30,14 @@
         android:padding="16dp"
         android:gravity="center"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSearch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
     <ScrollView
+        android:id="@+id/scrollViewTalukas"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -31,26 +50,257 @@
             android:alignmentMode="alignMargins"
             android:columnOrderPreserved="false">
 
-            <Button
+            <androidx.cardview.widget.CardView
+                android:tag="Pernem"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_columnWeight="1"
                 android:layout_margin="8dp"
-                android:backgroundTint="@android:color/white"
-                android:tag="Pernem"
-                android:text="Pernem"
-                android:textColor="@android:color/black" />
-            <Button android:text="Bardez" android:tag="Bardez" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
-            <Button android:text="Dharbandora" android:tag="Dharbandora" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
-            <Button android:text="Mormugao" android:tag="Mormugao" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
-            <Button android:text="Salcete" android:tag="Salcete" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
-            <Button android:text="Quepem" android:tag="Quepem" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
-            <Button android:text="Sanguem" android:tag="Sanguem" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
-            <Button android:text="Ponda" android:tag="Ponda" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
-            <Button android:text="Canacona" android:tag="Canacona" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
-            <Button android:text="Bicholim" android:tag="Bicholim" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
-            <Button android:text="Sattari" android:tag="Sattari" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
-            <Button android:text="Tiswadi" android:tag="Tiswadi" android:layout_width="0dp" android:layout_columnWeight="1" android:layout_height="wrap_content" android:layout_margin="8dp" android:backgroundTint="@android:color/white" android:textColor="@android:color/black"/>
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Pernem"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:tag="Bardez"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Bardez"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:tag="Dharbandora"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Dharbandora"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:tag="Mormugao"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Mormugao"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:tag="Salcete"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Salcete"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:tag="Quepem"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Quepem"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:tag="Sanguem"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Sanguem"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:tag="Ponda"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Ponda"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:tag="Canacona"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Canacona"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:tag="Bicholim"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Bicholim"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:tag="Sattari"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Sattari"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:tag="Tiswadi"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Tiswadi"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
+            </androidx.cardview.widget.CardView>
 
         </GridLayout>
     </ScrollView>
