@@ -18,16 +18,9 @@ class Home : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         // Set up click listeners for each card
-        val cardInterest = view.findViewById<CardView>(R.id.cardInterest)
         val cardAnalysis = view.findViewById<CardView>(R.id.cardAnalysis)
         val cardQuiz = view.findViewById<CardView>(R.id.cardQuiz)
-        val cardGuidance = view.findViewById<CardView>(R.id.cardGuidance)
         val cardChatbot = view.findViewById<CardView>(R.id.cardChatbot)
-
-        cardInterest.setOnClickListener {
-            val intent = Intent(activity, InterestActivity::class.java)
-            startActivity(intent)
-        }
 
         cardAnalysis.setOnClickListener {
             val intent = Intent(activity, AnalysisActivity::class.java)
@@ -36,11 +29,6 @@ class Home : Fragment() {
 
         cardQuiz.setOnClickListener {
             val intent = Intent(activity, QuizActivity::class.java)
-            startActivity(intent)
-        }
-
-        cardGuidance.setOnClickListener {
-            val intent = Intent(activity, GuidanceActivity::class.java)
             startActivity(intent)
         }
 
