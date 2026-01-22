@@ -7,4 +7,6 @@
     <color name="light_blue_bg">#e6f7ff</color>
     <color name="bblue">#0073e6</color>
     <color name="light_blue">#edf7fa</color>
+    <color name="neutral_gray">#E0E0E0</color>
+    <color name="darker_gray">#666666</color>
 </resources>

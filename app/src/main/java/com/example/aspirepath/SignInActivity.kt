@@ -75,7 +75,8 @@ class SignInActivity : AppCompatActivity() {
         }
 
         tvForgotPassword.setOnClickListener {
-            showForgotPasswordDialog()
+            val intent = Intent(this, ForgotPasswordActivity::class.java)
+            startActivity(intent)
         }
 
         tvSignUp.setOnClickListener {
@@ -83,19 +84,5 @@ class SignInActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-    }
-
-    private fun showForgotPasswordDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Forgot Password")
-        builder.setMessage("Password recovery feature will be available soon. Please contact support or create a new account.")
-        builder.setPositiveButton("OK") { dialog, _ ->
-            dialog.dismiss()
-        }
-        builder.setNegativeButton("Sign Up") { _, _ ->
-            val intent = Intent(this, SignUpActivity::class.java)
-            startActivity(intent)
-        }
-        builder.show()
     }
 }

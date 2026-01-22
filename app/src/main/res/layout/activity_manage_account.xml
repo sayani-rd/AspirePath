@@ -35,6 +35,140 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="24dp"/>
 
+            <!-- Change Password Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                android:layout_marginTop="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Change Password"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Update your password to keep your account secure."
+                        android:textSize="14sp"
+                        android:textColor="#666666"
+                        android:layout_marginBottom="16dp"/>
+
+                    <Button
+                        android:id="@+id/btnChangePassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:text="Change Password"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:backgroundTint="@color/bblue"
+                        app:cornerRadius="26dp"/>
+
+                    <!-- Password Change Form (Initially Hidden) -->
+                    <LinearLayout
+                        android:id="@+id/passwordChangeForm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="16dp"
+                        android:visibility="gone">
+
+                        <!-- Current Password -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp"
+                            app:hintEnabled="false"
+                            app:passwordToggleEnabled="true">
+
+                            <EditText
+                                android:id="@+id/etCurrentPassword"
+                                android:layout_width="match_parent"
+                                android:layout_height="52dp"
+                                android:hint="Current Password"
+                                android:inputType="textPassword"
+                                android:padding="12dp"
+                                android:background="@drawable/edit_text_background_transparent"
+                                android:textSize="16sp"
+                                android:drawableStart="@drawable/ic_lock"
+                                android:drawablePadding="8dp"
+                                android:paddingEnd="45dp"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- New Password -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp"
+                            app:hintEnabled="false"
+                            app:passwordToggleEnabled="true">
+
+                            <EditText
+                                android:id="@+id/etNewPassword"
+                                android:layout_width="match_parent"
+                                android:layout_height="52dp"
+                                android:hint="New Password"
+                                android:inputType="textPassword"
+                                android:padding="12dp"
+                                android:background="@drawable/edit_text_background_transparent"
+                                android:textSize="16sp"
+                                android:drawableStart="@drawable/ic_lock"
+                                android:drawablePadding="8dp"
+                                android:paddingEnd="45dp"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Confirm Password -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            app:hintEnabled="false"
+                            app:passwordToggleEnabled="true">
+
+                            <EditText
+                                android:id="@+id/etConfirmPassword"
+                                android:layout_width="match_parent"
+                                android:layout_height="52dp"
+                                android:hint="Confirm Password"
+                                android:inputType="textPassword"
+                                android:padding="12dp"
+                                android:background="@drawable/edit_text_background_transparent"
+                                android:textSize="16sp"
+                                android:drawableStart="@drawable/ic_lock"
+                                android:drawablePadding="8dp"
+                                android:paddingEnd="45dp"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <Button
+                            android:id="@+id/btnResetPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="52dp"
+                            android:text="Reset Password"
+                            android:textAllCaps="false"
+                            android:textColor="#FFFFFF"
+                            android:backgroundTint="@color/bblue"
+                            app:cornerRadius="26dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
             <!-- Danger Zone Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -52,7 +186,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Danger Zone"
+                        android:text="Delete Account"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="#D32F2F"
@@ -70,7 +204,7 @@
                         android:id="@+id/btnDeleteAccount"
                         android:layout_width="match_parent"
                         android:layout_height="52dp"
-                        android:text="Remove Account"
+                        android:text="Delete Account"
                         android:textAllCaps="false"
                         android:textColor="#FFFFFF"
                         android:backgroundTint="#D32F2F"
