@@ -21,6 +21,10 @@
             android:name=".SignUpActivity"
             android:exported="true"/>
         <activity
+            android:name=".ForgotPasswordActivity"
+            android:exported="false"
+            android:parentActivityName=".SignInActivity"/>
+        <activity
             android:name=".InterestActivity"
             android:exported="false"
             android:parentActivityName=".First"/>

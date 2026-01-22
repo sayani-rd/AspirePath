@@ -225,7 +225,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Eligibility"
+                        android:text="Qualification"
                         android:textSize="12sp"
                         android:textColor="#999999"
                         android:textStyle="bold"/>
