@@ -12,14 +12,19 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class SignInActivity : AppCompatActivity() {
 
+    private lateinit var auth: FirebaseAuth
     private var isPasswordVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+
+        auth = FirebaseAuth.getInstance()
+
 
         val etEmail = findViewById<EditText>(R.id.etEmail)
         val etPassword = findViewById<EditText>(R.id.etPassword)
@@ -40,37 +45,41 @@ class SignInActivity : AppCompatActivity() {
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
             } else {
-                val sharedPreferences: SharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
-                
-                if (sharedPreferences.contains(email)) {
-                    val storedPassword = sharedPreferences.getString(email, "")
-                    
-                    if (password == storedPassword) {
-                        Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
-                        
-                        // Set login flag and current user
-                        val editor = sharedPreferences.edit()
-                        editor.putBoolean("isLoggedIn", true)
-                        editor.putString("current_user_email", email)
-                        editor.apply()
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
 
-                        // Navigate to Dashboard
-                        val intent = Intent(this, First::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        // Visual feedback for wrong password
-                        etPassword.setBackgroundColor(Color.parseColor("#FFEBEE"))
-                        etPassword.setHintTextColor(Color.RED)
-                        Toast.makeText(this, "❌ Invalid Password", Toast.LENGTH_SHORT).show()
+                            // Set login flag and current user
+                            val sharedPreferences: SharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+                            val editor = sharedPreferences.edit()
+                            editor.putBoolean("isLoggedIn", true)
+                            editor.putString("current_user_email", email)
+                            // Update stored password to match Firebase
+                            editor.putString(email, password)
+                            editor.apply()
+
+                            // Navigate to Dashboard
+                            val intent = Intent(this, First::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            // Login failed
+                            etPassword.setBackgroundColor(Color.parseColor("#FFEBEE"))
+                            etPassword.setHintTextColor(Color.RED)
+                            etEmail.setBackgroundColor(Color.parseColor("#FFEBEE"))
+                            etEmail.setHintTextColor(Color.RED)
+                            
+                            val exception = task.exception
+                            if (exception is com.google.firebase.auth.FirebaseAuthInvalidCredentialsException || 
+                                exception is com.google.firebase.auth.FirebaseAuthInvalidUserException) {
+                                Toast.makeText(this, "Invalid Email or Password", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(this, "Login Failed. Please try again.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }
-                } else {
-                    // Visual feedback for user not found
-                    etEmail.setBackgroundColor(Color.parseColor("#FFEBEE"))
-                    etEmail.setHintTextColor(Color.RED)
-                    Toast.makeText(this, "User not found. Please Sign Up.", Toast.LENGTH_SHORT).show()
-                }
             }
         }
 

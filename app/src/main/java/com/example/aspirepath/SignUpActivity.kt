@@ -9,12 +9,13 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import java.util.*
 
 class SignUpActivity : AppCompatActivity() {
 
+    private lateinit var auth: FirebaseAuth
     private var selectedDate: Calendar = Calendar.getInstance()
-    private var isEmailVerified = false
     private var isPasswordVisible = false
     private var isConfirmPasswordVisible = false
     private var selectedEligibility: String = ""
@@ -23,6 +24,8 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
+
+        auth = FirebaseAuth.getInstance()
 
         val etName = findViewById<EditText>(R.id.etName)
         val etDateOfBirth = findViewById<EditText>(R.id.etDateOfBirth)
@@ -59,18 +62,61 @@ class SignUpActivity : AppCompatActivity() {
 
         // Verify button listener
         btnVerify.setOnClickListener {
-             if (!isEmailVerified) {
-                val email = etEmail.text.toString().trim()
-                if (email.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    // Simulate sending verification email
-                    Toast.makeText(this, "Verification email sent", Toast.LENGTH_LONG).show()
-                    isEmailVerified = true
-                } else {
-                    Toast.makeText(this, "Please enter a valid email", Toast.LENGTH_SHORT).show()
-                }
-            } else {
-                 Toast.makeText(this, "Already sent verification email! Please check", Toast.LENGTH_SHORT).show()
+            val email = etEmail.text.toString().trim()
+            val password = etPassword.text.toString().trim()
+
+            if (email.isEmpty()) {
+                Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
+
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                Toast.makeText(this, "Please enter a valid email", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (password.isEmpty()) {
+                Toast.makeText(this, "Please enter password to verify", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            
+            if (password.length < 6) {
+                Toast.makeText(this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        val user = auth.currentUser
+                        user?.sendEmailVerification()?.addOnCompleteListener { verifyTask ->
+                            if (verifyTask.isSuccessful) {
+                                Toast.makeText(this, "Verification email sent. Please check your inbox.", Toast.LENGTH_LONG).show()
+                            } else {
+                                Toast.makeText(this, "Failed to send verification email.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } else {
+                        if (task.exception is com.google.firebase.auth.FirebaseAuthUserCollisionException) {
+                            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { signInTask ->
+                                if (signInTask.isSuccessful) {
+                                    val user = auth.currentUser
+                                    if (user != null && !user.isEmailVerified) {
+                                        user.sendEmailVerification().addOnCompleteListener { 
+                                            Toast.makeText(this, "Verification email resent.", Toast.LENGTH_SHORT).show()
+                                        }
+                                    } else {
+                                        Toast.makeText(this, "User already registered.", Toast.LENGTH_SHORT).show()
+                                    }
+                                } else {
+                                    Toast.makeText(this, "User exists but login failed: ${signInTask.exception?.message}", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        } else {
+                            Toast.makeText(this, "Authentication failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
         }
 
 
@@ -92,11 +138,6 @@ class SignUpActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (!isEmailVerified) {
-                Toast.makeText(this, "Please verify your email first", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
             if (password.length < 6) {
                 Toast.makeText(this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -114,29 +155,42 @@ class SignUpActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Save to SharedPreferences
-            val sharedPreferences: SharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
-            if (sharedPreferences.contains(email)) {
-                Toast.makeText(this, "User already exists! Please Log In.", Toast.LENGTH_SHORT).show()
-            } else {
-                val editor = sharedPreferences.edit()
-                editor.putString(email, password)
-                editor.putString("current_user_email", email)
-                editor.putString("user_name", name)
-                editor.putString("user_dob", dob)
-                editor.putString("user_eligibility", eligibility)
-                editor.putString("user_stream", stream)
-                editor.putInt("user_age", age)
-                editor.putBoolean("isLoggedIn", true)
-                editor.apply()
+            // Check Firebase Verification
+            val user = auth.currentUser
+            if (user == null) {
+                Toast.makeText(this, "Please click Verify first.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-                Toast.makeText(this, "Account Created Successfully", Toast.LENGTH_SHORT).show()
+            user.reload().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    if (!user.isEmailVerified) {
+                        Toast.makeText(this, "Please verify your email first", Toast.LENGTH_SHORT).show()
+                    } else {
+                        // Save to SharedPreferences
+                        val sharedPreferences: SharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putString(email, password)
+                        editor.putString("current_user_email", email)
+                        editor.putString("user_name", name)
+                        editor.putString("user_dob", dob)
+                        editor.putString("user_eligibility", eligibility)
+                        editor.putString("user_stream", stream)
+                        editor.putInt("user_age", age)
+                        editor.putBoolean("isLoggedIn", true)
+                        editor.apply()
 
-                // Navigate to Dashboard
-                val intent = Intent(this, First::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-                finish()
+                        Toast.makeText(this, "Account Created Successfully", Toast.LENGTH_SHORT).show()
+
+                        // Navigate to Dashboard
+                        val intent = Intent(this@SignUpActivity, First::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                        finish()
+                    }
+                } else {
+                    Toast.makeText(this, "Failed to check verification status.", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 

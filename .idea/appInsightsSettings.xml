@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.aspirepath" />
+                  <option name="mobileSdkAppId" value="1:839969347414:android:a9c35373cb8e1323c7e8f7" />
+                  <option name="projectId" value="aspire-path-app" />
+                  <option name="projectNumber" value="839969347414" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
