@@ -10,16 +10,22 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
+import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 class ManageAccountActivity : AppCompatActivity() {
 
     private lateinit var passwordChangeForm: LinearLayout
     private lateinit var btnChangePassword: Button
     private var isPasswordFormVisible = false
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_account)
+
+        auth = FirebaseAuth.getInstance()
 
         // Set up toolbar
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
@@ -96,33 +102,39 @@ class ManageAccountActivity : AppCompatActivity() {
 
     private fun changePassword(currentPassword: String, newPassword: String, 
                                etCurrentPassword: EditText, etNewPassword: EditText, etConfirmPassword: EditText) {
-        val sharedPreferences: SharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
-        val currentUserEmail = sharedPreferences.getString("current_user_email", "")
+        val user = auth.currentUser
+        
+        if (user != null && user.email != null) {
+            val credential = EmailAuthProvider.getCredential(user.email!!, currentPassword)
+            
+            user.reauthenticate(credential).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    user.updatePassword(newPassword).addOnCompleteListener { updateTask ->
+                        if (updateTask.isSuccessful) {
+                            Toast.makeText(this, "Password changed successfully", Toast.LENGTH_SHORT).show()
 
-        if (currentUserEmail.isNullOrEmpty()) {
-            Toast.makeText(this, "User session not found. Please login again.", Toast.LENGTH_SHORT).show()
-            return
+                            // Update password in SharedPreferences (to keep local sync)
+                            val sharedPreferences: SharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+                            val editor = sharedPreferences.edit()
+                            editor.putString(user.email, newPassword)
+                            editor.apply()
+
+                            // Clear the form and hide it
+                            etCurrentPassword.text.clear()
+                            etNewPassword.text.clear()
+                            etConfirmPassword.text.clear()
+                            togglePasswordForm()
+                        } else {
+                            Toast.makeText(this, "Failed to update password: ${updateTask.exception?.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    Toast.makeText(this, "Current password is incorrect", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } else {
+            Toast.makeText(this, "User not authenticated. Please log in again.", Toast.LENGTH_SHORT).show()
         }
-
-        val storedPassword = sharedPreferences.getString(currentUserEmail, "")
-
-        if (storedPassword != currentPassword) {
-            Toast.makeText(this, "Current password is incorrect", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        // Update password in SharedPreferences
-        val editor = sharedPreferences.edit()
-        editor.putString(currentUserEmail, newPassword)
-        editor.apply()
-
-        Toast.makeText(this, "Password changed successfully", Toast.LENGTH_SHORT).show()
-
-        // Clear the form and hide it
-        etCurrentPassword.text.clear()
-        etNewPassword.text.clear()
-        etConfirmPassword.text.clear()
-        togglePasswordForm()
     }
 
     private fun showDeleteConfirmationDialog() {
