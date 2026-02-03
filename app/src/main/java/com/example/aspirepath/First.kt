@@ -4,13 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Typeface
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
+
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -41,7 +35,7 @@ class First : AppCompatActivity() {
                 R.id.home -> replaceFragment(Home())
                 R.id.explore -> replaceFragment(Explore())
                 R.id.resources -> replaceFragment(Resources())
-                R.id.careers -> replaceFragment(Progress())
+                R.id.profile -> replaceFragment(Profile())
                 else -> false
             }
             true
@@ -60,24 +54,12 @@ class First : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.profile, menu)
-        
-        val menuItem = menu?.findItem(R.id.profile)
-        if (menuItem != null) {
-            val sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
-            val name = sharedPreferences.getString("user_name", "User") ?: "User"
-            val initials = getInitials(name)
-            menuItem.icon = createProfileIcon(initials)
-        }
+        menuInflater.inflate(R.menu.account, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.profile -> {
-                replaceFragment(Profile())
-                true
-            }
             R.id.manage_account -> {
                 val intent = Intent(this, ManageAccountActivity::class.java)
                 startActivity(intent)
@@ -102,59 +84,11 @@ class First : AppCompatActivity() {
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        if (fragment is Profile) {
-            supportFragmentManager.beginTransaction()
-                .setCustomAnimations(
-                    R.anim.slide_in_right,
-                    0,
-                    0,
-                    R.anim.slide_out_right
-                )
-                .add(android.R.id.content, fragment, "PROFILE_TAG")
-                .addToBackStack("PROFILE")
-                .commit()
-        } else {
-            toolbar.visibility = View.VISIBLE
-            bottomNavigationView.visibility = View.VISIBLE
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.frameLayout, fragment)
-                .commit()
-        }
+        toolbar.visibility = View.VISIBLE
+        bottomNavigationView.visibility = View.VISIBLE
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frameLayout, fragment)
+            .commit()
     }
 
-    private fun getInitials(name: String): String {
-        val parts = name.trim().split(" ")
-        return when {
-            parts.size >= 2 -> "${parts[0][0]}${parts[1][0]}".uppercase()
-            parts.isNotEmpty() -> parts[0].take(2).uppercase()
-            else -> "U"
-        }
-    }
-
-    private fun createProfileIcon(text: String): Drawable {
-        val size = 120 // Icon size in pixels, matching profile approximate scale if possible, but 120 is good for high density
-        val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        val paint = Paint()
-
-        // Background circle
-        paint.color = Color.parseColor("#1C4195")
-        paint.style = Paint.Style.FILL
-        paint.isAntiAlias = true
-        canvas.drawCircle(size / 2f, size / 2f, size / 2f, paint)
-
-        // Text
-        paint.color = Color.WHITE
-        paint.textAlign = Paint.Align.CENTER
-        paint.textSize = 50f
-        paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
-
-        // Calculate vertical center to align text properly
-        val xPos = size / 2f
-        val yPos = (size / 2f) - ((paint.descent() + paint.ascent()) / 2f)
-
-        canvas.drawText(text, xPos, yPos, paint)
-
-        return BitmapDrawable(resources, bitmap)
-    }
 }
