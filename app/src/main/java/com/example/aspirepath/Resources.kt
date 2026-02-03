@@ -25,7 +25,8 @@ class Resources : Fragment() {
         }
 
         cardScholarships.setOnClickListener {
-            Toast.makeText(requireContext(), "Scholarships - Coming Soon", Toast.LENGTH_SHORT).show()
+            val intent = android.content.Intent(requireContext(), ScholarshipActivity::class.java)
+            startActivity(intent)
         }
 
         cardEntranceExams.setOnClickListener {
