@@ -61,22 +61,7 @@ class Profile : Fragment() {
             view.findViewById<TextView>(R.id.tvProfileStream).text = stream
         }
 
-        // Handle Back Arrow
-        view.findViewById<View>(R.id.btnBack).setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
-        }
 
-        // Handle Options Menu
-        view.findViewById<View>(R.id.btnProfileOptions).setOnClickListener { v ->
-            val popup = android.widget.PopupMenu(requireContext(), v)
-            popup.menu.add("Edit Profile picture")
-            popup.menu.add("Edit Profile Information")
-            popup.setOnMenuItemClickListener { item ->
-                android.widget.Toast.makeText(requireContext(), "Selected: ${item.title}", android.widget.Toast.LENGTH_SHORT).show()
-                true
-            }
-            popup.show()
-        }
 
         return view
     }
