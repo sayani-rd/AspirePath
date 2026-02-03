@@ -95,6 +95,10 @@
             android:name=".TalukaInstitutionsActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".ScholarshipActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>
