@@ -20,8 +20,20 @@ class Resources : Fragment() {
         val cardScholarships = view.findViewById<CardView>(R.id.cardScholarships)
         val cardEntranceExams = view.findViewById<CardView>(R.id.cardEntranceExams)
 
+        val btnNEP = view.findViewById<android.widget.Button>(R.id.btnNEP)
+        
+        btnNEP.setOnClickListener {
+            val url = "https://share.google/r7LQNfhTX76IyCk0e"
+            val intent = android.content.Intent(android.content.Intent.ACTION_VIEW)
+            intent.data = android.net.Uri.parse(url)
+            startActivity(intent)
+        }
+        
         cardNEP.setOnClickListener {
-            Toast.makeText(requireContext(), "NEP Information - Coming Soon", Toast.LENGTH_SHORT).show()
+            val url = "https://share.google/r7LQNfhTX76IyCk0e"
+            val intent = android.content.Intent(android.content.Intent.ACTION_VIEW)
+            intent.data = android.net.Uri.parse(url)
+            startActivity(intent)
         }
 
         cardScholarships.setOnClickListener {
