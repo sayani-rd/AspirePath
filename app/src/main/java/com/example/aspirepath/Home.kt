@@ -20,7 +20,7 @@ class Home : Fragment() {
         // Set up click listeners for each card
         val cardAnalysis = view.findViewById<CardView>(R.id.cardAnalysis)
         val cardQuiz = view.findViewById<CardView>(R.id.cardQuiz)
-        val cardChatbot = view.findViewById<CardView>(R.id.cardChatbot)
+        val cardShipping = view.findViewById<CardView>(R.id.cardShipping)
 
         cardAnalysis.setOnClickListener {
             val intent = Intent(activity, AnalysisActivity::class.java)
@@ -32,9 +32,8 @@ class Home : Fragment() {
             startActivity(intent)
         }
 
-        cardChatbot.setOnClickListener {
-            val intent = Intent(activity, ChatbotActivity::class.java)
-            startActivity(intent)
+        cardShipping.setOnClickListener {
+            // Intent for Shipping Institute activity if available
         }
 
         return view

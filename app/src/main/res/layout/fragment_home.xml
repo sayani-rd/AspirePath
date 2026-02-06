@@ -14,18 +14,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Welcome Section -->
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Explore Features"-->
-<!--            android:textSize="24sp"-->
-<!--            android:textStyle="bold"-->
-<!--            android:textColor="@color/blue"-->
-<!--            android:layout_marginBottom="20dp"/>-->
-
-
-
         <!-- Analysis Section Card -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardAnalysis"
@@ -75,8 +63,6 @@
                         android:textColor="#666666"
                         android:layout_marginTop="4dp"/>
                 </LinearLayout>
-
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -129,26 +115,14 @@
                         android:textColor="#666666"
                         android:layout_marginTop="4dp"/>
                 </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Coming Soon"
-                    android:textSize="12sp"
-                    android:textStyle="italic"
-                    android:textColor="#FF9800"
-                    android:background="#FFF3E0"
-                    android:padding="6dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
 
 
-        <!-- Chatbot Section Card -->
+        <!-- Shipping Institute Section Card -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardChatbot"
+            android:id="@+id/cardShipping"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -168,7 +142,7 @@
                 <TextView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:text="🤖"
+                    android:text="🚢"
                     android:textSize="36sp"
                     android:gravity="center"/>
 
@@ -182,7 +156,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="AI Chatbot"
+                        android:text="Shipping Institute"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="@color/blue"/>
@@ -190,23 +164,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Chat with AI career assistant"
+                        android:text="Explore top shipping and maritime institutes"
                         android:textSize="14sp"
                         android:textColor="#666666"
                         android:layout_marginTop="4dp"/>
                 </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Coming Soon"
-                    android:textSize="12sp"
-                    android:textStyle="italic"
-                    android:textColor="#FF9800"
-                    android:background="#FFF3E0"
-                    android:padding="6dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
