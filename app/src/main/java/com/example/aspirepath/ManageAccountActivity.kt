@@ -113,11 +113,7 @@ class ManageAccountActivity : AppCompatActivity() {
                         if (updateTask.isSuccessful) {
                             Toast.makeText(this, "Password changed successfully", Toast.LENGTH_SHORT).show()
 
-                            // Update password in SharedPreferences (to keep local sync)
-                            val sharedPreferences: SharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
-                            val editor = sharedPreferences.edit()
-                            editor.putString(user.email, newPassword)
-                            editor.apply()
+                            // Password is now managed by Firebase - no local storage needed
 
                             // Clear the form and hide it
                             etCurrentPassword.text.clear()

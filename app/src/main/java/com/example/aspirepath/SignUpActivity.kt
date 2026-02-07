@@ -10,11 +10,14 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FieldValue
 import java.util.*
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
     private var selectedDate: Calendar = Calendar.getInstance()
     private var isPasswordVisible = false
     private var isConfirmPasswordVisible = false
@@ -26,6 +29,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
         val etName = findViewById<EditText>(R.id.etName)
         val etDateOfBirth = findViewById<EditText>(R.id.etDateOfBirth)
@@ -167,26 +171,41 @@ class SignUpActivity : AppCompatActivity() {
                     if (!user.isEmailVerified) {
                         Toast.makeText(this, "Please verify your email first", Toast.LENGTH_SHORT).show()
                     } else {
-                        // Save to SharedPreferences
-                        val sharedPreferences: SharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
-                        val editor = sharedPreferences.edit()
-                        editor.putString(email, password)
-                        editor.putString("current_user_email", email)
-                        editor.putString("user_name", name)
-                        editor.putString("user_dob", dob)
-                        editor.putString("user_eligibility", eligibility)
-                        editor.putString("user_stream", stream)
-                        editor.putInt("user_age", age)
-                        editor.putBoolean("isLoggedIn", true)
-                        editor.apply()
+                        // Create user data map for Firestore
+                        val userData = hashMapOf(
+                            "name" to name,
+                            "email" to email,
+                            "dateOfBirth" to dob,
+                            "age" to age,
+                            "eligibility" to eligibility,
+                            "stream" to stream,
+                            "createdAt" to FieldValue.serverTimestamp(),
+                            "updatedAt" to FieldValue.serverTimestamp()
+                        )
 
-                        Toast.makeText(this, "Account Created Successfully", Toast.LENGTH_SHORT).show()
+                        // Save to Firestore using user's UID as document ID
+                        db.collection("users").document(user.uid)
+                            .set(userData)
+                            .addOnSuccessListener {
+                                // Save minimal data to SharedPreferences for session management
+                                val sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+                                val editor = sharedPreferences.edit()
+                                editor.putString("current_user_uid", user.uid)
+                                editor.putString("current_user_email", email)
+                                editor.putBoolean("isLoggedIn", true)
+                                editor.apply()
 
-                        // Navigate to Dashboard
-                        val intent = Intent(this@SignUpActivity, First::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
-                        finish()
+                                Toast.makeText(this, "Account Created Successfully", Toast.LENGTH_SHORT).show()
+
+                                // Navigate to Dashboard
+                                val intent = Intent(this@SignUpActivity, First::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+                                finish()
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(this, "Failed to save profile: ${e.message}", Toast.LENGTH_LONG).show()
+                            }
                     }
                 } else {
                     Toast.makeText(this, "Failed to check verification status.", Toast.LENGTH_SHORT).show()
