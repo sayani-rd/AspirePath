@@ -7,8 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Profile : Fragment() {
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -16,52 +22,83 @@ class Profile : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        // Get user data from SharedPreferences
-        val sharedPreferences = requireActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-        val email = sharedPreferences.getString("current_user_email", "")
-        
-        // Get all user details
-        val name = sharedPreferences.getString("user_name", "User")
-        val dob = sharedPreferences.getString("user_dob", "N/A")
-        val age = sharedPreferences.getInt("user_age", 0)
-        val eligibility = sharedPreferences.getString("user_eligibility", "N/A")
-        val stream = sharedPreferences.getString("user_stream", "")
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
-        // Set initials
+        // Get views
         val tvInitials = view.findViewById<TextView>(R.id.tvInitials)
-        val initials = getInitials(name ?: "U")
-        tvInitials.text = initials
-
-        // Set user details
-        view.findViewById<TextView>(R.id.tvProfileName).text = name
-        view.findViewById<TextView>(R.id.tvProfileEmail).text = email
+        val tvProfileName = view.findViewById<TextView>(R.id.tvProfileName)
+        val tvProfileEmail = view.findViewById<TextView>(R.id.tvProfileEmail)
+        val tvProfileDOB = view.findViewById<TextView>(R.id.tvProfileDOB)
+        val tvProfileAge = view.findViewById<TextView>(R.id.tvProfileAge)
+        val tvProfileEligibility = view.findViewById<TextView>(R.id.tvProfileEligibility)
+        val tvProfileStream = view.findViewById<TextView>(R.id.tvProfileStream)
         
-        // DOB field (conditional)
-        if (dob.isNullOrEmpty() || dob == "N/A") {
-            view.findViewById<View>(R.id.layoutDOB).visibility = View.GONE
-            view.findViewById<View>(R.id.dividerDOB).visibility = View.GONE
-        } else {
-            view.findViewById<TextView>(R.id.tvProfileDOB).text = dob
-        }
-        
-        // Age field (conditional)
-        if (age == 0) {
-            view.findViewById<View>(R.id.layoutAge).visibility = View.GONE
-            view.findViewById<View>(R.id.dividerAge).visibility = View.GONE
-        } else {
-            view.findViewById<TextView>(R.id.tvProfileAge).text = age.toString()
-        }
-        
-        view.findViewById<TextView>(R.id.tvProfileEligibility).text = eligibility
+        val layoutDOB = view.findViewById<View>(R.id.layoutDOB)
+        val dividerDOB = view.findViewById<View>(R.id.dividerDOB)
+        val layoutAge = view.findViewById<View>(R.id.layoutAge)
+        val dividerAge = view.findViewById<View>(R.id.dividerAge)
+        val layoutStream = view.findViewById<View>(R.id.layoutStream)
 
-        // Stream field (conditional)
-        if (stream.isNullOrEmpty() || stream == "Select Stream") {
-            view.findViewById<View>(R.id.layoutStream).visibility = View.GONE
+        // Get current user
+        val currentUser = auth.currentUser
+
+        if (currentUser != null) {
+            // Fetch user data from Firestore
+            db.collection("users").document(currentUser.uid)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        // Extract data from Firestore
+                        val name = document.getString("name") ?: "User"
+                        val email = document.getString("email") ?: currentUser.email ?: ""
+                        val dob = document.getString("dateOfBirth") ?: ""
+                        val age = document.getLong("age")?.toInt() ?: 0
+                        val eligibility = document.getString("eligibility") ?: "N/A"
+                        val stream = document.getString("stream") ?: ""
+
+                        // Set initials
+                        val initials = getInitials(name)
+                        tvInitials.text = initials
+
+                        // Set user details
+                        tvProfileName.text = name
+                        tvProfileEmail.text = email
+
+                        // DOB field (conditional)
+                        if (dob.isEmpty() || dob == "N/A") {
+                            layoutDOB.visibility = View.GONE
+                            dividerDOB.visibility = View.GONE
+                        } else {
+                            tvProfileDOB.text = dob
+                        }
+
+                        // Age field (conditional)
+                        if (age == 0) {
+                            layoutAge.visibility = View.GONE
+                            dividerAge.visibility = View.GONE
+                        } else {
+                            tvProfileAge.text = age.toString()
+                        }
+
+                        tvProfileEligibility.text = eligibility
+
+                        // Stream field (conditional)
+                        if (stream.isEmpty() || stream == "Select Stream") {
+                            layoutStream.visibility = View.GONE
+                        } else {
+                            tvProfileStream.text = stream
+                        }
+                    } else {
+                        Toast.makeText(requireContext(), "Profile data not found", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(requireContext(), "Error fetching profile: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
         } else {
-            view.findViewById<TextView>(R.id.tvProfileStream).text = stream
+            Toast.makeText(requireContext(), "User not logged in", Toast.LENGTH_SHORT).show()
         }
-
-
 
         return view
     }
