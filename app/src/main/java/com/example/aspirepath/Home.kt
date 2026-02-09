@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 
 class Home : Fragment() {
@@ -17,24 +19,37 @@ class Home : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        // Set up click listeners for each card
-        val cardAnalysis = view.findViewById<CardView>(R.id.cardAnalysis)
-        val cardQuiz = view.findViewById<CardView>(R.id.cardQuiz)
-        val cardShipping = view.findViewById<CardView>(R.id.cardShipping)
+        val cardTrendingJobs = view.findViewById<CardView>(R.id.cardTrendingJobs)
+        val cardCareerQuiz = view.findViewById<CardView>(R.id.cardCareerQuiz)
+        val cardShippingInstitute = view.findViewById<CardView>(R.id.cardShippingInstitute)
+        val cardSkillsAnalysis = view.findViewById<CardView>(R.id.cardSkillsAnalysis)
+        val cardSuccessStories = view.findViewById<CardView>(R.id.cardSuccessStories)
+        // val btnMenu = view.findViewById<ImageButton>(R.id.btnMenu) // View Removed
 
-        cardAnalysis.setOnClickListener {
+        cardTrendingJobs.setOnClickListener {
             val intent = Intent(activity, AnalysisActivity::class.java)
             startActivity(intent)
         }
 
-        cardQuiz.setOnClickListener {
+        cardCareerQuiz.setOnClickListener {
             val intent = Intent(activity, QuizActivity::class.java)
             startActivity(intent)
         }
 
-        cardShipping.setOnClickListener {
-            // Intent for Shipping Institute activity if available
+        cardShippingInstitute.setOnClickListener {
+            val intent = Intent(activity, ShippingInstitutesActivity::class.java)
+            startActivity(intent)
         }
+
+        cardSkillsAnalysis.setOnClickListener {
+            // Navigation removed as per request
+        }
+        
+        cardSuccessStories.setOnClickListener {
+            Toast.makeText(context, "Success Stories coming soon!", Toast.LENGTH_SHORT).show()
+        }
+
+        // btnMenu listener removed
 
         return view
     }

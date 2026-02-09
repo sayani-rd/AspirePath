@@ -14,8 +14,13 @@ class AnalysisActivity : AppCompatActivity() {
         setContentView(R.layout.activity_analysis)
 
         // Set up toolbar
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
         supportActionBar?.title = "Trending Jobs"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
 
         val rvTrendingJobs = findViewById<RecyclerView>(R.id.rvTrendingJobs)
         rvTrendingJobs.layoutManager = LinearLayoutManager(this)
