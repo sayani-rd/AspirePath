@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FAFAFA"
+    android:background="@drawable/bg2"
     tools:context=".Explore">
 
     <!-- Search Bar -->
