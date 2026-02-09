@@ -78,6 +78,20 @@ class InstitutionAdapter(private var institutions: List<Institution>) :
         } else {
             holder.website.visibility = View.GONE
         }
+
+        // Alternate Background Colors
+        val context = holder.itemView.context
+        val colors = listOf(
+            R.color.pastel_blue,
+            R.color.pastel_purple,
+            R.color.pastel_mint,
+            R.color.pastel_orange,
+            R.color.pastel_pink
+        )
+        val colorRes = colors[position % colors.size]
+        (holder.itemView as androidx.cardview.widget.CardView).setCardBackgroundColor(
+            androidx.core.content.ContextCompat.getColor(context, colorRes)
+        )
     }
 
     override fun getItemCount() = institutions.size

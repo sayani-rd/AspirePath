@@ -75,6 +75,20 @@ class TrendingJobsAdapter(private val items: List<TrendingJobItem>) :
                 layoutCertifications.visibility = View.VISIBLE
                 tvCertifications.text = job.certifications
             }
+            
+            // Alternate background colors (Pastel)
+            val context = itemView.context
+            val colors = listOf(
+                R.color.pastel_blue,
+                R.color.pastel_purple,
+                R.color.pastel_mint,
+                R.color.pastel_orange,
+                R.color.pastel_pink
+            )
+            val colorRes = colors[adapterPosition % colors.size]
+            (itemView as androidx.cardview.widget.CardView).setCardBackgroundColor(
+                androidx.core.content.ContextCompat.getColor(context, colorRes)
+            )
         }
     }
 }
