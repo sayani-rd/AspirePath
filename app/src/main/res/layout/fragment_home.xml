@@ -13,16 +13,30 @@
         android:layout_height="wrap_content"
         android:padding="24dp">
 
+        <!-- Greeting Text -->
+
         <!-- Trending Jobs Card -->
+        <TextView
+            android:id="@+id/tvGreeting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Hey User\nWelcome to Aspire Path"
+            android:textColor="@color/text_primary"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cardTrendingJobs"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             app:cardCornerRadius="24dp"
             app:cardElevation="0dp"
             app:cardBackgroundColor="@color/white"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/tvGreeting">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -47,23 +61,23 @@
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:src="@drawable/baseline_moving_24"
-                    app:tint="@color/badge_text"
                     android:background="@drawable/edit_text_background_rounded"
                     android:backgroundTint="@color/badge_bg"
                     android:padding="8dp"
+                    android:src="@drawable/baseline_moving_24"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/badge_text" />
 
                 <TextView
                     android:id="@+id/tvTrendingTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:text="Trending Jobs"
                     android:textColor="@color/text_primary"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:layout_marginTop="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvBadgeHotNow" />
 
@@ -88,7 +102,7 @@
             android:layout_marginEnd="8dp"
             app:cardCornerRadius="24dp"
             app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/card_bg_quiz"
+            app:cardBackgroundColor="@color/card_bg_success"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline_vertical"
             app:layout_constraintTop_toBottomOf="@id/cardTrendingJobs">
@@ -282,7 +296,7 @@
             android:layout_marginEnd="8dp"
             app:cardCornerRadius="24dp"
             app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/card_bg_success"
+            app:cardBackgroundColor="@color/card_bg_quiz"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline_vertical"
             app:layout_constraintTop_toBottomOf="@id/cardDailyInsight">
