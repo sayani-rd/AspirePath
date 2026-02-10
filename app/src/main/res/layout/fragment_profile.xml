@@ -12,7 +12,7 @@
         android:id="@+id/viewHeaderBackground"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:background="@drawable/header_rounded_bg"
+        android:background="@android:color/transparent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <!-- Content ScrollView -->
@@ -38,6 +38,20 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Profile Menu (3 Dots) -->
+            <ImageView
+                android:id="@+id/ivProfileMenu"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="12dp"
+                android:src="@drawable/ic_more_vert"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="26dp"
+                android:layout_marginEnd="16dp"
+                app:tint="@color/blue"/>
 
             <!-- Profile Card -->
             <androidx.cardview.widget.CardView

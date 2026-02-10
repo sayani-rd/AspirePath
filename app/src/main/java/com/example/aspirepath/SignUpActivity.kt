@@ -23,6 +23,7 @@ class SignUpActivity : AppCompatActivity() {
     private var isConfirmPasswordVisible = false
     private var selectedEligibility: String = ""
     private var selectedStream: String = ""
+    private var selectedTaluka: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +37,7 @@ class SignUpActivity : AppCompatActivity() {
         val etEligibility = findViewById<EditText>(R.id.etEligibility)
         val etStream = findViewById<EditText>(R.id.etStream)
         val etStreamOther = findViewById<EditText>(R.id.etStreamOther)
+        val etTaluka = findViewById<EditText>(R.id.etTaluka)
         val etEmail = findViewById<EditText>(R.id.etEmail)
         val btnVerify = findViewById<Button>(R.id.btnVerify)
         val etPassword = findViewById<EditText>(R.id.etPassword)
@@ -57,6 +59,14 @@ class SignUpActivity : AppCompatActivity() {
         // Stream Click Listener
         etStream.setOnClickListener {
             showStreamDialog(streamOptions, etStream, etStreamOther)
+        }
+
+        // Taluka options
+        val talukaOptions = arrayOf("Pernem", "Bardez", "Tiswadi", "Ponda", "Bicholim", "Sattari", "Dharbandora", "Quepem", "Salcete", "Mormugao", "Sanguem", "Canacona")
+
+        // Taluka Click Listener
+        etTaluka.setOnClickListener {
+            showTalukaDialog(talukaOptions, etTaluka)
         }
 
         // Date of Birth picker
@@ -132,12 +142,13 @@ class SignUpActivity : AppCompatActivity() {
             val stream = if (etStream.visibility == View.VISIBLE) {
                 if (etStreamOther.visibility == View.VISIBLE) etStreamOther.text.toString().trim() else etStream.text.toString().trim()
             } else ""
+            val taluka = etTaluka.text.toString().trim()
             val email = etEmail.text.toString().trim()
             val password = etPassword.text.toString().trim()
             val confirmPassword = etConfirmPassword.text.toString().trim()
 
             // Validation
-            if (name.isEmpty() || dob.isEmpty() || eligibility.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            if (name.isEmpty() || dob.isEmpty() || eligibility.isEmpty() || taluka.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -179,6 +190,7 @@ class SignUpActivity : AppCompatActivity() {
                             "age" to age,
                             "eligibility" to eligibility,
                             "stream" to stream,
+                            "taluka" to taluka,
                             "createdAt" to FieldValue.serverTimestamp(),
                             "updatedAt" to FieldValue.serverTimestamp()
                         )
@@ -285,6 +297,17 @@ class SignUpActivity : AppCompatActivity() {
             } else {
                 etStreamOther.visibility = View.GONE
             }
+            dialog.dismiss()
+        }
+        builder.show()
+    }
+
+    private fun showTalukaDialog(options: Array<String>, etTaluka: EditText) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Select Taluka")
+        builder.setItems(options) { dialog, which ->
+            selectedTaluka = options[which]
+            etTaluka.setText(selectedTaluka)
             dialog.dismiss()
         }
         builder.show()
