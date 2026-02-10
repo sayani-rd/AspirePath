@@ -34,6 +34,17 @@ class Profile : Fragment() {
     private lateinit var cvProfilePicture: CardView
     private lateinit var ivProfilePicture: ImageView
     private lateinit var tvInitials: TextView
+    private lateinit var tvProfileName: TextView
+    private lateinit var tvProfileEmail: TextView
+    private lateinit var tvProfileDOB: TextView
+    private lateinit var tvProfileAge: TextView
+    private lateinit var tvProfileEligibility: TextView
+    private lateinit var tvProfileStream: TextView
+    private lateinit var layoutDOB: View
+    private lateinit var dividerDOB: View
+    private lateinit var layoutAge: View
+    private lateinit var dividerAge: View
+    private lateinit var layoutStream: View
 
     private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
@@ -58,19 +69,24 @@ class Profile : Fragment() {
         tvInitials = view.findViewById(R.id.tvInitials)
         cvProfilePicture = view.findViewById(R.id.cvProfilePicture)
         ivProfilePicture = view.findViewById(R.id.ivProfilePicture)
+        val ivProfileMenu = view.findViewById<ImageView>(R.id.ivProfileMenu)
+
+        ivProfileMenu.setOnClickListener {
+            showPopupMenu(it)
+        }
+
+        tvProfileName = view.findViewById(R.id.tvProfileName)
+        tvProfileEmail = view.findViewById(R.id.tvProfileEmail)
+        tvProfileDOB = view.findViewById(R.id.tvProfileDOB)
+        tvProfileAge = view.findViewById(R.id.tvProfileAge)
+        tvProfileEligibility = view.findViewById(R.id.tvProfileEligibility)
+        tvProfileStream = view.findViewById(R.id.tvProfileStream)
         
-        val tvProfileName = view.findViewById<TextView>(R.id.tvProfileName)
-        val tvProfileEmail = view.findViewById<TextView>(R.id.tvProfileEmail)
-        val tvProfileDOB = view.findViewById<TextView>(R.id.tvProfileDOB)
-        val tvProfileAge = view.findViewById<TextView>(R.id.tvProfileAge)
-        val tvProfileEligibility = view.findViewById<TextView>(R.id.tvProfileEligibility)
-        val tvProfileStream = view.findViewById<TextView>(R.id.tvProfileStream)
-        
-        val layoutDOB = view.findViewById<View>(R.id.layoutDOB)
-        val dividerDOB = view.findViewById<View>(R.id.dividerDOB)
-        val layoutAge = view.findViewById<View>(R.id.layoutAge)
-        val dividerAge = view.findViewById<View>(R.id.dividerAge)
-        val layoutStream = view.findViewById<View>(R.id.layoutStream)
+        layoutDOB = view.findViewById(R.id.layoutDOB)
+        dividerDOB = view.findViewById(R.id.dividerDOB)
+        layoutAge = view.findViewById(R.id.layoutAge)
+        dividerAge = view.findViewById(R.id.dividerAge)
+        layoutStream = view.findViewById(R.id.layoutStream)
 
         // Get current user
         val currentUser = auth.currentUser
@@ -88,64 +104,75 @@ class Profile : Fragment() {
             cvProfilePicture.setOnClickListener {
                 showProfileOptions(currentUser.uid)
             }
-
-            // Fetch user data from Firestore
-            db.collection("users").document(currentUser.uid)
-                .get()
-                .addOnSuccessListener { document ->
-                    if (document != null && document.exists()) {
-                        // Extract data from Firestore
-                        val name = document.getString("name") ?: "User"
-                        val email = document.getString("email") ?: currentUser.email ?: ""
-                        val dob = document.getString("dateOfBirth") ?: ""
-                        val age = document.getLong("age")?.toInt() ?: 0
-                        val eligibility = document.getString("eligibility") ?: "N/A"
-                        val stream = document.getString("stream") ?: ""
-
-                        // Set initials
-                        val initials = getInitials(name)
-                        tvInitials.text = initials
-
-                        // Set user details
-                        tvProfileName.text = name
-                        tvProfileEmail.text = email
-
-                        // DOB field (conditional)
-                        if (dob.isEmpty() || dob == "N/A") {
-                            layoutDOB.visibility = View.GONE
-                            dividerDOB.visibility = View.GONE
-                        } else {
-                            tvProfileDOB.text = dob
-                        }
-
-                        // Age field (conditional)
-                        if (age == 0) {
-                            layoutAge.visibility = View.GONE
-                            dividerAge.visibility = View.GONE
-                        } else {
-                            tvProfileAge.text = age.toString()
-                        }
-
-                        tvProfileEligibility.text = eligibility
-
-                        // Stream field (conditional)
-                        if (stream.isEmpty() || stream == "Select Stream") {
-                            layoutStream.visibility = View.GONE
-                        } else {
-                            tvProfileStream.text = stream
-                        }
-                    } else {
-                        Toast.makeText(requireContext(), "Profile data not found", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Toast.makeText(requireContext(), "Error fetching profile: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
         } else {
             Toast.makeText(requireContext(), "User not logged in", Toast.LENGTH_SHORT).show()
         }
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fetchUserData()
+    }
+
+    private fun fetchUserData() {
+        val currentUser = auth.currentUser ?: return
+        
+        db.collection("users").document(currentUser.uid)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    // Extract data from Firestore
+                    val name = document.getString("name") ?: "User"
+                    val email = document.getString("email") ?: currentUser.email ?: ""
+                    val dob = document.getString("dateOfBirth") ?: ""
+                    val age = document.getLong("age")?.toInt() ?: 0
+                    val eligibility = document.getString("eligibility") ?: "N/A"
+                    val stream = document.getString("stream") ?: ""
+
+                    // Set initials
+                    val initials = getInitials(name)
+                    tvInitials.text = initials
+
+                    // Set user details
+                    tvProfileName.text = name
+                    tvProfileEmail.text = email
+
+                    // DOB field (conditional)
+                    if (dob.isEmpty() || dob == "N/A") {
+                        layoutDOB.visibility = View.GONE
+                        dividerDOB.visibility = View.GONE
+                    } else {
+                        tvProfileDOB.text = dob
+                        layoutDOB.visibility = View.VISIBLE
+                        dividerDOB.visibility = View.VISIBLE
+                    }
+
+                    // Age field (conditional)
+                    if (age == 0) {
+                        layoutAge.visibility = View.GONE
+                        dividerAge.visibility = View.GONE
+                    } else {
+                        tvProfileAge.text = age.toString()
+                        layoutAge.visibility = View.VISIBLE
+                        dividerAge.visibility = View.VISIBLE
+                    }
+
+                    tvProfileEligibility.text = eligibility
+
+                    // Stream field (conditional)
+                    if (stream.isEmpty() || stream == "Select Stream") {
+                        layoutStream.visibility = View.GONE
+                    } else {
+                        tvProfileStream.text = stream
+                        layoutStream.visibility = View.VISIBLE
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(requireContext(), "Error fetching profile: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun openGallery() {
@@ -259,6 +286,46 @@ class Profile : Fragment() {
             cvProfilePicture.visibility = View.GONE
             tvInitials.visibility = View.VISIBLE
         }
+    }
+
+    private fun showPopupMenu(view: View) {
+        val popup = androidx.appcompat.widget.PopupMenu(requireContext(), view)
+        popup.menuInflater.inflate(R.menu.menu_profile, popup.menu)
+        popup.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.action_edit_profile -> {
+                    val intent = android.content.Intent(requireContext(), ManageAccountActivity::class.java)
+                    intent.putExtra("MODE", "EDIT_PROFILE")
+                    startActivity(intent)
+                    true
+                }
+                R.id.action_manage_account -> {
+                    val intent = android.content.Intent(requireContext(), ManageAccountActivity::class.java)
+                    intent.putExtra("MODE", "MANAGE_ACCOUNT")
+                    startActivity(intent)
+                    true
+                }
+                R.id.action_logout -> {
+                    // Sign out logic
+                    auth.signOut()
+
+                    // Clear SharedPreferences
+                    val sharedPreferences = requireActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+                    val editor = sharedPreferences.edit()
+                    editor.clear()
+                    editor.apply()
+
+                    // Navigate to Welcome
+                    val intent = android.content.Intent(requireContext(), WelcomeActivity::class.java)
+                    intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    requireActivity().finish()
+                    true
+                }
+                else -> false
+            }
+        }
+        popup.show()
     }
 
     private fun getInitials(name: String): String {

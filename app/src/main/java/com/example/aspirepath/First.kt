@@ -40,12 +40,28 @@ class First : AppCompatActivity() {
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
+                invalidateOptionsMenu()
                 val menuId = when (position % 4) {
-                    0 -> R.id.home
-                    1 -> R.id.explore
-                    2 -> R.id.resources
-                    3 -> R.id.profile
-                    else -> R.id.home
+                    0 -> {
+                        toolbar.title = "Aspire Path"
+                        R.id.home
+                    }
+                    1 -> {
+                        toolbar.title = "Explore"
+                        R.id.explore
+                    }
+                    2 -> {
+                        toolbar.title = "Resources"
+                        R.id.resources
+                    }
+                    3 -> {
+                        toolbar.title = "My Profile"
+                        R.id.profile
+                    }
+                    else -> {
+                        toolbar.title = "Aspire Path"
+                        R.id.home
+                    }
                 }
                 if (bottomNavigationView.selectedItemId != menuId) {
                     bottomNavigationView.selectedItemId = menuId
@@ -57,10 +73,22 @@ class First : AppCompatActivity() {
             val currentPos = viewPager.currentItem
             val currentMod = currentPos % 4
             val targetMod = when (item.itemId) {
-                R.id.home -> 0
-                R.id.explore -> 1
-                R.id.resources -> 2
-                R.id.profile -> 3
+                R.id.home -> {
+                    toolbar.title = "Aspire Path"
+                    0
+                }
+                R.id.explore -> {
+                    toolbar.title = "Explore"
+                    1
+                }
+                R.id.resources -> {
+                    toolbar.title = "Resources"
+                    2
+                }
+                R.id.profile -> {
+                    toolbar.title = "My Profile"
+                    3
+                }
                 else -> 0
             }
             
@@ -88,14 +116,25 @@ class First : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.account, menu)
-        return true
+        // Only show menu if we are on Profile page
+        if (viewPager.currentItem % 4 == 3) {
+            menuInflater.inflate(R.menu.account, menu)
+            return true
+        }
+        return false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.edit_profile -> {
+                 val intent = Intent(this, ManageAccountActivity::class.java)
+                 intent.putExtra("MODE", "EDIT_PROFILE")
+                 startActivity(intent)
+                 true
+            }
             R.id.manage_account -> {
                 val intent = Intent(this, ManageAccountActivity::class.java)
+                intent.putExtra("MODE", "MANAGE_ACCOUNT")
                 startActivity(intent)
                 true
             }
@@ -105,6 +144,9 @@ class First : AppCompatActivity() {
                 val editor = sharedPreferences.edit()
                 editor.putBoolean("isLoggedIn", false)
                 editor.apply()
+                
+                // Sign out from Firebase
+                com.google.firebase.auth.FirebaseAuth.getInstance().signOut()
 
                 // Navigate back to the welcome screen and clear the task stack
                 val intent = Intent(this, WelcomeActivity::class.java)

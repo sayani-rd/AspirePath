@@ -103,6 +103,22 @@
             android:name=".ShippingInstitutesActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".Post10thResultActivity"
+            android:exported="false"
+            android:parentActivityName=".Post10thActivity"/>
+        <activity
+            android:name=".Post12thResultActivity"
+            android:exported="false"
+            android:parentActivityName=".Post12thActivity"/>
+        <activity
+            android:name=".PostGraduationResultActivity"
+            android:exported="false"
+            android:parentActivityName=".PostGraduationActivity"/>
+        <activity
+            android:name=".ProgressAnalysisActivity"
+            android:exported="false"
+            android:parentActivityName=".Post10thResultActivity"/>
     </application>
 
 </manifest>
