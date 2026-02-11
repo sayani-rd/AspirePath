@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import java.util.Calendar
 
 class Home : Fragment() {
 
@@ -25,6 +27,32 @@ class Home : Fragment() {
         val cardSkillsAnalysis = view.findViewById<CardView>(R.id.cardSkillsAnalysis)
         val cardSuccessStories = view.findViewById<CardView>(R.id.cardSuccessStories)
         val tvGreeting = view.findViewById<android.widget.TextView>(R.id.tvGreeting)
+        val tvDailyQuote = view.findViewById<TextView>(R.id.tvDailyQuote)
+
+        // Daily Insight - rotating quotes based on day of year
+        val dailyQuotes = listOf(
+            "Consistency beats talent when talent stops trying.",
+            "Your career grows when your skills do.",
+            "Small progress every day leads to big success.",
+            "Opportunities favor those who prepare.",
+            "Focus on learning, results will follow.",
+            "Your future job depends on today's effort.",
+            "Growth begins where comfort ends.",
+            "Skills compound faster than motivation.",
+            "Success is built quietly, over time.",
+            "Don't chase roles, build value.",
+            "The best investment is in yourself.",
+            "Clarity comes from action, not waiting.",
+            "Career success is a marathon, not a sprint.",
+            "Work on skills today, enjoy freedom tomorrow.",
+            "Discipline creates opportunities luck can't.",
+            "Learn continuously or get left behind.",
+            "Your mindset shapes your career path.",
+            "Progress over perfection, always."
+        )
+        val dayOfYear = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
+        val todayQuote = dailyQuotes[dayOfYear % dailyQuotes.size]
+        tvDailyQuote.text = "\"$todayQuote\""
 
         // Fetch User Name
         val sharedPreferences = requireActivity().getSharedPreferences("UserPrefs", android.content.Context.MODE_PRIVATE)

@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/pastel_blue"
+        android:background="@color/pastel_purple"
         android:elevation="4dp"
         app:titleTextColor="@color/black" />
 
@@ -27,14 +27,6 @@
             android:padding="16dp">
 
             <!-- Header Section -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="❓"
-                android:textSize="60sp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
