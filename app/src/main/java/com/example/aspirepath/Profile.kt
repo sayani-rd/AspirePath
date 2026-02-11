@@ -107,6 +107,13 @@ class Profile : Fragment() {
         } else {
             Toast.makeText(requireContext(), "User not logged in", Toast.LENGTH_SHORT).show()
         }
+        
+        // My Resume Click Listener
+        val cardMyResume = view.findViewById<CardView>(R.id.cardMyResume)
+        cardMyResume?.setOnClickListener {
+            val intent = android.content.Intent(requireContext(), CvEditorActivity::class.java)
+            startActivity(intent)
+        }
 
         return view
     }

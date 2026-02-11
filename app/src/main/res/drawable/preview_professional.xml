@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="280dp"
+    android:viewportWidth="200"
+    android:viewportHeight="280">
+    <!-- Professional: Top Header -->
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M0,0h200v50H0z" />
+    <!-- Name Centered -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M50,15h100v10H50z" />
+    <!-- Subtitle -->
+    <path
+        android:fillColor="#757575"
+        android:pathData="M70,30h60v4H70z" />
+    <!-- Section 1 -->
+    <path
+        android:fillColor="#616161"
+        android:pathData="M20,70h160v6H20z" />
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M20,85h140v2H20z M20,95h150v2H20z M20,105h120v2H20z" />
+    <!-- Section 2 -->
+    <path
+        android:fillColor="#616161"
+        android:pathData="M20,130h160v6H20z" />
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M20,145h140v2H20z M20,155h150v2H20z M20,165h120v2H20z M20,175h140v2H20z" />
+    <!-- Section 3 -->
+    <path
+        android:fillColor="#616161"
+        android:pathData="M20,200h160v6H20z" />
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M20,215h100v2H20z M20,225h110v2H20z" />
+</vector>

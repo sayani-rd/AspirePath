@@ -167,7 +167,14 @@ class Home : Fragment() {
         }
         
         cardSuccessStories.setOnClickListener {
-            Toast.makeText(context, "Success Stories coming soon!", Toast.LENGTH_SHORT).show()
+            val intent = Intent(activity, SuccessStoriesActivity::class.java)
+            startActivity(intent)
+        }
+        
+        val cardCvMaker = view.findViewById<CardView>(R.id.cardCvMaker)
+        cardCvMaker.setOnClickListener {
+            val intent = Intent(activity, CvTemplatesActivity::class.java)
+            startActivity(intent)
         }
 
         // btnMenu listener removed
