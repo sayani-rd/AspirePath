@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="280dp"
+    android:viewportWidth="200"
+    android:viewportHeight="280">
+    <!-- Minimal: Clean, Centered -->
+    
+    <!-- Name Centered -->
+    <path
+        android:fillColor="#212121"
+        android:pathData="M50,30h100v12H50z" />
+    <!-- Separator Line -->
+    <path
+        android:fillColor="#BDBDBD"
+        android:pathData="M80,50h40v2H80z" />
+    
+    <!-- Section Header Left -->
+    <path
+        android:fillColor="#616161"
+        android:pathData="M20,80h40v6H20z" />
+    <!-- Content -->
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M20,95h140v2H20z M20,105h150v2H20z M20,115h130v2H20z" />
+        
+    <!-- Section Header Left -->
+    <path
+        android:fillColor="#616161"
+        android:pathData="M20,140h40v6H20z" />
+    <!-- Content -->
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M20,155h140v2H20z M20,165h120v2H20z" />
+        
+    <!-- Section Header Left -->
+    <path
+        android:fillColor="#616161"
+        android:pathData="M20,190h30v6H20z" />
+    <!-- Content -->
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M20,205h100v2H20z M20,215h110v2H20z" />
+
+</vector>

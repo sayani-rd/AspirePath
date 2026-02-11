@@ -79,6 +79,14 @@
             android:exported="false"
             android:parentActivityName=".First"/>
         <activity
+            android:name=".CvTemplatesActivity"
+            android:exported="false"
+            android:parentActivityName=".First"/>
+        <activity
+            android:name=".CvEditorActivity"
+            android:exported="false"
+            android:parentActivityName=".CvTemplatesActivity"/>
+        <activity
             android:name=".WelcomeActivity"
             android:exported="true"/>
         <activity
@@ -119,6 +127,10 @@
             android:name=".ProgressAnalysisActivity"
             android:exported="false"
             android:parentActivityName=".Post10thResultActivity"/>
+        <activity
+            android:name=".SuccessStoriesActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>
