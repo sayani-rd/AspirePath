@@ -188,7 +188,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ic_ship"
+                    android:src="@drawable/directions_boat"
                     app:tint="@color/icon_tint_shipping"
                     android:background="@drawable/edit_text_background_rounded"
                     android:backgroundTint="@color/white"
@@ -248,7 +248,7 @@
                     android:id="@+id/ivInsightProfile"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:src="@drawable/ic_person"
+                    android:src="@drawable/ic_lightbulb"
                     app:tint="@color/icon_tint_insight"
                     android:background="@drawable/circle_background"
                     android:backgroundTint="@color/white"
@@ -271,9 +271,10 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/tvDailyQuote"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="&quot;Networking is more about farming than hunting.&quot;"
+                    android:text=""
                     android:textColor="@color/text_primary"
                     android:textSize="14sp"
                     android:textStyle="italic"
