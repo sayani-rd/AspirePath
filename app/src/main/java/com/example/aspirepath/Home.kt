@@ -10,8 +10,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
-import java.util.Calendar
-
 class Home : Fragment() {
 
     override fun onCreateView(
@@ -29,7 +27,7 @@ class Home : Fragment() {
         val tvGreeting = view.findViewById<android.widget.TextView>(R.id.tvGreeting)
         val tvDailyQuote = view.findViewById<TextView>(R.id.tvDailyQuote)
 
-        // Daily Insight - rotating quotes based on day of year
+        // Daily Insight - picks a new random quote each time the app is opened
         val dailyQuotes = listOf(
             "Consistency beats talent when talent stops trying.",
             "Your career grows when your skills do.",
@@ -50,9 +48,8 @@ class Home : Fragment() {
             "Your mindset shapes your career path.",
             "Progress over perfection, always."
         )
-        val dayOfYear = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
-        val todayQuote = dailyQuotes[dayOfYear % dailyQuotes.size]
-        tvDailyQuote.text = "\"$todayQuote\""
+        val randomQuote = dailyQuotes.random()
+        tvDailyQuote.text = "\"$randomQuote\""
 
         // Fetch User Name
         val sharedPreferences = requireActivity().getSharedPreferences("UserPrefs", android.content.Context.MODE_PRIVATE)
