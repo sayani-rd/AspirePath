@@ -43,6 +43,9 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx:24.10.0")
     implementation("androidx.core:core-splashscreen:1.0.0")
     implementation("androidx.cardview:cardview:1.0.0")
+    
+    // Google Generative AI for Gemini
+    implementation("com.google.ai.client.generativeai:generativeai:0.7.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
