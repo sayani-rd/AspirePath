@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.example.aspirepath" />
-                  <option name="mobileSdkAppId" value="1:839969347414:android:a9c35373cb8e1323c7e8f7" />
-                  <option name="projectId" value="aspire-path-app" />
-                  <option name="projectNumber" value="839969347414" />
+                  <option name="mobileSdkAppId" value="1:1044753858364:android:b093253b40c9f98ee1a839" />
+                  <option name="projectId" value="aspirepath-app" />
+                  <option name="projectNumber" value="1044753858364" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

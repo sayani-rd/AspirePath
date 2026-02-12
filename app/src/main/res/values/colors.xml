@@ -9,4 +9,40 @@
     <color name="light_blue">#edf7fa</color>
     <color name="neutral_gray">#E0E0E0</color>
     <color name="darker_gray">#666666</color>
+
+    <!-- Pastel Color Palette -->
+    <!-- Pastel Color Palette -->
+    <color name="pastel_blue">#E1F5FE</color>
+    <color name="pastel_purple">#F3E5F5</color>
+    <color name="pastel_mint">#E0F2F1</color>
+    <color name="pastel_orange">#FFF3E0</color>
+    <color name="pastel_pink">#FFEBEE</color>
+    <color name="pastel_yellow">#FFFDE7</color>
+    <color name="pastel_lavender">#E8EAF6</color>
+
+    <color name="card_bg_quiz">@color/pastel_blue</color> <!-- Pastel Light Blue -->
+    <color name="card_bg_shipping">@color/pastel_purple</color> <!-- Pastel Purple -->
+    <color name="card_bg_insight">@color/pastel_mint</color> <!-- Pastel Mint -->
+    <color name="card_bg_success">@color/pastel_orange</color> <!-- Pastel Orange -->
+    <color name="card_bg_skills">@color/pastel_pink</color>  <!-- Pastel Pink -->
+    
+    <color name="text_primary">#2D3242</color> <!-- Dark Blue-Grey -->
+    <color name="text_secondary">#757575</color>
+    
+    <!-- Text Colors for Pastel Backgrounds (Dark) -->
+    <color name="text_on_pastel_primary">#37474F</color>
+    <color name="text_on_pastel_secondary">#546E7A</color>
+
+    <color name="badge_bg">#FFF8E1</color> <!-- Light Yellow -->
+    <color name="badge_text">#F57F17</color> <!-- Dark Yellow/Orange -->
+    
+    <color name="progress_track">#B3E5FC</color> <!-- Darker Pastel Blue -->
+    <color name="progress_indicator">#0288D1</color> <!-- Strong Blue -->
+    
+    <!-- Icon Tints -->
+    <color name="icon_tint_quiz">#0288D1</color>
+    <color name="icon_tint_shipping">#8E24AA</color>
+    <color name="icon_tint_insight">#00897B</color>
+    <color name="icon_tint_success">#EF6C00</color>
+    <color name="icon_tint_skills">#D32F2F</color>
 </resources>

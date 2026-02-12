@@ -16,22 +16,56 @@ import com.google.firebase.auth.FirebaseUser
 
 class ManageAccountActivity : AppCompatActivity() {
 
-    private lateinit var passwordChangeForm: LinearLayout
-    private lateinit var btnChangePassword: Button
-    private var isPasswordFormVisible = false
+    private lateinit var etEditName: com.google.android.material.textfield.TextInputEditText
+    private lateinit var etEditDOB: com.google.android.material.textfield.TextInputEditText
+    private lateinit var etEditEmail: com.google.android.material.textfield.TextInputEditText
+    private lateinit var etEditStream: com.google.android.material.textfield.TextInputEditText
+    private lateinit var btnSaveProfile: Button
+    private lateinit var editProfileContainer: LinearLayout
+    private lateinit var changePasswordCard: androidx.cardview.widget.CardView
+    private lateinit var dangerZoneCard: androidx.cardview.widget.CardView
+    private lateinit var db: com.google.firebase.firestore.FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    private lateinit var btnChangePassword: Button
+    private lateinit var passwordChangeForm: LinearLayout
+    private var isPasswordFormVisible: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_account)
 
         auth = FirebaseAuth.getInstance()
+        db = com.google.firebase.firestore.FirebaseFirestore.getInstance()
 
         // Set up toolbar
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Manage Account"
+        
+        val mode = intent.getStringExtra("MODE") ?: "MANAGE_ACCOUNT"
+
+        editProfileContainer = findViewById(R.id.editProfileContainer)
+        changePasswordCard = findViewById<View>(R.id.changePasswordContainer).parent as androidx.cardview.widget.CardView
+        dangerZoneCard = findViewById<View>(R.id.btnDeleteAccount).parent.parent as androidx.cardview.widget.CardView
+        
+        etEditName = findViewById(R.id.etEditName)
+        etEditDOB = findViewById(R.id.etEditDOB)
+        etEditEmail = findViewById(R.id.etEditEmail)
+        etEditStream = findViewById(R.id.etEditStream)
+        btnSaveProfile = findViewById(R.id.btnSaveProfile)
+
+        if (mode == "EDIT_PROFILE") {
+            supportActionBar?.title = "Edit Profile"
+            editProfileContainer.visibility = View.VISIBLE
+            changePasswordCard.visibility = View.GONE
+            dangerZoneCard.visibility = View.GONE
+            loadProfileData()
+        } else {
+            supportActionBar?.title = "Manage Account"
+            editProfileContainer.visibility = View.GONE
+            changePasswordCard.visibility = View.VISIBLE
+            dangerZoneCard.visibility = View.VISIBLE
+        }
 
         val btnDeleteAccount = findViewById<Button>(R.id.btnDeleteAccount)
         btnChangePassword = findViewById(R.id.btnChangePassword)
@@ -40,6 +74,10 @@ class ManageAccountActivity : AppCompatActivity() {
         val etCurrentPassword = findViewById<EditText>(R.id.etCurrentPassword)
         val etNewPassword = findViewById<EditText>(R.id.etNewPassword)
         val etConfirmPassword = findViewById<EditText>(R.id.etConfirmPassword)
+
+        btnSaveProfile.setOnClickListener {
+             saveProfileChanges()
+        }
 
         btnDeleteAccount.setOnClickListener {
             showDeleteConfirmationDialog()
@@ -58,6 +96,64 @@ class ManageAccountActivity : AppCompatActivity() {
                 changePassword(currentPassword, newPassword, etCurrentPassword, etNewPassword, etConfirmPassword)
             }
         }
+    }
+
+    private fun loadProfileData() {
+        val uid = auth.currentUser?.uid ?: return
+        db.collection("users").document(uid).get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    etEditName.setText(document.getString("name"))
+                    etEditDOB.setText(document.getString("dateOfBirth"))
+                    etEditEmail.setText(document.getString("email"))
+                    etEditStream.setText(document.getString("stream"))
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Failed to load profile data", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun saveProfileChanges() {
+        val uid = auth.currentUser?.uid ?: return
+        val name = etEditName.text.toString().trim()
+        val dob = etEditDOB.text.toString().trim()
+        val email = etEditEmail.text.toString().trim()
+        val stream = etEditStream.text.toString().trim()
+
+        if (name.isEmpty()) {
+            Toast.makeText(this, "Name cannot be empty", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val updates = hashMapOf<String, Any>(
+            "name" to name,
+            "dateOfBirth" to dob,
+            "email" to email,
+            "stream" to stream
+        )
+        // Recalculate age if DOB changed (simple logic)
+        if (dob.isNotEmpty()) {
+             try {
+                 val parts = dob.split("/")
+                 if (parts.size == 3) {
+                     val year = parts[2].toInt()
+                     val currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)
+                     updates["age"] = currentYear - year
+                 }
+             } catch (e: Exception) {
+                 // Ignore parsing errors
+             }
+        }
+
+        db.collection("users").document(uid).update(updates)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Failed to update profile: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun togglePasswordForm() {
@@ -113,11 +209,7 @@ class ManageAccountActivity : AppCompatActivity() {
                         if (updateTask.isSuccessful) {
                             Toast.makeText(this, "Password changed successfully", Toast.LENGTH_SHORT).show()
 
-                            // Update password in SharedPreferences (to keep local sync)
-                            val sharedPreferences: SharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
-                            val editor = sharedPreferences.edit()
-                            editor.putString(user.email, newPassword)
-                            editor.apply()
+                            // Password is now managed by Firebase - no local storage needed
 
                             // Clear the form and hide it
                             etCurrentPassword.text.clear()

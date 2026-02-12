@@ -644,16 +644,7 @@ object InstitutionData {
             email = "govtcollegequepem@gmail.com",
             websiteUrl = "https://www.gcq.ac.in/"
         ),
-        Institution(
-            name = "Don Bosco College of Agriculture",
-            category = "College",
-            taluka = "Quepem",
-            location = "Agro Ed Complex, Sulcorna, Quepem, Goa – 403705",
-            streamsOrPrograms = "Agriculture",
-            contactNumber = "+91-9421414268",
-            email = "dbcaoffice2015@gmail.com",
-            websiteUrl = "https://dbca.ac.in/"
-        ),
+
         Institution(
             name = "Guardian Angel Institute of Hotel Management & Catering Technology",
             category = "College",
@@ -1063,6 +1054,37 @@ object InstitutionData {
             contactNumber = "",
             email = "",
             websiteUrl = ""
+        ),
+        // Colleges
+        Institution(
+            name = "Goa Institute of Management (GIM)",
+            category = "College",
+            taluka = "Sattari",
+            location = "Sanquelim, Sattari",
+            streamsOrPrograms = "Management (PGDM)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = "https://gim.ac.in/"
+        ),
+        Institution(
+            name = "Indian Institute of Technology (IIT) Goa",
+            category = "College",
+            taluka = "Sattari",
+            location = "Sattari",
+            streamsOrPrograms = "B.Tech, M.Tech, Ph.D",
+            contactNumber = "",
+            email = "",
+            websiteUrl = "https://iitgoa.ac.in/"
+        ),
+        Institution(
+            name = "National Institute of Technology (NIT) Goa",
+            category = "College",
+            taluka = "Sattari",
+            location = "Sattari",
+            streamsOrPrograms = "B.Tech, M.Tech, Ph.D",
+            contactNumber = "",
+            email = "",
+            websiteUrl = "https://www.nitgoa.ac.in/"
         ),
         // --- TISWADI TALUKA ---
         // Higher Secondary

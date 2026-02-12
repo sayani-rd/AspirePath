@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_bg"
+    android:background="@drawable/bg"
     android:fillViewport="true"
     tools:context=".SignUpActivity">
 
@@ -102,6 +102,21 @@
         android:drawableStart="@drawable/ic_school"
         android:drawablePadding="8dp"
         android:visibility="gone" />
+
+    <!-- Taluka -->
+    <EditText
+        android:id="@+id/etTaluka"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_text_background_transparent"
+        android:hint="Select Taluka"
+        android:focusable="false"
+        android:clickable="true"
+        android:padding="10dp"
+        android:drawableStart="@drawable/ic_location_pin"
+        android:drawablePadding="8dp"
+        android:drawableEnd="@android:drawable/arrow_down_float" />
 
     <!-- Email -->
     <LinearLayout

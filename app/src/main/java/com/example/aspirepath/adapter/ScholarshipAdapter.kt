@@ -47,6 +47,19 @@ class ScholarshipAdapter(
         holder.btnApply.setOnClickListener {
             openUrl(scholarship.applyUrl)
         }
+
+        // Alternate Background Colors
+        val colors = listOf(
+            R.color.pastel_blue,
+            R.color.pastel_purple,
+            R.color.pastel_mint,
+            R.color.pastel_orange,
+            R.color.pastel_pink
+        )
+        val colorRes = colors[position % colors.size]
+        (holder.itemView as com.google.android.material.card.MaterialCardView).setCardBackgroundColor(
+            androidx.core.content.ContextCompat.getColor(context, colorRes)
+        )
     }
 
     override fun getItemCount(): Int {

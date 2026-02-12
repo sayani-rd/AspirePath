@@ -48,15 +48,15 @@ class SignInActivity : AppCompatActivity() {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
+                            val user = auth.currentUser
                             Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
 
-                            // Set login flag and current user
+                            // Save session data to SharedPreferences
                             val sharedPreferences: SharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
                             val editor = sharedPreferences.edit()
                             editor.putBoolean("isLoggedIn", true)
                             editor.putString("current_user_email", email)
-                            // Update stored password to match Firebase
-                            editor.putString(email, password)
+                            editor.putString("current_user_uid", user?.uid)
                             editor.apply()
 
                             // Navigate to Dashboard
