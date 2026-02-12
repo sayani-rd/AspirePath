@@ -20,6 +20,8 @@ class ManageAccountActivity : AppCompatActivity() {
     private lateinit var etEditDOB: com.google.android.material.textfield.TextInputEditText
     private lateinit var etEditEmail: com.google.android.material.textfield.TextInputEditText
     private lateinit var etEditStream: com.google.android.material.textfield.TextInputEditText
+    private lateinit var etEditGender: com.google.android.material.textfield.TextInputEditText
+    private lateinit var etEditTaluka: com.google.android.material.textfield.TextInputEditText
     private lateinit var btnSaveProfile: Button
     private lateinit var editProfileContainer: LinearLayout
     private lateinit var changePasswordCard: androidx.cardview.widget.CardView
@@ -52,6 +54,8 @@ class ManageAccountActivity : AppCompatActivity() {
         etEditDOB = findViewById(R.id.etEditDOB)
         etEditEmail = findViewById(R.id.etEditEmail)
         etEditStream = findViewById(R.id.etEditStream)
+        etEditGender = findViewById(R.id.etEditGender)
+        etEditTaluka = findViewById(R.id.etEditTaluka)
         btnSaveProfile = findViewById(R.id.btnSaveProfile)
 
         if (mode == "EDIT_PROFILE") {
@@ -60,6 +64,28 @@ class ManageAccountActivity : AppCompatActivity() {
             changePasswordCard.visibility = View.GONE
             dangerZoneCard.visibility = View.GONE
             loadProfileData()
+            
+            // Setup Gender click listener
+            val genderOptions = arrayOf("Male", "Female", "Other")
+            etEditGender.setOnClickListener {
+                AlertDialog.Builder(this)
+                    .setTitle("Select Gender")
+                    .setItems(genderOptions) { _, which ->
+                        etEditGender.setText(genderOptions[which])
+                    }
+                    .show()
+            }
+
+            // Setup Taluka click listener
+            val talukaOptions = arrayOf("Pernem", "Bardez", "Tiswadi", "Ponda", "Bicholim", "Sattari", "Dharbandora", "Quepem", "Salcete", "Mormugao", "Sanguem", "Canacona")
+            etEditTaluka.setOnClickListener {
+                AlertDialog.Builder(this)
+                    .setTitle("Select Taluka")
+                    .setItems(talukaOptions) { _, which ->
+                        etEditTaluka.setText(talukaOptions[which])
+                    }
+                    .show()
+            }
         } else {
             supportActionBar?.title = "Manage Account"
             editProfileContainer.visibility = View.GONE
@@ -107,6 +133,8 @@ class ManageAccountActivity : AppCompatActivity() {
                     etEditDOB.setText(document.getString("dateOfBirth"))
                     etEditEmail.setText(document.getString("email"))
                     etEditStream.setText(document.getString("stream"))
+                    etEditGender.setText(document.getString("gender"))
+                    etEditTaluka.setText(document.getString("taluka"))
                 }
             }
             .addOnFailureListener {
@@ -120,6 +148,8 @@ class ManageAccountActivity : AppCompatActivity() {
         val dob = etEditDOB.text.toString().trim()
         val email = etEditEmail.text.toString().trim()
         val stream = etEditStream.text.toString().trim()
+        val gender = etEditGender.text.toString().trim()
+        val taluka = etEditTaluka.text.toString().trim()
 
         if (name.isEmpty()) {
             Toast.makeText(this, "Name cannot be empty", Toast.LENGTH_SHORT).show()
@@ -130,7 +160,9 @@ class ManageAccountActivity : AppCompatActivity() {
             "name" to name,
             "dateOfBirth" to dob,
             "email" to email,
-            "stream" to stream
+            "stream" to stream,
+            "gender" to gender,
+            "taluka" to taluka
         )
         // Recalculate age if DOB changed (simple logic)
         if (dob.isNotEmpty()) {

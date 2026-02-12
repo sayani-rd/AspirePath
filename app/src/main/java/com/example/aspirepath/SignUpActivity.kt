@@ -24,6 +24,7 @@ class SignUpActivity : AppCompatActivity() {
     private var selectedEligibility: String = ""
     private var selectedStream: String = ""
     private var selectedTaluka: String = ""
+    private var selectedGender: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,7 @@ class SignUpActivity : AppCompatActivity() {
         val btnVerify = findViewById<Button>(R.id.btnVerify)
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val etConfirmPassword = findViewById<EditText>(R.id.etConfirmPassword)
+        val etGender = findViewById<EditText>(R.id.etGender)
         val btnSignUp = findViewById<Button>(R.id.btnSignUp)
         val tvSignIn = findViewById<TextView>(R.id.tvSignIn)
 
@@ -72,6 +74,19 @@ class SignUpActivity : AppCompatActivity() {
         // Date of Birth picker
         etDateOfBirth.setOnClickListener {
             showDatePicker(etDateOfBirth)
+        }
+
+        // Gender Click Listener
+        val genderOptions = arrayOf("Male", "Female", "Other")
+        etGender.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Select Gender")
+            builder.setItems(genderOptions) { dialog, which ->
+                selectedGender = genderOptions[which]
+                etGender.setText(selectedGender)
+                dialog.dismiss()
+            }
+            builder.show()
         }
 
         // Verify button listener
@@ -148,7 +163,7 @@ class SignUpActivity : AppCompatActivity() {
             val confirmPassword = etConfirmPassword.text.toString().trim()
 
             // Validation
-            if (name.isEmpty() || dob.isEmpty() || eligibility.isEmpty() || taluka.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            if (name.isEmpty() || dob.isEmpty() || eligibility.isEmpty() || taluka.isEmpty() || email.isEmpty() || password.isEmpty() || selectedGender.isEmpty()) {
                 Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -191,6 +206,7 @@ class SignUpActivity : AppCompatActivity() {
                             "eligibility" to eligibility,
                             "stream" to stream,
                             "taluka" to taluka,
+                            "gender" to selectedGender,
                             "createdAt" to FieldValue.serverTimestamp(),
                             "updatedAt" to FieldValue.serverTimestamp()
                         )

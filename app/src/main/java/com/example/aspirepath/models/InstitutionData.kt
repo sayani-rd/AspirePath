@@ -952,65 +952,95 @@ object InstitutionData {
         // --- BICHOLIM TALUKA ---
         // Higher Secondary
         Institution(
-            name = "Shri Shantadurga Higher Secondary School",
+            name = "Shri Shantadurga Higher Secondary School, Bicholim",
             category = "Higher Secondary",
             taluka = "Bicholim",
-            location = "Borden, Bicholim, Goa",
-            streamsOrPrograms = "Arts, Science, Commerce",
+            location = "Bicholim Town, Bicholim Taluka, North Goa -- 403504",
+            streamsOrPrograms = "Arts, Science, Commerce, Vocational (Fees: ₹5,000--₹15,000/yr)",
             contactNumber = "",
             email = "",
-            websiteUrl = "https://shrishantadurgahssbicholimgoa.weebly.com/"
+            websiteUrl = ""
         ),
         Institution(
-            name = "Siddhartha Bandodkar Higher Secondary School",
+            name = "Government Higher Secondary School, Sanquelim",
             category = "Higher Secondary",
             taluka = "Bicholim",
-            location = "Velguem, Bicholim, Goa",
-            streamsOrPrograms = "",
+            location = "Sanquelim, Bicholim Taluka, North Goa -- 403505",
+            streamsOrPrograms = "Arts, Science, Commerce, Vocational (Fees: ₹3,000--₹8,000/yr)",
             contactNumber = "",
             email = "",
-            websiteUrl = "https://schools.org.in/north-goa/30010300306/siddharth-bandodkar-higher-secondary-sch.html"
+            websiteUrl = ""
         ),
         Institution(
-            name = "Shri Vijayanand Higher Secondary School of Arts, Commerce & Science",
+            name = "Siddharth Bandodkar Higher Secondary School, Velguem",
             category = "Higher Secondary",
             taluka = "Bicholim",
-            location = "Sharda Nagar, Maem, Bhatwadi, Goa",
-            streamsOrPrograms = "Arts, Commerce, Science",
+            location = "Velguem, Bicholim Taluka, North Goa",
+            streamsOrPrograms = "Arts, Commerce, Science (Fees: ₹6,000--₹12,000/yr)",
             contactNumber = "",
             email = "",
-            websiteUrl = "https://schools.org.in/north-goa/30010303315/shri-vijayanand-higher-secondary-sc.html"
+            websiteUrl = ""
+        ),
+        Institution(
+            name = "V.R. Gauns Memorial Higher Secondary School, Sanquelim",
+            category = "Higher Secondary",
+            taluka = "Bicholim",
+            location = "Navelim, Sanquelim, North Goa -- 403505",
+            streamsOrPrograms = "Arts, Commerce, Science (Fees: ₹6,000--₹15,000/yr)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = ""
+        ),
+        Institution(
+            name = "Vijayanand Higher Secondary School, Mayem",
+            category = "Higher Secondary",
+            taluka = "Bicholim",
+            location = "Tisk, Mayem, Bicholim Taluka, Goa",
+            streamsOrPrograms = "Arts, Commerce (Fees: ₹5,000--₹10,000/yr)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = ""
         ),
         // Colleges
         Institution(
             name = "Narayan Zantye College of Commerce",
             category = "College",
             taluka = "Bicholim",
-            location = "Vatadev, Sarvan, Bicholim, Goa – 403529",
-            streamsOrPrograms = "Commerce",
+            location = "Sarvan, Post Industrial Estate, Bicholim, North Goa -- 403529",
+            streamsOrPrograms = "B.Com, M.Com, Research Centre in Commerce (Fees: ₹20,000--₹30,000/yr)",
             contactNumber = "",
             email = "",
-            websiteUrl = "https://www.zantyecollege.ac.in/"
+            websiteUrl = "https://www.zantyecollege.ac.in"
         ),
         Institution(
-            name = "Government Polytechnic Bicholim",
+            name = "Government Polytechnic, Bicholim",
             category = "College",
             taluka = "Bicholim",
-            location = "Sharda Nagar, Maem, Bhatwadi, Goa – 403504",
-            streamsOrPrograms = "Technical Education",
+            location = "Mayem, Bicholim, North Goa -- 403504",
+            streamsOrPrograms = "Diploma in Civil, Mechanical, Electrical, Electronics & Communication, Mining (Fees: ₹40,000--₹60,000/yr)",
             contactNumber = "",
             email = "",
-            websiteUrl = "https://dte.goa.gov.in/institute/Diploma/6054"
+            websiteUrl = "https://www.gpb.goa.gov.in"
+        ),
+        Institution(
+            name = "Government ITI, Bicholim",
+            category = "College",
+            taluka = "Bicholim",
+            location = "Valshi, Bicholim, North Goa -- 403504",
+            streamsOrPrograms = "Electrician, Fitter, COPA, Mechanic Diesel (Fees: ₹5,000--₹20,000/yr)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = "https://dsde.goa.gov.in"
         ),
         Institution(
             name = "Government College of Arts, Science & Commerce, Sanquelim",
             category = "College",
             taluka = "Bicholim",
-            location = "Sanquelim, Bicholim",
-            streamsOrPrograms = "Arts, Science, Commerce",
+            location = "Sanquelim, North Goa -- 403505",
+            streamsOrPrograms = "BA, BSc, BCom, BCA, MA (Fees: ₹5,000--₹20,000/yr)",
             contactNumber = "",
             email = "",
-            websiteUrl = "https://gcascs.ac.in/"
+            websiteUrl = "https://www.gcsanquelim.ac.in"
         ),
 
         // --- SATTARI TALUKA ---
@@ -1019,52 +1049,92 @@ object InstitutionData {
             name = "Government Higher Secondary School, Valpoi",
             category = "Higher Secondary",
             taluka = "Sattari",
-            location = "Valpoi, Sattari, Goa",
-            streamsOrPrograms = "",
-            contactNumber = "",
-            email = "",
-            websiteUrl = "https://schools.org.in/north-goa/30010401908/govt-higher-secondary-school.html"
-        ),
-        Institution(
-            name = "Government Higher Secondary School, Sanquelim",
-            category = "Higher Secondary",
-            taluka = "Sattari",
-            location = "Sanquelim, Sattari region",
-            streamsOrPrograms = "",
-            contactNumber = "",
-            email = "",
-            websiteUrl = "https://schools.org.in/north-goa/30010302108/govt-higher-sec-school-sanquelim.html"
-        ),
-        Institution(
-            name = "Jawahar Navodaya Vidyalaya (JNV)",
-            category = "Higher Secondary",
-            taluka = "Sattari",
-            location = "Sattari",
-            streamsOrPrograms = "",
-            contactNumber = "",
-            email = "",
-            websiteUrl = "https://navodaya.gov.in/nvs/nvs-school/NORTHGOA/en/about_us/About-JNV/"
-        ),
-        Institution(
-            name = "Vividha Higher Secondary School",
-            category = "Higher Secondary",
-            taluka = "Sattari",
-            location = "Sattari",
-            streamsOrPrograms = "",
+            location = "Valpoi, Sattari Taluka, North Goa -- 403506",
+            streamsOrPrograms = "Arts, Science, Commerce, Vocational (Fees: ₹3,000--₹8,000/yr)",
             contactNumber = "",
             email = "",
             websiteUrl = ""
+        ),
+        Institution(
+            name = "Our Lady of Lourdes Higher Secondary School, Valpoi",
+            category = "Higher Secondary",
+            taluka = "Sattari",
+            location = "Valpoi, Sattari Taluka, North Goa",
+            streamsOrPrograms = "Arts, Commerce (Fees: ₹6,000--₹12,000/yr)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = ""
+        ),
+        Institution(
+            name = "Shree Bhumika Higher Secondary School, Poriem",
+            category = "Higher Secondary",
+            taluka = "Sattari",
+            location = "Poriem, Sattari Taluka, North Goa",
+            streamsOrPrograms = "Arts, Commerce (Fees: ₹6,000--₹12,000/yr)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = ""
+        ),
+        Institution(
+            name = "Unity Higher Secondary School, Valpoi",
+            category = "Higher Secondary",
+            taluka = "Sattari",
+            location = "Valpoi, Sattari Taluka, North Goa",
+            streamsOrPrograms = "Arts (Fees: ₹5,000--₹10,000/yr)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = ""
+        ),
+        Institution(
+            name = "Jawahar Navodaya Vidyalaya, Valpoi",
+            category = "Higher Secondary",
+            taluka = "Sattari",
+            location = "Valpoi, Sattari Taluka, North Goa -- 403506",
+            streamsOrPrograms = "Science (CBSE) (Fees: Free/Nominal)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = "https://navodaya.gov.in"
         ),
         // Colleges
         Institution(
             name = "Goa Institute of Management (GIM)",
             category = "College",
             taluka = "Sattari",
-            location = "Sanquelim, Sattari",
-            streamsOrPrograms = "Management (PGDM)",
+            location = "Poriem, Sattari Taluka, North Goa -- 403505",
+            streamsOrPrograms = "PGDM, PGDM Healthcare, Big Data Analytics, FPM (Fees: ₹20--22 Lakhs/2yrs)",
             contactNumber = "",
             email = "",
-            websiteUrl = "https://gim.ac.in/"
+            websiteUrl = "https://gim.ac.in"
+        ),
+        Institution(
+            name = "Sattari Government ITI (Honda)",
+            category = "College",
+            taluka = "Sattari",
+            location = "Honda, Sattari Taluka, North Goa -- 403530",
+            streamsOrPrograms = "Electrician, Fitter, COPA (Fees: ₹5,000--₹20,000/yr)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = "https://dsde.goa.gov.in"
+        ),
+        Institution(
+            name = "Shri Bhumika Nursing College",
+            category = "College",
+            taluka = "Sattari",
+            location = "Parye, Poriem, Sattari Taluka, North Goa -- 403505",
+            streamsOrPrograms = "B.Sc Nursing, GNM (Fees: ₹60,000--₹1,20,000/yr)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = ""
+        ),
+        Institution(
+            name = "Forest Training School",
+            category = "College",
+            taluka = "Sattari",
+            location = "Valpoi, Sattari Taluka, North Goa -- 403506",
+            streamsOrPrograms = "Forest Guard & Forestry Training Programs (Government Department Training)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = "https://forest.goa.gov.in"
         ),
         Institution(
             name = "Indian Institute of Technology (IIT) Goa",
@@ -1089,75 +1159,145 @@ object InstitutionData {
         // --- TISWADI TALUKA ---
         // Higher Secondary
         Institution(
+            name = "Mushtifund Higher Secondary School, Cujira",
+            category = "Higher Secondary",
+            taluka = "Tiswadi",
+            location = "Cujira, Bambolim, Tiswadi Taluka, North Goa",
+            streamsOrPrograms = "Arts, Commerce, Science (Fees: ₹8,000--₹18,000/yr)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = ""
+        ),
+        Institution(
+            name = "Don Bosco Higher Secondary School, Panaji",
+            category = "Higher Secondary",
+            taluka = "Tiswadi",
+            location = "Panaji, Tiswadi Taluka, North Goa -- 403001",
+            streamsOrPrograms = "Arts, Commerce, Science (Fees: ₹10,000--₹25,000/yr)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = "https://donboscopanaji.com"
+        ),
+        Institution(
+            name = "Dr. K.B. Hedgewar Higher Secondary School, Cujira",
+            category = "Higher Secondary",
+            taluka = "Tiswadi",
+            location = "Cujira, Bambolim, North Goa",
+            streamsOrPrograms = "Science, Commerce (Fees: ₹8,000--₹18,000/yr)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = ""
+        ),
+        Institution(
             name = "Santa Cruz Higher Secondary School",
             category = "Higher Secondary",
             taluka = "Tiswadi",
-            location = "Santa Cruz, Tiswadi",
-            streamsOrPrograms = "",
+            location = "Santa Cruz, Tiswadi Taluka, North Goa",
+            streamsOrPrograms = "Arts, Commerce (Fees: ₹6,000--₹15,000/yr)",
             contactNumber = "",
             email = "",
-            websiteUrl = "https://schools.org.in/north-goa/30010501708/santa-cruz-higher-secondary-school.html"
+            websiteUrl = ""
         ),
         Institution(
-            name = "Don Bosco Higher Secondary School",
+            name = "Our Lady of the Rosary Higher Secondary School, Dona Paula",
             category = "Higher Secondary",
             taluka = "Tiswadi",
-            location = "Panjim, Tiswadi",
-            streamsOrPrograms = "",
+            location = "Dona Paula, Tiswadi Taluka, North Goa -- 403004",
+            streamsOrPrograms = "Arts, Commerce (Fees: ₹8,000--₹20,000/yr)",
             contactNumber = "",
             email = "",
-            websiteUrl = "https://dbhsspanjim.edu.in/"
+            websiteUrl = ""
         ),
         Institution(
-            name = "Dr. T.B. Cunha Government Higher Secondary School",
+            name = "People's Higher Secondary School, Panaji",
             category = "Higher Secondary",
             taluka = "Tiswadi",
-            location = "Panjim, Tiswadi",
-            streamsOrPrograms = "",
+            location = "Panaji, Tiswadi Taluka, North Goa",
+            streamsOrPrograms = "Commerce, Arts (Fees: ₹7,000--₹18,000/yr)",
             contactNumber = "",
             email = "",
-            websiteUrl = "https://schools.org.in/north-goa/30010500334/dr-t-b-cunha-govt-higher-sec-school.html"
-        ),
-        Institution(
-            name = "Our Lady of the Rosary Higher Secondary School",
-            category = "Higher Secondary",
-            taluka = "Tiswadi",
-            location = "Dona Paula, Tiswadi",
-            streamsOrPrograms = "",
-            contactNumber = "",
-            email = "",
-            websiteUrl = "https://olorosaryhss.com/"
+            websiteUrl = ""
         ),
         // Colleges
         Institution(
-            name = "S.S. Dempo College of Commerce & Economics",
+            name = "Goa Medical College (GMC)",
             category = "College",
             taluka = "Tiswadi",
-            location = "Tiswadi",
-            streamsOrPrograms = "Commerce",
+            location = "Bambolim, Tiswadi, Goa -- 403202",
+            streamsOrPrograms = "MBBS, MD, MS, Super Specialties (Fees: Government Regulated)",
             contactNumber = "",
             email = "",
-            websiteUrl = "https://dempocollege.edu.in/"
+            websiteUrl = "https://www.gmc.goa.gov.in"
         ),
         Institution(
-            name = "Goa Dental College and Hospital",
+            name = "Goa Dental College & Hospital",
             category = "College",
             taluka = "Tiswadi",
-            location = "Tiswadi",
-            streamsOrPrograms = "Medical/Dental",
+            location = "Bambolim, Tiswadi, Goa -- 403202",
+            streamsOrPrograms = "BDS, MDS (Fees: Government Regulated)",
             contactNumber = "",
             email = "",
-            websiteUrl = "https://gdch.goa.gov.in/"
+            websiteUrl = "https://gdch.goa.gov.in"
         ),
         Institution(
             name = "Goa College of Pharmacy",
             category = "College",
             taluka = "Tiswadi",
-            location = "Tiswadi",
-            streamsOrPrograms = "Pharmacy",
+            location = "18th June Road, Panaji -- 403001",
+            streamsOrPrograms = "D.Pharm, B.Pharm (Fees: ₹30,000--₹1,00,000/yr)",
             contactNumber = "",
             email = "",
-            websiteUrl = "https://gcp.goa.gov.in/"
+            websiteUrl = "https://www.gcp.goa.gov.in"
+        ),
+        Institution(
+            name = "Goa College of Architecture",
+            category = "College",
+            taluka = "Tiswadi",
+            location = "Altinho, Panaji -- 403001",
+            streamsOrPrograms = "B.Arch, M.Arch (Fees: ₹30,000--₹80,000/yr)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = "https://gcarch.goa.gov.in"
+        ),
+        Institution(
+            name = "Dhempe College of Arts & Science",
+            category = "College",
+            taluka = "Tiswadi",
+            location = "Miramar, Panaji -- 403001",
+            streamsOrPrograms = "BA, BSc, MSc (Fees: ₹6,000--₹25,000/yr)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = "https://www.dhempecollege.edu.in"
+        ),
+        Institution(
+            name = "S.S. Dempo College of Commerce & Economics",
+            category = "College",
+            taluka = "Tiswadi",
+            location = "Integrated Education Complex, Cujira, Bambolim -- 403202",
+            streamsOrPrograms = "BCom, BBA, MCom (Fees: ₹10,000--₹50,000/yr)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = "https://www.dempocollege.edu.in"
+        ),
+        Institution(
+            name = "Don Bosco College",
+            category = "College",
+            taluka = "Tiswadi",
+            location = "Panaji -- 403001",
+            streamsOrPrograms = "BBA, BCA, BCom (Fees: ₹20,000--₹80,000/yr)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = "https://donboscogoa.ac.in"
+        ),
+        Institution(
+            name = "Goa University",
+            category = "College",
+            taluka = "Tiswadi",
+            location = "Taleigao Plateau -- 403206",
+            streamsOrPrograms = "Postgraduate & PhD Programs (Fees: As per University norms)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = "https://www.unigoa.ac.in"
         )
     )
 }

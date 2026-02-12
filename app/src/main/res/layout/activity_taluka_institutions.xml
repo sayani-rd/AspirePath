@@ -18,32 +18,51 @@
         app:titleTextColor="@color/white"
         app:title="Institutions" />
 
-    <!-- Toggle Buttons -->
-    <LinearLayout
+    <!-- Toggle Buttons (Horizontal Scrollable) -->
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:padding="16dp">
+        android:scrollbars="none"
+        android:padding="12dp">
 
-        <Button
-            android:id="@+id/btnColleges"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Colleges"
-            android:textColor="@android:color/white"
-            android:layout_marginEnd="8dp"/>
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnHigherSecondary"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Higher Secondary"
-            android:textColor="@android:color/white"
-            android:layout_marginStart="8dp"/>
-    </LinearLayout>
+            <Button
+                android:id="@+id/btnHigherSecondary"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Higher Secondary"
+                android:textColor="@android:color/white"
+                android:layout_marginEnd="8dp"/>
+
+            <Button
+                android:id="@+id/btnColleges"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:text="College-UG"
+                android:textColor="@android:color/white"
+                android:layout_marginEnd="8dp"/>
+
+            <Button
+                android:id="@+id/btnDiploma"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:text="Diploma"
+                android:textColor="@android:color/white"
+                android:layout_marginEnd="8dp"/>
+
+            <Button
+                android:id="@+id/btnMasters"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:text="College-PG"
+                android:textColor="@android:color/white"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewInstitutions"
