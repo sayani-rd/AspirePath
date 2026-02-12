@@ -135,13 +135,14 @@ class Post10thActivity : AppCompatActivity() {
         val resultType = scores.filterValues { it == maxScore }.keys.first()
 
         // Save scores to SharedPreferences
+        // Save scores to SharedPreferences
         val sharedPreferences = getSharedPreferences("QuizScores", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-        editor.putInt("SCORE_A", scores["A"] ?: 0)
-        editor.putInt("SCORE_B", scores["B"] ?: 0)
-        editor.putInt("SCORE_C", scores["C"] ?: 0)
-        editor.putInt("SCORE_D", scores["D"] ?: 0)
-        editor.putBoolean("HAS_QUIZ_DATA", true)
+        editor.putInt("POST10_SCORE_A", scores["A"] ?: 0)
+        editor.putInt("POST10_SCORE_B", scores["B"] ?: 0)
+        editor.putInt("POST10_SCORE_C", scores["C"] ?: 0)
+        editor.putInt("POST10_SCORE_D", scores["D"] ?: 0)
+        editor.putBoolean("HAS_POST10_DATA", true)
         editor.apply()
 
         val intent = Intent(this, Post10thResultActivity::class.java)

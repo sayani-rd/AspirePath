@@ -329,14 +329,14 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardScholarships"
+            android:id="@+id/cardEntranceExams"
             android:layout_width="0dp"
             android:layout_height="140dp"
             android:layout_marginTop="16dp"
             android:layout_marginStart="8dp"
             app:cardCornerRadius="24dp"
             app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/pastel_pink"
+            app:cardBackgroundColor="@color/pastel_orange"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
@@ -352,7 +352,7 @@
                 <TextView
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:text="💰"
+                    android:text="📝"
                     android:textSize="24sp"
                     android:gravity="center"
                     app:layout_constraintStart_toStartOf="parent"
@@ -361,7 +361,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Scholarships"
+                    android:text="Competitive\nExams"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:textColor="@color/text_primary"
@@ -505,14 +505,15 @@
         </androidx.cardview.widget.CardView>
 
         <!-- Entrance Exams Card -->
+        <!-- Scholarship Card -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardEntranceExams"
+            android:id="@+id/cardScholarships"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/pastel_orange"
+            app:cardBackgroundColor="@color/pastel_pink"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
@@ -528,7 +529,7 @@
                 <TextView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:text="📝"
+                    android:text="💰"
                     android:textSize="36sp"
                     android:gravity="center"
                     android:textColor="@color/text_primary"/>
@@ -543,7 +544,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Competitive Exams"
+                        android:text="Scholarships"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="@color/text_primary"/>
@@ -551,7 +552,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Guide to various competitive exams"
+                        android:text="Financial aid and opportunities"
                         android:textSize="14sp"
                         android:textColor="@color/text_secondary"
                         android:layout_marginTop="4dp"/>
