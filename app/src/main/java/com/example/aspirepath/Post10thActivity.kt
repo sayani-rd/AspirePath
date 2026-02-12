@@ -9,6 +9,9 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FieldValue
 
 class Post10thActivity : AppCompatActivity() {
 
@@ -24,6 +27,14 @@ class Post10thActivity : AppCompatActivity() {
 
     private var currentQuestionIndex = 0
     private var scores = mutableMapOf("A" to 0, "B" to 0, "C" to 0, "D" to 0)
+    private val userResponses = mutableListOf<QuizResponse>()
+
+    data class QuizResponse(
+        val questionIndex: Int,
+        val questionText: String,
+        val selectedOption: String,
+        val selectedAnswerText: String
+    )
 
     data class Question(
         val text: String,
@@ -112,13 +123,41 @@ class Post10thActivity : AppCompatActivity() {
             return
         }
 
-        // Record Score
+        val selectedOption: String
+        val selectedAnswerText: String
+        
+        // Record Score and capture response
         when (selectedId) {
-            R.id.rbOptionA -> scores["A"] = scores["A"]!! + 1
-            R.id.rbOptionB -> scores["B"] = scores["B"]!! + 1
-            R.id.rbOptionC -> scores["C"] = scores["C"]!! + 1
-            R.id.rbOptionD -> scores["D"] = scores["D"]!! + 1
+            R.id.rbOptionA -> {
+                scores["A"] = scores["A"]!! + 1
+                selectedOption = "A"
+                selectedAnswerText = rbOptionA.text.toString()
+            }
+            R.id.rbOptionB -> {
+                scores["B"] = scores["B"]!! + 1
+                selectedOption = "B"
+                selectedAnswerText = rbOptionB.text.toString()
+            }
+            R.id.rbOptionC -> {
+                scores["C"] = scores["C"]!! + 1
+                selectedOption = "C"
+                selectedAnswerText = rbOptionC.text.toString()
+            }
+            R.id.rbOptionD -> {
+                scores["D"] = scores["D"]!! + 1
+                selectedOption = "D"
+                selectedAnswerText = rbOptionD.text.toString()
+            }
+            else -> return
         }
+        
+        // Save this response
+        userResponses.add(QuizResponse(
+            questionIndex = currentQuestionIndex,
+            questionText = questions[currentQuestionIndex].text,
+            selectedOption = selectedOption,
+            selectedAnswerText = selectedAnswerText
+        ))
 
         currentQuestionIndex++
 
@@ -144,12 +183,52 @@ class Post10thActivity : AppCompatActivity() {
         editor.putBoolean("HAS_QUIZ_DATA", true)
         editor.apply()
 
+        // Save to Firestore interest collection
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        if (userId != null) {
+            val db = FirebaseFirestore.getInstance()
+            val quizData = hashMapOf(
+                "quizType" to "post10th",
+                "resultType" to resultType,
+                "scoreA" to (scores["A"] ?: 0),
+                "scoreB" to (scores["B"] ?: 0),
+                "scoreC" to (scores["C"] ?: 0),
+                "scoreD" to (scores["D"] ?: 0),
+                "responses" to userResponses.map { response ->
+                    hashMapOf(
+                        "questionIndex" to response.questionIndex,
+                        "questionText" to response.questionText,
+                        "selectedOption" to response.selectedOption,
+                        "selectedAnswer" to response.selectedAnswerText
+                    )
+                },
+                "timestamp" to FieldValue.serverTimestamp(),
+                "updatedAt" to FieldValue.serverTimestamp()
+            )
+            
+            db.collection("interest").document(userId)
+                .set(quizData)
+                .addOnSuccessListener {
+                    // Data saved successfully to Firestore
+                }
+                .addOnFailureListener { e ->
+                    // Handle error silently, don't block user flow
+                    e.printStackTrace()
+                }
+        }
+
+        // Pass responses as JSON string for AI processing
+        val responsesJson = userResponses.joinToString(",\n") { 
+            """{"q":${it.questionIndex + 1},"text":"${it.questionText.replace("\"", "'")}","answer":"${it.selectedAnswerText.replace("\"", "'")}"}"""
+        }
+
         val intent = Intent(this, Post10thResultActivity::class.java)
         intent.putExtra("RESULT_TYPE", resultType)
         intent.putExtra("SCORE_A", scores["A"])
         intent.putExtra("SCORE_B", scores["B"])
         intent.putExtra("SCORE_C", scores["C"])
         intent.putExtra("SCORE_D", scores["D"])
+        intent.putExtra("USER_RESPONSES", "[$responsesJson]")
         startActivity(intent)
         finish()
     }
