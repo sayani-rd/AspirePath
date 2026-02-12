@@ -14,13 +14,18 @@ import com.google.android.material.button.MaterialButton
 
 class ScholarshipAdapter(
     private val context: Context,
-    private val scholarshipList: List<Scholarship>
+    private var scholarshipList: List<Scholarship>
 ) : RecyclerView.Adapter<ScholarshipAdapter.ScholarshipViewHolder>() {
+
+    fun updateList(newList: List<Scholarship>) {
+        scholarshipList = newList
+        notifyDataSetChanged()
+    }
 
     class ScholarshipViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvName: TextView = itemView.findViewById(R.id.tvScholarshipName)
         val tvProvider: TextView = itemView.findViewById(R.id.tvProvider)
-        val tvDeadline: TextView = itemView.findViewById(R.id.tvDeadline)
+
         val tvDescription: TextView = itemView.findViewById(R.id.tvDescription)
         val btnGuidelines: MaterialButton = itemView.findViewById(R.id.btnGuidelines)
         val btnApply: MaterialButton = itemView.findViewById(R.id.btnApply)
@@ -36,16 +41,16 @@ class ScholarshipAdapter(
         val scholarship = scholarshipList[position]
 
         holder.tvName.text = scholarship.name
-        holder.tvProvider.text = scholarship.provider
-        holder.tvDeadline.text = scholarship.deadline
+        holder.tvProvider.text = scholarship.organization
+
         holder.tvDescription.text = scholarship.description
 
         holder.btnGuidelines.setOnClickListener {
-            openUrl(scholarship.guidelinesUrl)
+            openUrl(scholarship.pdfLink)
         }
 
         holder.btnApply.setOnClickListener {
-            openUrl(scholarship.applyUrl)
+            openUrl(scholarship.link)
         }
 
         // Alternate Background Colors

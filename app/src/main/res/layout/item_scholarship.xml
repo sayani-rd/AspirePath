@@ -53,31 +53,7 @@
             android:background="#EEEEEE"
             app:layout_constraintTop_toBottomOf="@+id/tvProvider" />
 
-        <TextView
-            android:id="@+id/tvDeadlineLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Deadline:"
-            android:textColor="#777777"
-            android:textSize="13sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-        <TextView
-            android:id="@+id/tvDeadline"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="31 Oct 2025"
-            android:textColor="#D32F2F"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/tvDeadlineLabel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tvDeadlineLabel"
-            app:layout_constraintTop_toTopOf="@+id/tvDeadlineLabel"
-            tools:text="31 Oct 2025" />
 
         <TextView
             android:id="@+id/tvDescription"
@@ -91,7 +67,7 @@
             android:maxLines="3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDeadlineLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
 
         <LinearLayout
             android:layout_width="match_parent"

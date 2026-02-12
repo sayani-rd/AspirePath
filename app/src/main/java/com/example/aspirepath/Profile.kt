@@ -2,6 +2,7 @@ package com.example.aspirepath
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.aspirepath.data.local.AppDatabase
@@ -30,7 +32,7 @@ class Profile : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private lateinit var profileDao: ProfileDao
-    
+
     private lateinit var cvProfilePicture: CardView
     private lateinit var ivProfilePicture: ImageView
     private lateinit var tvInitials: TextView
@@ -60,7 +62,7 @@ class Profile : Fragment() {
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
-        
+
         // Initialize Room DB
         val database = AppDatabase.getDatabase(requireContext())
         profileDao = database.profileDao()
@@ -81,7 +83,7 @@ class Profile : Fragment() {
         tvProfileAge = view.findViewById(R.id.tvProfileAge)
         tvProfileEligibility = view.findViewById(R.id.tvProfileEligibility)
         tvProfileStream = view.findViewById(R.id.tvProfileStream)
-        
+
         layoutDOB = view.findViewById(R.id.layoutDOB)
         dividerDOB = view.findViewById(R.id.dividerDOB)
         layoutAge = view.findViewById(R.id.layoutAge)
@@ -107,11 +109,11 @@ class Profile : Fragment() {
         } else {
             Toast.makeText(requireContext(), "User not logged in", Toast.LENGTH_SHORT).show()
         }
-        
+
         // My Resume Click Listener
         val cardMyResume = view.findViewById<CardView>(R.id.cardMyResume)
         cardMyResume?.setOnClickListener {
-            val intent = android.content.Intent(requireContext(), CvEditorActivity::class.java)
+            val intent = Intent(requireContext(), CvEditorActivity::class.java)
             startActivity(intent)
         }
 
@@ -125,7 +127,7 @@ class Profile : Fragment() {
 
     private fun fetchUserData() {
         val currentUser = auth.currentUser ?: return
-        
+
         db.collection("users").document(currentUser.uid)
             .get()
             .addOnSuccessListener { document ->
@@ -209,7 +211,7 @@ class Profile : Fragment() {
                 // Copy image to internal storage to persist access
                 val fileName = "profile_${uid}.jpg"
                 val file = File(context.filesDir, fileName)
-                
+
                 context.contentResolver.openInputStream(uri)?.use { input ->
                     FileOutputStream(file).use { output ->
                         input.copyTo(output)
@@ -217,14 +219,14 @@ class Profile : Fragment() {
                 }
 
                 val savedUri = Uri.fromFile(file).toString()
-                
+
                 // Save to Room
                 val profile = ProfileEntity(uid = uid, profilePictureUri = savedUri)
                 profileDao.insertProfile(profile)
 
                 withContext(Dispatchers.Main) {
                     // Update UI (Invalidate cache hack)
-                    ivProfilePicture.setImageURI(null) 
+                    ivProfilePicture.setImageURI(null)
                     updateProfileUI(savedUri)
                     Toast.makeText(context, "Profile picture updated", Toast.LENGTH_SHORT).show()
                 }
@@ -258,7 +260,7 @@ class Profile : Fragment() {
                 // Get current profile to find file path
                 val profile = profileDao.getProfile(uid)
                 if (profile?.profilePictureUri != null) {
-                    val uri = Uri.parse(profile.profilePictureUri)
+                    val uri = profile.profilePictureUri.toUri()
                     if (uri.scheme == "file") {
                         val file = File(uri.path!!)
                         if (file.exists()) {
@@ -275,7 +277,7 @@ class Profile : Fragment() {
                     tvInitials.visibility = View.VISIBLE
                     Toast.makeText(requireContext(), "Profile picture removed", Toast.LENGTH_SHORT).show()
                 }
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(requireContext(), "Error removing profile picture", Toast.LENGTH_SHORT).show()
                 }
@@ -286,7 +288,7 @@ class Profile : Fragment() {
     private fun updateProfileUI(uriString: String?) {
         if (uriString != null) {
             ivProfilePicture.setImageURI(null)
-            ivProfilePicture.setImageURI(Uri.parse(uriString))
+            ivProfilePicture.setImageURI(uriString.toUri())
             cvProfilePicture.visibility = View.VISIBLE
             tvInitials.visibility = View.GONE
         } else {
@@ -301,13 +303,13 @@ class Profile : Fragment() {
         popup.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_edit_profile -> {
-                    val intent = android.content.Intent(requireContext(), ManageAccountActivity::class.java)
+                    val intent = Intent(requireContext(), ManageAccountActivity::class.java)
                     intent.putExtra("MODE", "EDIT_PROFILE")
                     startActivity(intent)
                     true
                 }
                 R.id.action_manage_account -> {
-                    val intent = android.content.Intent(requireContext(), ManageAccountActivity::class.java)
+                    val intent = Intent(requireContext(), ManageAccountActivity::class.java)
                     intent.putExtra("MODE", "MANAGE_ACCOUNT")
                     startActivity(intent)
                     true
@@ -323,8 +325,8 @@ class Profile : Fragment() {
                     editor.apply()
 
                     // Navigate to Welcome
-                    val intent = android.content.Intent(requireContext(), WelcomeActivity::class.java)
-                    intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    val intent = Intent(requireContext(), WelcomeActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                     requireActivity().finish()
                     true
