@@ -69,6 +69,17 @@
                         android:padding="16dp"
                         android:lineSpacingExtra="4dp"/>
                 </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/btnViewPathPost10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="📊 View My Career Path"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:backgroundTint="#1C4195"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <!-- Post 12th Section -->
@@ -121,6 +132,17 @@
                         android:padding="16dp"
                         android:lineSpacingExtra="4dp"/>
                 </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/btnViewPathPost12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="📊 View My Career Path"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:backgroundTint="#1C4195"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <!-- Post Graduation Section -->
@@ -173,6 +195,17 @@
                         android:padding="16dp"
                         android:lineSpacingExtra="4dp"/>
                 </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/btnViewPathPostGrad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="📊 View My Career Path"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:backgroundTint="#1C4195"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <TextView

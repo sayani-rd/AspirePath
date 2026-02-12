@@ -3,6 +3,15 @@ package com.example.aspirepath
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.TextView
+import android.view.View
+import android.widget.Button
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import android.text.Html
+import androidx.appcompat.app.AlertDialog
+import android.widget.ScrollView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
@@ -38,6 +47,62 @@ class ProgressAnalysisActivity : AppCompatActivity() {
         // Setup Description
         val tvAnalysisDescription = findViewById<TextView>(R.id.tvAnalysisDescription)
         tvAnalysisDescription.text = generateDescription(scoreA, scoreB, scoreC, scoreD, type)
+
+        // Setup Career Path Button (Firebase Integration)
+        setupCareerPathButton(type)
+    }
+
+    private fun setupCareerPathButton(type: String) {
+        val btnViewCareerPath = findViewById<Button>(R.id.btnViewCareerPath)
+        val user = FirebaseAuth.getInstance().currentUser ?: return
+        val db = FirebaseFirestore.getInstance()
+
+        // Map internal type to Firebase level name
+        val levelName = when(type) {
+            "POST12" -> "12th_Standard"
+            "POSTGRAD" -> "Postgraduate"
+            else -> "10th_Standard"
+        }
+
+        db.collection("users").document(user.uid)
+            .collection("quizzes").document(levelName)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val recommendations = document.getString("ai_recommendations")
+                    if (!recommendations.isNullOrEmpty()) {
+                        btnViewCareerPath.visibility = View.VISIBLE
+                        btnViewCareerPath.setOnClickListener {
+                            showRecommendationsDialog(recommendations)
+                        }
+                    }
+                }
+            }
+    }
+
+    private fun showRecommendationsDialog(recommendations: String) {
+        val dialogView = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(40, 40, 40, 40)
+            setBackgroundColor(Color.WHITE)
+        }
+
+        val scrollView = ScrollView(this)
+        val textView = TextView(this).apply {
+            textSize = 15f
+            setTextColor(Color.BLACK)
+            setPadding(10, 10, 10, 10)
+            text = Html.fromHtml(recommendations, Html.FROM_HTML_MODE_COMPACT)
+        }
+
+        scrollView.addView(textView)
+        dialogView.addView(scrollView)
+
+        AlertDialog.Builder(this)
+            .setTitle("📊 My Personalized Career Path")
+            .setView(dialogView)
+            .setPositiveButton("Close", null)
+            .show()
     }
 
     private fun setupPieChart(pieChart: PieChart, a: Int, b: Int, c: Int, d: Int, type: String) {

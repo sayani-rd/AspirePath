@@ -67,6 +67,20 @@
                     android:lineSpacingExtra="4dp"/>
             </androidx.cardview.widget.CardView>
 
+            <Button
+                android:id="@+id/btnViewCareerPath"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📊 View My Career Path"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:backgroundTint="#1C4195"
+                android:padding="12dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="32dp"
+                android:visibility="gone" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
