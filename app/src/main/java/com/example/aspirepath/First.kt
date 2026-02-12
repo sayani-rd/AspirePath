@@ -2,55 +2,69 @@ package com.example.aspirepath
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-
-import androidx.activity.OnBackPressedCallback
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import android.view.View
 
 class First : AppCompatActivity() {
 
     private lateinit var toolbar: androidx.appcompat.widget.Toolbar
     private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var viewPager: ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_first)
 
-        toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
-        // setSupportActionBar(toolbar) // Commented out to hide menu bar
-        toolbar.visibility = View.GONE
-        
-        bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        toolbar = findViewById(R.id.toolbar)
+        toolbar.visibility = View.GONE                // Keep toolbar hidden as per design
 
-        // Set default fragment
-        if (savedInstanceState == null) {
-            replaceFragment(Home())
+        bottomNavigationView = findViewById(R.id.bottomNavigationView)
+        viewPager = findViewById(R.id.viewPager)
+
+        val adapter = ViewPagerAdapter(this)
+        viewPager.adapter = adapter
+
+        // Check for navigation intent
+        if (intent.getStringExtra("NAVIGATE_TO") == "PROGRESS") {
+            viewPager.post {
+                viewPager.setCurrentItem(2, false)
+                bottomNavigationView.selectedItemId = R.id.progress
+            }
         }
 
+
+        // Setup BottomNavigation to control ViewPager
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.home -> replaceFragment(Home())
-                R.id.explore -> replaceFragment(Explore())
-                R.id.progress -> {
-                    val intent = Intent(this, ProgressAnalysisActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.profile -> replaceFragment(Profile())
+                R.id.home -> viewPager.currentItem = 0
+                R.id.explore -> viewPager.currentItem = 1
+                R.id.progress -> viewPager.currentItem = 2
+                R.id.profile -> viewPager.currentItem = 3
                 else -> false
             }
             true
         }
 
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+        // Setup ViewPager to control BottomNavigation
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                bottomNavigationView.menu.getItem(position).isChecked = true
+            }
+        })
+
+        // Handle Back Press for Navigation
+        onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (supportFragmentManager.backStackEntryCount > 0) {
-                    supportFragmentManager.popBackStack()
+                if (viewPager.currentItem != 0) {
+                    // Navigate to Home
+                    viewPager.currentItem = 0
                 } else {
+                    // If on Home, exit app
                     isEnabled = false
                     onBackPressedDispatcher.onBackPressed()
                 }
@@ -58,42 +72,17 @@ class First : AppCompatActivity() {
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.account, menu)
-        return true
-    }
+    private inner class ViewPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
+        override fun getItemCount(): Int = 4
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.manage_account -> {
-                val intent = Intent(this, ManageAccountActivity::class.java)
-                startActivity(intent)
-                true
+        override fun createFragment(position: Int): Fragment {
+            return when (position) {
+                0 -> Home()
+                1 -> Explore()
+                2 -> ProgressAnalysisFragment()
+                3 -> Profile()
+                else -> Home()
             }
-            R.id.logout -> {
-                // Clear login state from SharedPreferences
-                val sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
-                val editor = sharedPreferences.edit()
-                editor.putBoolean("isLoggedIn", false)
-                editor.apply()
-
-                // Navigate back to the welcome screen and clear the task stack
-                val intent = Intent(this, WelcomeActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-                finish()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
-
-    private fun replaceFragment(fragment: Fragment) {
-        toolbar.visibility = View.GONE
-        bottomNavigationView.visibility = View.VISIBLE
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.frameLayout, fragment)
-            .commit()
-    }
-
 }

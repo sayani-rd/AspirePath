@@ -59,13 +59,22 @@ class Post12thResultActivity : AppCompatActivity() {
 
         val btnProgressAnalysis = findViewById<Button>(R.id.btnProgressAnalysis)
         btnProgressAnalysis.setOnClickListener {
-            val intent = Intent(this, ProgressAnalysisActivity::class.java)
-            intent.putExtra("TYPE", "POST12")
-            intent.putExtra("SCORE_A", scoreA)
-            intent.putExtra("SCORE_B", scoreB)
-            intent.putExtra("SCORE_C", scoreC)
-            intent.putExtra("SCORE_D", scoreD)
+            // Save results to SharedPreferences
+            val sharedPreferences = getSharedPreferences("QuizPrefs", MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putString("TYPE", "POST12")
+            editor.putInt("SCORE_A", scoreA)
+            editor.putInt("SCORE_B", scoreB)
+            editor.putInt("SCORE_C", scoreC)
+            editor.putInt("SCORE_D", scoreD)
+            editor.apply()
+
+            // Navigate to First Activity (Progress Tab)
+            val intent = Intent(this, First::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.putExtra("NAVIGATE_TO", "PROGRESS")
             startActivity(intent)
+            finish()
         }
 
         btnHome.setOnClickListener {
