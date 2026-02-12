@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="280dp"
+    android:viewportWidth="200"
+    android:viewportHeight="280">
+    <!-- Modern: Sidebar -->
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M0,0h60v280H0z" />
+    <!-- Name -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M70,20h100v10H70z" />
+    <!-- Content Lines -->
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M70,40h110v2H70z M70,50h110v2H70z M70,60h80v2H70z" />
+    <!-- Section 1 -->
+    <path
+        android:fillColor="#757575"
+        android:pathData="M70,80h100v6H70z" />
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M70,95h90v2H70z M70,105h100v2H70z M70,115h60v2H70z" />
+    <!-- Section 2 -->
+    <path
+        android:fillColor="#757575"
+        android:pathData="M70,140h100v6H70z" />
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M70,155h90v2H70z M70,165h100v2H70z M70,175h60v2H70z M70,185h80v2H70z" />
+    <!-- Sidebar Details -->
+    <path
+        android:fillColor="#757575"
+        android:pathData="M10,30h40v4H10z" />
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M10,45h30v2H10z M10,55h35v2H10z" />
+    <path
+        android:fillColor="#757575"
+        android:pathData="M10,80h40v4H10z" />
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M10,95h30v2H10z M10,105h20v2H10z M10,115h25v2H10z" />
+</vector>

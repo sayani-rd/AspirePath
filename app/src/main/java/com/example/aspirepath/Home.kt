@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
-
 class Home : Fragment() {
 
     override fun onCreateView(
@@ -17,25 +19,121 @@ class Home : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        // Set up click listeners for each card
-        val cardAnalysis = view.findViewById<CardView>(R.id.cardAnalysis)
-        val cardQuiz = view.findViewById<CardView>(R.id.cardQuiz)
-        val cardChatbot = view.findViewById<CardView>(R.id.cardChatbot)
+        val cardTrendingJobs = view.findViewById<CardView>(R.id.cardTrendingJobs)
+        val cardCareerQuiz = view.findViewById<CardView>(R.id.cardCareerQuiz)
+        val cardShippingInstitute = view.findViewById<CardView>(R.id.cardShippingInstitute)
+        val cardSuccessStories = view.findViewById<CardView>(R.id.cardSuccessStories)
+        val tvGreeting = view.findViewById<android.widget.TextView>(R.id.tvGreeting)
+        val tvDailyQuote = view.findViewById<TextView>(R.id.tvDailyQuote)
 
-        cardAnalysis.setOnClickListener {
+        // Daily Insight - picks a new random quote each time the app is opened
+        val dailyQuotes = listOf(
+            "Consistency beats talent when talent stops trying.",
+            "Your career grows when your skills do.",
+            "Small progress every day leads to big success.",
+            "Opportunities favor those who prepare.",
+            "Focus on learning, results will follow.",
+            "Your future job depends on today's effort.",
+            "Growth begins where comfort ends.",
+            "Skills compound faster than motivation.",
+            "Success is built quietly, over time.",
+            "Don't chase roles, build value.",
+            "The best investment is in yourself.",
+            "Clarity comes from action, not waiting.",
+            "Career success is a marathon, not a sprint.",
+            "Work on skills today, enjoy freedom tomorrow.",
+            "Discipline creates opportunities luck can't.",
+            "Learn continuously or get left behind.",
+            "Your mindset shapes your career path.",
+            "Progress over perfection, always."
+        )
+        val randomQuote = dailyQuotes.random()
+        tvDailyQuote.text = "\"$randomQuote\""
+
+        // Fetch User Name
+        val sharedPreferences = requireActivity().getSharedPreferences("UserPrefs", android.content.Context.MODE_PRIVATE)
+        val uid = sharedPreferences.getString("current_user_uid", null)
+        
+        if (uid != null) {
+            com.google.firebase.firestore.FirebaseFirestore.getInstance()
+                .collection("users")
+                .document(uid)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val name = document.getString("name") ?: "User"
+                        val fullText = "Hey $name\nWelcome to Aspire Path"
+                        tvGreeting.text = fullText
+                        tvGreeting.setTypeface(null, android.graphics.Typeface.BOLD)
+                    }
+                }
+                .addOnFailureListener {
+                    tvGreeting.text = "Hey User\nWelcome to Aspire Path"
+                    tvGreeting.setTypeface(null, android.graphics.Typeface.BOLD)
+                }
+        } else {
+             // Fallback if no UID found (e.g. debugging instantly without login)
+             tvGreeting.text = "Hey User\nWelcome to Aspire Path"
+             tvGreeting.setTypeface(null, android.graphics.Typeface.BOLD)
+        }
+
+        cardTrendingJobs.setOnClickListener {
             val intent = Intent(activity, AnalysisActivity::class.java)
             startActivity(intent)
         }
 
-        cardQuiz.setOnClickListener {
+        cardCareerQuiz.setOnClickListener {
             val intent = Intent(activity, QuizActivity::class.java)
             startActivity(intent)
         }
 
-        cardChatbot.setOnClickListener {
-            val intent = Intent(activity, ChatbotActivity::class.java)
+        cardShippingInstitute.setOnClickListener {
+            val intent = Intent(activity, ShippingInstitutesActivity::class.java)
             startActivity(intent)
         }
+        
+        cardSuccessStories.setOnClickListener {
+            val intent = Intent(activity, SuccessStoriesActivity::class.java)
+            startActivity(intent)
+        }
+        
+        val cardCvMaker = view.findViewById<CardView>(R.id.cardCvMaker)
+        cardCvMaker.setOnClickListener {
+            val intent = Intent(activity, CvTemplatesActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Add resource cards click listeners
+        val cardNEP = view.findViewById<CardView>(R.id.cardNEP)
+        val cardScholarships = view.findViewById<CardView>(R.id.cardScholarships)
+        val cardEntranceExams = view.findViewById<CardView>(R.id.cardEntranceExams)
+        val btnNEP = view.findViewById<android.widget.Button>(R.id.btnNEP)
+        
+        btnNEP.setOnClickListener {
+            val url = "https://share.google/r7LQNfhTX76IyCk0e"
+            val intent = android.content.Intent(android.content.Intent.ACTION_VIEW)
+            intent.data = android.net.Uri.parse(url)
+            startActivity(intent)
+        }
+        
+        cardNEP.setOnClickListener {
+            val url = "https://share.google/r7LQNfhTX76IyCk0e"
+            val intent = android.content.Intent(android.content.Intent.ACTION_VIEW)
+            intent.data = android.net.Uri.parse(url)
+            startActivity(intent)
+        }
+
+        cardScholarships.setOnClickListener {
+            val intent = Intent(requireContext(), ScholarshipActivity::class.java)
+            startActivity(intent)
+        }
+
+        cardEntranceExams.setOnClickListener {
+            val intent = Intent(requireContext(), CompetitiveExamsActivity::class.java)
+            startActivity(intent)
+        }
+
+        // btnMenu listener removed
 
         return view
     }

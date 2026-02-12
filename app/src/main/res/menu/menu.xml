@@ -10,9 +10,9 @@
         android:title="Explore"
         android:icon="@drawable/baseline_saved_search_24"/>
     <item
-        android:id="@+id/resources"
-        android:title="Resources"
-        android:icon="@drawable/baseline_more_24"/>
+        android:id="@+id/progress"
+        android:title="Progress Analysis"
+        android:icon="@drawable/baseline_moving_24"/>
     <item
         android:id="@+id/profile"
         android:title="Profile"

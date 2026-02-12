@@ -10,28 +10,34 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FieldValue
 import java.util.*
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
     private var selectedDate: Calendar = Calendar.getInstance()
     private var isPasswordVisible = false
     private var isConfirmPasswordVisible = false
     private var selectedEligibility: String = ""
     private var selectedStream: String = ""
+    private var selectedTaluka: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
         auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
         val etName = findViewById<EditText>(R.id.etName)
         val etDateOfBirth = findViewById<EditText>(R.id.etDateOfBirth)
         val etEligibility = findViewById<EditText>(R.id.etEligibility)
         val etStream = findViewById<EditText>(R.id.etStream)
         val etStreamOther = findViewById<EditText>(R.id.etStreamOther)
+        val etTaluka = findViewById<EditText>(R.id.etTaluka)
         val etEmail = findViewById<EditText>(R.id.etEmail)
         val btnVerify = findViewById<Button>(R.id.btnVerify)
         val etPassword = findViewById<EditText>(R.id.etPassword)
@@ -53,6 +59,14 @@ class SignUpActivity : AppCompatActivity() {
         // Stream Click Listener
         etStream.setOnClickListener {
             showStreamDialog(streamOptions, etStream, etStreamOther)
+        }
+
+        // Taluka options
+        val talukaOptions = arrayOf("Pernem", "Bardez", "Tiswadi", "Ponda", "Bicholim", "Sattari", "Dharbandora", "Quepem", "Salcete", "Mormugao", "Sanguem", "Canacona")
+
+        // Taluka Click Listener
+        etTaluka.setOnClickListener {
+            showTalukaDialog(talukaOptions, etTaluka)
         }
 
         // Date of Birth picker
@@ -128,12 +142,13 @@ class SignUpActivity : AppCompatActivity() {
             val stream = if (etStream.visibility == View.VISIBLE) {
                 if (etStreamOther.visibility == View.VISIBLE) etStreamOther.text.toString().trim() else etStream.text.toString().trim()
             } else ""
+            val taluka = etTaluka.text.toString().trim()
             val email = etEmail.text.toString().trim()
             val password = etPassword.text.toString().trim()
             val confirmPassword = etConfirmPassword.text.toString().trim()
 
             // Validation
-            if (name.isEmpty() || dob.isEmpty() || eligibility.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            if (name.isEmpty() || dob.isEmpty() || eligibility.isEmpty() || taluka.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -167,26 +182,42 @@ class SignUpActivity : AppCompatActivity() {
                     if (!user.isEmailVerified) {
                         Toast.makeText(this, "Please verify your email first", Toast.LENGTH_SHORT).show()
                     } else {
-                        // Save to SharedPreferences
-                        val sharedPreferences: SharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
-                        val editor = sharedPreferences.edit()
-                        editor.putString(email, password)
-                        editor.putString("current_user_email", email)
-                        editor.putString("user_name", name)
-                        editor.putString("user_dob", dob)
-                        editor.putString("user_eligibility", eligibility)
-                        editor.putString("user_stream", stream)
-                        editor.putInt("user_age", age)
-                        editor.putBoolean("isLoggedIn", true)
-                        editor.apply()
+                        // Create user data map for Firestore
+                        val userData = hashMapOf(
+                            "name" to name,
+                            "email" to email,
+                            "dateOfBirth" to dob,
+                            "age" to age,
+                            "eligibility" to eligibility,
+                            "stream" to stream,
+                            "taluka" to taluka,
+                            "createdAt" to FieldValue.serverTimestamp(),
+                            "updatedAt" to FieldValue.serverTimestamp()
+                        )
 
-                        Toast.makeText(this, "Account Created Successfully", Toast.LENGTH_SHORT).show()
+                        // Save to Firestore using user's UID as document ID
+                        db.collection("users").document(user.uid)
+                            .set(userData)
+                            .addOnSuccessListener {
+                                // Save minimal data to SharedPreferences for session management
+                                val sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+                                val editor = sharedPreferences.edit()
+                                editor.putString("current_user_uid", user.uid)
+                                editor.putString("current_user_email", email)
+                                editor.putBoolean("isLoggedIn", true)
+                                editor.apply()
 
-                        // Navigate to Dashboard
-                        val intent = Intent(this@SignUpActivity, First::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
-                        finish()
+                                Toast.makeText(this, "Account Created Successfully", Toast.LENGTH_SHORT).show()
+
+                                // Navigate to Dashboard
+                                val intent = Intent(this@SignUpActivity, First::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+                                finish()
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(this, "Failed to save profile: ${e.message}", Toast.LENGTH_LONG).show()
+                            }
                     }
                 } else {
                     Toast.makeText(this, "Failed to check verification status.", Toast.LENGTH_SHORT).show()
@@ -266,6 +297,17 @@ class SignUpActivity : AppCompatActivity() {
             } else {
                 etStreamOther.visibility = View.GONE
             }
+            dialog.dismiss()
+        }
+        builder.show()
+    }
+
+    private fun showTalukaDialog(options: Array<String>, etTaluka: EditText) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Select Taluka")
+        builder.setItems(options) { dialog, which ->
+            selectedTaluka = options[which]
+            etTaluka.setText(selectedTaluka)
             dialog.dismiss()
         }
         builder.show()

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="280dp"
+    android:viewportWidth="200"
+    android:viewportHeight="280">
+    <!-- Creative: Left Bar, Bubbles -->
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M10,10h10v260H10z" />
+    
+    <!-- Large Name -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M30,20h120v16H30z" />
+    <!-- Subtitle -->
+    <path
+        android:fillColor="#757575"
+        android:pathData="M30,45h80v6H30z" />
+    
+    <!-- Bubble Headers -->
+    <path
+        android:fillColor="#BDBDBD"
+        android:pathData="M30,80h100v10H30z" />
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M30,100h140v2H30z M30,110h120v2H30z M30,120h130v2H30z" />
+
+    <path
+        android:fillColor="#BDBDBD"
+        android:pathData="M30,150h100v10H30z" />
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M30,170h140v2H30z M30,180h120v2H30z" />
+
+    <path
+        android:fillColor="#BDBDBD"
+        android:pathData="M30,210h80v10H30z" />
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M30,230h100v2H30z M30,240h90v2H30z" />
+</vector>

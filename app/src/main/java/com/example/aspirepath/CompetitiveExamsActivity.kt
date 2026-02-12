@@ -69,8 +69,19 @@ class CompetitiveExamsActivity : AppCompatActivity() {
             holder.tvName.text = item
             holder.tvIcon.text = item.first().toString()
             
-            // Generate a random-ish color based on position or name hash if needed, 
-            // but keeping it simple for now, relying on the circle_background color. 
+            // Alternate Background Colors
+            val context = holder.itemView.context
+            val colors = listOf(
+                R.color.pastel_blue,
+                R.color.pastel_purple,
+                R.color.pastel_mint,
+                R.color.pastel_orange,
+                R.color.pastel_pink
+            )
+            val colorRes = colors[position % colors.size]
+            (holder.itemView as androidx.cardview.widget.CardView).setCardBackgroundColor(
+                androidx.core.content.ContextCompat.getColor(context, colorRes)
+            )
         }
 
         override fun getItemCount() = items.size
