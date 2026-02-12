@@ -8,6 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Button
+import android.widget.ScrollView
+import androidx.appcompat.app.AlertDialog
+import android.text.Html
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import androidx.fragment.app.Fragment
 import com.example.aspirepath.R
 import com.github.mikephil.charting.charts.PieChart
@@ -33,81 +39,96 @@ class ProgressAnalysisFragment : Fragment() {
 
     private fun loadDataAndSetupViews() {
         val view = view ?: return
-        
-        // Fetch data from CORRECT SharedPreferences file "QuizScores"
-        val sharedPreferences = requireContext().getSharedPreferences("QuizScores", Context.MODE_PRIVATE)
-
-        val hasPost10 = sharedPreferences.getBoolean("HAS_POST10_DATA", false)
-        val hasPost12 = sharedPreferences.getBoolean("HAS_POST12_DATA", false)
-        val hasPostGrad = sharedPreferences.getBoolean("HAS_POSTGRAD_DATA", false)
+        val user = FirebaseAuth.getInstance().currentUser ?: return
+        val db = FirebaseFirestore.getInstance()
 
         val layoutPost10 = view.findViewById<LinearLayout>(R.id.layoutPost10)
         val layoutPost12 = view.findViewById<LinearLayout>(R.id.layoutPost12)
         val layoutPostGrad = view.findViewById<LinearLayout>(R.id.layoutPostGrad)
         val tvNoData = view.findViewById<TextView>(R.id.tvNoData)
 
-        var hasAnyData = false
+        // Reset visibility
+        layoutPost10.visibility = View.GONE
+        layoutPost12.visibility = View.GONE
+        layoutPostGrad.visibility = View.GONE
+        tvNoData.text = "🔄 Loading your progress from the cloud..."
+        tvNoData.visibility = View.VISIBLE
 
-        // --- Post 10th Section ---
-        if (hasPost10) {
-            hasAnyData = true
-            layoutPost10.visibility = View.VISIBLE
-            
-            val scoreA = sharedPreferences.getInt("POST10_SCORE_A", 0)
-            val scoreB = sharedPreferences.getInt("POST10_SCORE_B", 0)
-            val scoreC = sharedPreferences.getInt("POST10_SCORE_C", 0)
-            val scoreD = sharedPreferences.getInt("POST10_SCORE_D", 0)
-
-            val pieChart = view.findViewById<PieChart>(R.id.pieChartPost10)
-            setupPieChart(pieChart, scoreA, scoreB, scoreC, scoreD, "POST10")
-
-            val tvDesc = view.findViewById<TextView>(R.id.tvDescPost10)
-            tvDesc.text = generateDescription(scoreA, scoreB, scoreC, scoreD, "POST10")
-        } else {
-            layoutPost10.visibility = View.GONE
-        }
-
-        // --- Post 12th Section ---
-        if (hasPost12) {
-            hasAnyData = true
-            layoutPost12.visibility = View.VISIBLE
-            
-            val scoreA = sharedPreferences.getInt("POST12_SCORE_A", 0)
-            val scoreB = sharedPreferences.getInt("POST12_SCORE_B", 0)
-            val scoreC = sharedPreferences.getInt("POST12_SCORE_C", 0)
-            val scoreD = sharedPreferences.getInt("POST12_SCORE_D", 0)
-
-            val pieChart = view.findViewById<PieChart>(R.id.pieChartPost12)
-            setupPieChart(pieChart, scoreA, scoreB, scoreC, scoreD, "POST12")
-
-            val tvDesc = view.findViewById<TextView>(R.id.tvDescPost12)
-            tvDesc.text = generateDescription(scoreA, scoreB, scoreC, scoreD, "POST12")
-        } else {
-            layoutPost12.visibility = View.GONE
-        }
-
-        // --- Post Graduation Section ---
-        if (hasPostGrad) {
-            hasAnyData = true
-            layoutPostGrad.visibility = View.VISIBLE
-            
-            val scoreA = sharedPreferences.getInt("POSTGRAD_SCORE_A", 0)
-            val scoreB = sharedPreferences.getInt("POSTGRAD_SCORE_B", 0)
-            val scoreC = sharedPreferences.getInt("POSTGRAD_SCORE_C", 0)
-            val scoreD = sharedPreferences.getInt("POSTGRAD_SCORE_D", 0)
-
-            val pieChart = view.findViewById<PieChart>(R.id.pieChartPostGrad)
-            setupPieChart(pieChart, scoreA, scoreB, scoreC, scoreD, "POSTGRAD")
-
-            val tvDesc = view.findViewById<TextView>(R.id.tvDescPostGrad)
-            tvDesc.text = generateDescription(scoreA, scoreB, scoreC, scoreD, "POSTGRAD")
-        } else {
-            layoutPostGrad.visibility = View.GONE
-        }
-
-        tvNoData.visibility = if (hasAnyData) View.GONE else View.VISIBLE
+        db.collection("users").document(user.uid)
+            .collection("quizzes")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                var hasAnyData = false
+                
+                for (document in querySnapshot.documents) {
+                    val levelName = document.id
+                    val quizScores = document.get("quiz_scores") as? Map<String, Long> ?: continue
+                    val aiRecommendations = document.getString("ai_recommendations") ?: ""
+                    
+                    hasAnyData = true
+                    
+                    when (levelName) {
+                        "10th_Standard" -> {
+                            layoutPost10.visibility = View.VISIBLE
+                            val sPCM = quizScores["Science_PCM"]?.toInt() ?: 0
+                            val sPCB = quizScores["Science_PCB"]?.toInt() ?: 0
+                            val comm = quizScores["Commerce"]?.toInt() ?: 0
+                            val arts = quizScores["Arts"]?.toInt() ?: 0
+                            
+                            setupPieChart(view.findViewById(R.id.pieChartPost10), sPCM, sPCB, comm, arts, "POST10")
+                            view.findViewById<TextView>(R.id.tvDescPost10).text = generateDescription(sPCM, sPCB, comm, arts, "POST10")
+                            updateCareerPathButton(view.findViewById(R.id.btnViewPathPost10), aiRecommendations)
+                        }
+                        "12th_Standard" -> {
+                            layoutPost12.visibility = View.VISIBLE
+                            val sTech = quizScores["Science_Tech"]?.toInt() ?: 0
+                            val mSoc = quizScores["Medical_Social"]?.toInt() ?: 0
+                            val cBiz = quizScores["Commerce_Biz"]?.toInt() ?: 0
+                            val aCre = quizScores["Arts_Creative"]?.toInt() ?: 0
+                            
+                            setupPieChart(view.findViewById(R.id.pieChartPost12), sTech, mSoc, cBiz, aCre, "POST12")
+                            view.findViewById<TextView>(R.id.tvDescPost12).text = generateDescription(sTech, mSoc, cBiz, aCre, "POST12")
+                            updateCareerPathButton(view.findViewById(R.id.btnViewPathPost12), aiRecommendations)
+                        }
+                        "Postgraduate" -> {
+                            layoutPostGrad.visibility = View.VISIBLE
+                            val aCom = quizScores["Arts_Comm"]?.toInt() ?: 0
+                            val cBiz = quizScores["Commerce_Biz"]?.toInt() ?: 0
+                            val sTec = quizScores["Science_Tech"]?.toInt() ?: 0
+                            val pSkl = quizScores["Practical_Skill"]?.toInt() ?: 0
+                            
+                            setupPieChart(view.findViewById(R.id.pieChartPostGrad), aCom, cBiz, sTec, pSkl, "POSTGRAD")
+                            view.findViewById<TextView>(R.id.tvDescPostGrad).text = generateDescription(aCom, cBiz, sTec, pSkl, "POSTGRAD")
+                            updateCareerPathButton(view.findViewById(R.id.btnViewPathPostGrad), aiRecommendations)
+                        }
+                    }
+                }
+                
+                if (!hasAnyData) {
+                    tvNoData.text = "No analysis data available yet. Take a quiz to see your progress!"
+                    tvNoData.visibility = View.VISIBLE
+                } else {
+                    tvNoData.visibility = View.GONE
+                }
+            }
+            .addOnFailureListener {
+                tvNoData.text = "⚠️ Unable to load progress. Check your connection."
+                tvNoData.visibility = View.VISIBLE
+            }
     }
 
+    private fun updateCareerPathButton(button: Button, recommendations: String) {
+        if (recommendations.isNotEmpty()) {
+            button.visibility = View.VISIBLE
+            button.text = "📊 View My Career Path"
+            button.isEnabled = true
+            button.setOnClickListener {
+                showRecommendationsDialog(recommendations)
+            }
+        } else {
+            button.visibility = View.GONE
+        }
+    }
 
     private fun setupPieChart(pieChart: PieChart, a: Int, b: Int, c: Int, d: Int, type: String) {
         val entries = ArrayList<PieEntry>()
@@ -190,10 +211,35 @@ class ProgressAnalysisFragment : Fragment() {
                 else -> ""
             }
         }
-
         return "Based on your responses, your strongest interest lies in $categoryName.\n\n" +
                "The pie chart above visualizes how your interests are distributed across different fields. " +
                "A larger slice indicates a stronger preference for that particular career path.\n\n" +
                "We recommend exploring careers and courses related to $categoryName to maximize your potential."
+    }
+
+
+    private fun showRecommendationsDialog(recommendations: String) {
+        val dialogView = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(40, 40, 40, 40)
+            setBackgroundColor(Color.WHITE)
+        }
+
+        val scrollView = ScrollView(requireContext())
+        val textView = TextView(requireContext()).apply {
+            textSize = 15f
+            setTextColor(Color.BLACK)
+            setPadding(10, 10, 10, 10)
+            text = Html.fromHtml(recommendations, Html.FROM_HTML_MODE_COMPACT)
+        }
+
+        scrollView.addView(textView)
+        dialogView.addView(scrollView)
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("📊 My Personalized Career Path")
+            .setView(dialogView)
+            .setPositiveButton("Close", null)
+            .show()
     }
 }

@@ -184,17 +184,19 @@ class Post10thActivity : AppCompatActivity() {
         editor.putBoolean("HAS_POST10_DATA", true)
         editor.apply()
 
-        // Save to Firestore interest collection
+        // Save to Firestore category-specific document
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         if (userId != null) {
             val db = FirebaseFirestore.getInstance()
             val quizData = hashMapOf(
-                "quizType" to "post10th",
+                "category_name" to "10th_Standard",
                 "resultType" to resultType,
-                "scoreA" to (scores["A"] ?: 0),
-                "scoreB" to (scores["B"] ?: 0),
-                "scoreC" to (scores["C"] ?: 0),
-                "scoreD" to (scores["D"] ?: 0),
+                "quiz_scores" to mapOf(
+                    "Science_PCM" to (scores["A"] ?: 0),
+                    "Science_PCB" to (scores["B"] ?: 0),
+                    "Commerce" to (scores["C"] ?: 0),
+                    "Arts" to (scores["D"] ?: 0)
+                ),
                 "responses" to userResponses.map { response ->
                     hashMapOf(
                         "questionIndex" to response.questionIndex,
@@ -203,17 +205,16 @@ class Post10thActivity : AppCompatActivity() {
                         "selectedAnswer" to response.selectedAnswerText
                     )
                 },
-                "timestamp" to FieldValue.serverTimestamp(),
-                "updatedAt" to FieldValue.serverTimestamp()
+                "last_attempt_date" to FieldValue.serverTimestamp()
             )
             
-            db.collection("interest").document(userId)
-                .set(quizData)
+            db.collection("users").document(userId)
+                .collection("quizzes").document("10th_Standard")
+                .set(quizData, com.google.firebase.firestore.SetOptions.merge())
                 .addOnSuccessListener {
-                    // Data saved successfully to Firestore
+                    // Data saved successfully
                 }
                 .addOnFailureListener { e ->
-                    // Handle error silently, don't block user flow
                     e.printStackTrace()
                 }
         }

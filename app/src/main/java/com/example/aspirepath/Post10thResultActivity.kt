@@ -117,6 +117,12 @@ class Post10thResultActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        // Initialize Career Path button (invisible until AI results arrive)
+        val btnViewCareerPath = findViewById<Button>(R.id.btnViewCareerPath)
+        btnViewCareerPath.setOnClickListener {
+             // We'll capture the AI text when it arrives
+        }
     }
     
     private fun generateAiJobRecommendations(
@@ -246,6 +252,16 @@ Be specific and practical. Focus on careers achievable after choosing the right 
                         progressBarAi.visibility = View.GONE
                         // Render HTML using Html.fromHtml
                         tvAiRecommendations.text = android.text.Html.fromHtml(aiText, android.text.Html.FROM_HTML_MODE_COMPACT)
+                        
+                        // Show the Career Path dialog button
+                        val btnViewCareerPath = findViewById<Button>(R.id.btnViewCareerPath)
+                        btnViewCareerPath.visibility = View.VISIBLE
+                        btnViewCareerPath.setOnClickListener {
+                            showRecommendationsDialog(aiText)
+                        }
+
+                        // Save Result to Firebase for Persistent Dashboard Access
+                        saveQuizResultToFirebase(aiText, resultType, scoreA, scoreB, scoreC, scoreD)
                     }
                 } else {
                     // Start reading error stream
@@ -285,12 +301,13 @@ Be specific and practical. Focus on careers achievable after choosing the right 
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
             val db = FirebaseFirestore.getInstance()
-            db.collection("interest").document(user.uid)
+            db.collection("users").document(user.uid)
+                .collection("quizzes").document("10th_Standard")
                 .get()
                 .addOnSuccessListener { document ->
                     if (document != null && document.exists()) {
                         try {
-                            // Extract responses safely
+                            // Extract responses safely from standardized structure
                             val responsesList = document.get("responses") as? List<Map<String, Any>>
                             val responsesJson = responsesList?.joinToString(",\n") { 
                                 val qText = it["questionText"] as? String ?: ""
@@ -317,6 +334,64 @@ Be specific and practical. Focus on careers achievable after choosing the right 
         } else {
             generateAiJobRecommendations(resultType, scoreA, scoreB, scoreC, scoreD, null)
         }
+    }
+
+    private fun saveQuizResultToFirebase(
+        aiRecommendations: String,
+        resultType: String,
+        scoreA: Int, scoreB: Int, scoreC: Int, scoreD: Int
+    ) {
+        val user = FirebaseAuth.getInstance().currentUser ?: return
+        val db = FirebaseFirestore.getInstance()
+        
+        val quizData = hashMapOf(
+            "last_attempt_date" to com.google.firebase.Timestamp.now(),
+            "quiz_scores" to mapOf(
+                "Science_PCM" to scoreA,
+                "Science_PCB" to scoreB,
+                "Commerce" to scoreC,
+                "Arts" to scoreD,
+                "Result_Type" to resultType
+            ),
+            "ai_recommendations" to aiRecommendations
+        )
+
+        // Store under /users/{uid}/quizzes/10th_Standard
+        db.collection("users").document(user.uid)
+            .collection("quizzes").document("10th_Standard")
+            .set(quizData, com.google.firebase.firestore.SetOptions.merge())
+            .addOnSuccessListener {
+                android.widget.Toast.makeText(this, "Progress Saved! View your analysis on the Dashboard.", android.widget.Toast.LENGTH_LONG).show()
+            }
+            .addOnFailureListener { e ->
+                e.printStackTrace()
+                // Fail silently or log error, user sees AI result anyway
+            }
+    }
+
+    private fun showRecommendationsDialog(recommendations: String) {
+        val dialogView = android.widget.LinearLayout(this).apply {
+            orientation = android.widget.LinearLayout.VERTICAL
+            setPadding(40, 40, 40, 40)
+            setBackgroundColor(android.graphics.Color.WHITE)
+        }
+
+        val scrollView = android.widget.ScrollView(this)
+        val textView = TextView(this).apply {
+            textSize = 15f
+            setTextColor(android.graphics.Color.BLACK)
+            setPadding(10, 10, 10, 10)
+            text = android.text.Html.fromHtml(recommendations, android.text.Html.FROM_HTML_MODE_COMPACT)
+        }
+
+        scrollView.addView(textView)
+        dialogView.addView(scrollView)
+
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("📊 My Personalized Career Path")
+            .setView(dialogView)
+            .setPositiveButton("Close", null)
+            .show()
     }
 
     override fun onSupportNavigateUp(): Boolean {
