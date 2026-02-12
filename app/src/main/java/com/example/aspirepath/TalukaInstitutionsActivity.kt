@@ -16,8 +16,10 @@ class TalukaInstitutionsActivity : AppCompatActivity() {
     private lateinit var adapter: InstitutionAdapter
     private lateinit var btnColleges: Button
     private lateinit var btnHigherSecondary: Button
+    private lateinit var btnDiploma: Button
+    private lateinit var btnMasters: Button
     
-    private var currentCategory = "College" 
+    private var currentCategory = "College-UG" 
     private var talukaName: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +37,8 @@ class TalukaInstitutionsActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerViewInstitutions)
         btnColleges = findViewById(R.id.btnColleges)
         btnHigherSecondary = findViewById(R.id.btnHigherSecondary)
+        btnDiploma = findViewById(R.id.btnDiploma)
+        btnMasters = findViewById(R.id.btnMasters)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -42,8 +46,8 @@ class TalukaInstitutionsActivity : AppCompatActivity() {
         updateList()
 
         btnColleges.setOnClickListener {
-            if (currentCategory != "College") {
-                currentCategory = "College"
+            if (currentCategory != "College-UG") {
+                currentCategory = "College-UG"
                 updateCategoryButtons()
                 updateList()
             }
@@ -56,28 +60,62 @@ class TalukaInstitutionsActivity : AppCompatActivity() {
                 updateList()
             }
         }
+
+        btnDiploma.setOnClickListener {
+            if (currentCategory != "Diploma") {
+                currentCategory = "Diploma"
+                updateCategoryButtons()
+                updateList()
+            }
+        }
+
+        btnMasters.setOnClickListener {
+            if (currentCategory != "College-PG") {
+                currentCategory = "College-PG"
+                updateCategoryButtons()
+                updateList()
+            }
+        }
     }
 
     private fun updateList() {
         val filteredList = InstitutionData.institutions.filter { institution ->
             val matchTaluka = institution.taluka.equals(talukaName, ignoreCase = true)
-            val matchCategory = if (currentCategory == "College") {
-                 // Match "College" or specific college types if any, but usually just contains "College"
-                 institution.category.contains("College", ignoreCase = true) || institution.category.contains("University", ignoreCase = true) || institution.category.contains("Institute", ignoreCase = true) && !institution.category.contains("Higher Secondary", ignoreCase = true)
-            } else {
-                institution.category.contains("Higher Secondary", ignoreCase = true)
+            
+            val matchCategory = when (currentCategory) {
+                "College-UG" -> {
+                    (institution.category.contains("College", ignoreCase = true) || 
+                     institution.category.contains("University", ignoreCase = true)) &&
+                    !institution.category.contains("Higher Secondary", ignoreCase = true) &&
+                    !institution.name.contains("GTI", ignoreCase = true) &&
+                    !institution.name.contains("ITI", ignoreCase = true) &&
+                     !institution.streamsOrPrograms.contains("Diploma", ignoreCase = true) &&
+                     !institution.streamsOrPrograms.contains("PGDM", ignoreCase = true) &&
+                     !institution.streamsOrPrograms.contains("Postgraduate", ignoreCase = true)
+                }
+                "Higher Secondary" -> {
+                    institution.category.contains("Higher Secondary", ignoreCase = true)
+                }
+                "Diploma" -> {
+                    institution.name.contains("Polytechnic", ignoreCase = true) ||
+                    institution.name.contains("ITI", ignoreCase = true) ||
+                    institution.streamsOrPrograms.contains("Diploma", ignoreCase = true)
+                }
+                "College-PG" -> {
+                    institution.streamsOrPrograms.contains("PGDM", ignoreCase = true) ||
+                    institution.streamsOrPrograms.contains("M.Com", ignoreCase = true) ||
+                    institution.streamsOrPrograms.contains("M.Sc", ignoreCase = true) ||
+                    institution.streamsOrPrograms.contains("MA", ignoreCase = true) ||
+                    institution.streamsOrPrograms.contains("M.Tech", ignoreCase = true) ||
+                    institution.streamsOrPrograms.contains("PhD", ignoreCase = true) ||
+                    institution.streamsOrPrograms.contains("Postgraduate", ignoreCase = true) ||
+                    institution.name.contains("University", ignoreCase = true) ||
+                    institution.name.contains("Management", ignoreCase = true)
+                }
+                else -> false
             }
-            // Simple check based on Explore.kt logic which used "College" and "Higher Secondary"
-            // Let's refine based on Data content.
-            // InstitutionData uses "Higher Secondary" and probably "College".
-            // Let's stick to what's in the data.
-            val simpleMatchCategory = institution.category.equals(currentCategory, ignoreCase = true) 
             
-            // To be safe, let's look at the data again.
-            // The data lines say `category = "Higher Secondary"` or `category = "College"`.
-            // So exact match should work if data is consistent.
-            
-            matchTaluka && simpleMatchCategory
+            matchTaluka && matchCategory
         }
         
         adapter = InstitutionAdapter(filteredList)
@@ -85,18 +123,39 @@ class TalukaInstitutionsActivity : AppCompatActivity() {
     }
 
     private fun updateCategoryButtons() {
-        if (currentCategory == "College") {
-             btnColleges.setBackgroundColor(Color.parseColor("#1976D2")) // Active Blue
-             btnColleges.setTextColor(Color.WHITE)
-             
-             btnHigherSecondary.setBackgroundColor(Color.WHITE)
-             btnHigherSecondary.setTextColor(Color.BLACK)
-        } else {
-             btnColleges.setBackgroundColor(Color.WHITE)
-             btnColleges.setTextColor(Color.BLACK)
-             
-             btnHigherSecondary.setBackgroundColor(Color.parseColor("#1976D2"))
-             btnHigherSecondary.setTextColor(Color.WHITE)
+        val activeColor = Color.parseColor("#1976D2")
+        val inactiveColor = Color.WHITE
+        val activeTextColor = Color.WHITE
+        val inactiveTextColor = Color.BLACK
+
+        // Reset all
+        btnColleges.setBackgroundColor(inactiveColor)
+        btnColleges.setTextColor(inactiveTextColor)
+        btnHigherSecondary.setBackgroundColor(inactiveColor)
+        btnHigherSecondary.setTextColor(inactiveTextColor)
+        btnDiploma.setBackgroundColor(inactiveColor)
+        btnDiploma.setTextColor(inactiveTextColor)
+        btnMasters.setBackgroundColor(inactiveColor)
+        btnMasters.setTextColor(inactiveTextColor)
+
+        // Set active
+        when (currentCategory) {
+            "College-UG" -> {
+                btnColleges.setBackgroundColor(activeColor)
+                btnColleges.setTextColor(activeTextColor)
+            }
+            "Higher Secondary" -> {
+                btnHigherSecondary.setBackgroundColor(activeColor)
+                btnHigherSecondary.setTextColor(activeTextColor)
+            }
+            "Diploma" -> {
+                btnDiploma.setBackgroundColor(activeColor)
+                btnDiploma.setTextColor(activeTextColor)
+            }
+            "College-PG" -> {
+                btnMasters.setBackgroundColor(activeColor)
+                btnMasters.setTextColor(activeTextColor)
+            }
         }
     }
 }

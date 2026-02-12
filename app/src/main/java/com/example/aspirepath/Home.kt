@@ -23,7 +23,7 @@ class Home : Fragment() {
         val cardCareerQuiz = view.findViewById<CardView>(R.id.cardCareerQuiz)
         val cardShippingInstitute = view.findViewById<CardView>(R.id.cardShippingInstitute)
         val cardSuccessStories = view.findViewById<CardView>(R.id.cardSuccessStories)
-        val tvGreeting = view.findViewById<android.widget.TextView>(R.id.tvGreeting)
+        val tvUserName = view.findViewById<TextView>(R.id.tvUserName)
         val tvDailyQuote = view.findViewById<TextView>(R.id.tvDailyQuote)
 
         // Daily Insight - picks a new random quote each time the app is opened
@@ -62,19 +62,15 @@ class Home : Fragment() {
                 .addOnSuccessListener { document ->
                     if (document != null && document.exists()) {
                         val name = document.getString("name") ?: "User"
-                        val fullText = "Hey $name\nWelcome to Aspire Path"
-                        tvGreeting.text = fullText
-                        tvGreeting.setTypeface(null, android.graphics.Typeface.BOLD)
+                        tvUserName.text = "$name ✨"
                     }
                 }
                 .addOnFailureListener {
-                    tvGreeting.text = "Hey User\nWelcome to Aspire Path"
-                    tvGreeting.setTypeface(null, android.graphics.Typeface.BOLD)
+                    tvUserName.text = "User ✨"
                 }
         } else {
              // Fallback if no UID found (e.g. debugging instantly without login)
-             tvGreeting.text = "Hey User\nWelcome to Aspire Path"
-             tvGreeting.setTypeface(null, android.graphics.Typeface.BOLD)
+             tvUserName.text = "User ✨"
         }
 
         cardTrendingJobs.setOnClickListener {
@@ -97,11 +93,7 @@ class Home : Fragment() {
             startActivity(intent)
         }
         
-        val cardCvMaker = view.findViewById<CardView>(R.id.cardCvMaker)
-        cardCvMaker.setOnClickListener {
-            val intent = Intent(activity, CvTemplatesActivity::class.java)
-            startActivity(intent)
-        }
+
 
         // Add resource cards click listeners
         val cardNEP = view.findViewById<CardView>(R.id.cardNEP)

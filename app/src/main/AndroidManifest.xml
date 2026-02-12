@@ -78,14 +78,7 @@
             android:name=".ManageAccountActivity"
             android:exported="false"
             android:parentActivityName=".First"/>
-        <activity
-            android:name=".CvTemplatesActivity"
-            android:exported="false"
-            android:parentActivityName=".First"/>
-        <activity
-            android:name=".CvEditorActivity"
-            android:exported="false"
-            android:parentActivityName=".CvTemplatesActivity"/>
+
         <activity
             android:name=".WelcomeActivity"
             android:exported="true"/>

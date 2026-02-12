@@ -42,11 +42,15 @@ class Profile : Fragment() {
     private lateinit var tvProfileAge: TextView
     private lateinit var tvProfileEligibility: TextView
     private lateinit var tvProfileStream: TextView
+    private lateinit var tvProfileGender: TextView
+    private lateinit var tvProfileTaluka: TextView
     private lateinit var layoutDOB: View
     private lateinit var dividerDOB: View
     private lateinit var layoutAge: View
     private lateinit var dividerAge: View
     private lateinit var layoutStream: View
+    private lateinit var layoutGender: View
+    private lateinit var layoutTaluka: View
 
     private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
@@ -83,12 +87,16 @@ class Profile : Fragment() {
         tvProfileAge = view.findViewById(R.id.tvProfileAge)
         tvProfileEligibility = view.findViewById(R.id.tvProfileEligibility)
         tvProfileStream = view.findViewById(R.id.tvProfileStream)
+        tvProfileGender = view.findViewById(R.id.tvProfileGender)
+        tvProfileTaluka = view.findViewById(R.id.tvProfileTaluka)
 
         layoutDOB = view.findViewById(R.id.layoutDOB)
         dividerDOB = view.findViewById(R.id.dividerDOB)
         layoutAge = view.findViewById(R.id.layoutAge)
         dividerAge = view.findViewById(R.id.dividerAge)
         layoutStream = view.findViewById(R.id.layoutStream)
+        layoutGender = view.findViewById(R.id.layoutGender)
+        layoutTaluka = view.findViewById(R.id.layoutTaluka)
 
         // Get current user
         val currentUser = auth.currentUser
@@ -110,12 +118,7 @@ class Profile : Fragment() {
             Toast.makeText(requireContext(), "User not logged in", Toast.LENGTH_SHORT).show()
         }
 
-        // My Resume Click Listener
-        val cardMyResume = view.findViewById<CardView>(R.id.cardMyResume)
-        cardMyResume?.setOnClickListener {
-            val intent = Intent(requireContext(), CvEditorActivity::class.java)
-            startActivity(intent)
-        }
+
 
         return view
     }
@@ -139,6 +142,8 @@ class Profile : Fragment() {
                     val age = document.getLong("age")?.toInt() ?: 0
                     val eligibility = document.getString("eligibility") ?: "N/A"
                     val stream = document.getString("stream") ?: ""
+                    val gender = document.getString("gender") ?: "N/A"
+                    val taluka = document.getString("taluka") ?: "N/A"
 
                     // Set initials
                     val initials = getInitials(name)
@@ -176,6 +181,22 @@ class Profile : Fragment() {
                     } else {
                         tvProfileStream.text = stream
                         layoutStream.visibility = View.VISIBLE
+                    }
+
+                    // Gender field (conditional)
+                    if (gender == "N/A" || gender.isEmpty()) {
+                        layoutGender.visibility = View.GONE
+                    } else {
+                        tvProfileGender.text = gender
+                        layoutGender.visibility = View.VISIBLE
+                    }
+
+                    // Taluka field (conditional)
+                    if (taluka == "N/A" || taluka.isEmpty()) {
+                        layoutTaluka.visibility = View.GONE
+                    } else {
+                        tvProfileTaluka.text = taluka
+                        layoutTaluka.visibility = View.VISIBLE
                     }
                 }
             }

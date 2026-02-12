@@ -90,6 +90,21 @@
         android:drawableEnd="@android:drawable/arrow_down_float"
         android:visibility="gone" />
 
+    <!-- Gender Input -->
+    <EditText
+        android:id="@+id/etGender"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_text_background_transparent"
+        android:hint="Select Gender"
+        android:focusable="false"
+        android:clickable="true"
+        android:padding="10dp"
+        android:drawableStart="@drawable/ic_person"
+        android:drawablePadding="8dp"
+        android:drawableEnd="@android:drawable/arrow_down_float" />
+
     <!-- Stream Other (Conditional - when Other is selected) -->
     <EditText
         android:id="@+id/etStreamOther"

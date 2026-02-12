@@ -16,27 +16,54 @@
         <!-- Greeting Text -->
 
         <!-- Trending Jobs Card -->
+        <!-- Greeting Section -->
         <TextView
-            android:id="@+id/tvGreeting"
+            android:id="@+id/tvHey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Hey User\nWelcome to Aspire Path"
-            android:textColor="@color/text_primary"
-            android:textSize="36sp"
-            android:textStyle="bold"
+            android:text="HEY"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.1"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="User ✨"
+            android:fontFamily="serif"
+            android:textColor="#7B68EE"
+            android:textSize="32sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvHey" />
+
+        <TextView
+            android:id="@+id/tvWelcomeSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Welcome to Aspire Path"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUserName" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardTrendingJobs"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             app:cardCornerRadius="24dp"
             app:cardElevation="0dp"
             app:cardBackgroundColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/tvGreeting">
+            app:layout_constraintTop_toBottomOf="@id/tvWelcomeSubtitle">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -371,73 +398,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardCvMaker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/card_bg_success"
-            app:layout_constraintTop_toBottomOf="@id/cardSuccessStories">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="20dp">
-
-                <ImageView
-                    android:id="@+id/ivCvMaker"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/baseline_list_24"
-                    app:tint="@color/icon_tint_success"
-                    android:background="@drawable/circle_background"
-                    android:backgroundTint="@color/white"
-                    android:padding="8dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-                <TextView
-                    android:id="@+id/tvCvTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="CV Maker"
-                    android:textColor="@color/text_primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginStart="16dp"
-                    app:layout_constraintStart_toEndOf="@id/ivCvMaker"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/tvCvDesc"
-                    app:layout_constraintVertical_chainStyle="packed"/>
-
-                <TextView
-                    android:id="@+id/tvCvDesc"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Create professional resumes in minutes"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="14sp"
-                    android:layout_marginStart="16dp"
-                    app:layout_constraintStart_toEndOf="@id/ivCvMaker"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCvTitle"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_arrow_forward"
-                    app:tint="@color/text_secondary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
         <!-- NEP Information Card -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardNEP"
@@ -450,7 +410,7 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
-            app:layout_constraintTop_toBottomOf="@id/cardCvMaker">
+            app:layout_constraintTop_toBottomOf="@id/cardSuccessStories">
 
             <LinearLayout
                 android:layout_width="match_parent"
