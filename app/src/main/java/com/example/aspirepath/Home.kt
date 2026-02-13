@@ -10,6 +10,8 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import com.example.aspirepath.utils.ViewExtensions.applyPopEffect
+
 class Home : Fragment() {
 
     override fun onCreateView(
@@ -21,10 +23,14 @@ class Home : Fragment() {
 
         val cardTrendingJobs = view.findViewById<CardView>(R.id.cardTrendingJobs)
         val cardCareerQuiz = view.findViewById<CardView>(R.id.cardCareerQuiz)
-        val cardShippingInstitute = view.findViewById<CardView>(R.id.cardShippingInstitute)
         val cardSuccessStories = view.findViewById<CardView>(R.id.cardSuccessStories)
         val tvUserName = view.findViewById<TextView>(R.id.tvUserName)
         val tvDailyQuote = view.findViewById<TextView>(R.id.tvDailyQuote)
+
+        // Apply Pop Effect
+        cardTrendingJobs.applyPopEffect()
+        cardCareerQuiz.applyPopEffect()
+        cardSuccessStories.applyPopEffect()
 
         // Daily Insight - picks a new random quote each time the app is opened
         val dailyQuotes = listOf(
@@ -83,10 +89,7 @@ class Home : Fragment() {
             startActivity(intent)
         }
 
-        cardShippingInstitute.setOnClickListener {
-            val intent = Intent(activity, ShippingInstitutesActivity::class.java)
-            startActivity(intent)
-        }
+
         
         cardSuccessStories.setOnClickListener {
             val intent = Intent(activity, SuccessStoriesActivity::class.java)
@@ -99,15 +102,11 @@ class Home : Fragment() {
         val cardNEP = view.findViewById<CardView>(R.id.cardNEP)
         val cardScholarships = view.findViewById<CardView>(R.id.cardScholarships)
         val cardEntranceExams = view.findViewById<CardView>(R.id.cardEntranceExams)
-        val btnNEP = view.findViewById<android.widget.Button>(R.id.btnNEP)
         
-        btnNEP.setOnClickListener {
-            val url = "https://share.google/r7LQNfhTX76IyCk0e"
-            val intent = android.content.Intent(android.content.Intent.ACTION_VIEW)
-            intent.data = android.net.Uri.parse(url)
-            startActivity(intent)
-        }
-        
+        cardNEP.applyPopEffect()
+        cardScholarships.applyPopEffect()
+        cardEntranceExams.applyPopEffect()
+
         cardNEP.setOnClickListener {
             val url = "https://share.google/r7LQNfhTX76IyCk0e"
             val intent = android.content.Intent(android.content.Intent.ACTION_VIEW)

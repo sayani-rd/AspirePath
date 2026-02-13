@@ -27,6 +27,8 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 
+import com.example.aspirepath.utils.ViewExtensions.applyPopEffect
+
 class Profile : Fragment() {
 
     private lateinit var auth: FirebaseAuth
@@ -97,6 +99,16 @@ class Profile : Fragment() {
         layoutStream = view.findViewById(R.id.layoutStream)
         layoutGender = view.findViewById(R.id.layoutGender)
         layoutTaluka = view.findViewById(R.id.layoutTaluka)
+
+        // Apply Pop Effect
+        tvInitials.applyPopEffect()
+        cvProfilePicture.applyPopEffect()
+        ivProfileMenu.applyPopEffect()
+        layoutDOB.applyPopEffect()
+        layoutAge.applyPopEffect()
+        layoutStream.applyPopEffect()
+        layoutGender.applyPopEffect()
+        layoutTaluka.applyPopEffect()
 
         // Get current user
         val currentUser = auth.currentUser

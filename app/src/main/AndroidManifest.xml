@@ -97,6 +97,10 @@
             android:exported="false"
             android:parentActivityName=".MainActivity"/>
         <activity
+            android:name=".CategoryInstitutionsActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".ScholarshipActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"/>

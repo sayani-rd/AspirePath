@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.aspirepath.R
 import com.example.aspirepath.models.Institution
 
+import com.example.aspirepath.utils.ViewExtensions.applyPopEffect
+
 class InstitutionAdapter(private var institutions: List<Institution>) :
     RecyclerView.Adapter<InstitutionAdapter.InstitutionViewHolder>() {
 
@@ -33,6 +35,8 @@ class InstitutionAdapter(private var institutions: List<Institution>) :
 
     override fun onBindViewHolder(holder: InstitutionViewHolder, position: Int) {
         val institution = institutions[position]
+
+        holder.itemView.applyPopEffect()
 
         holder.name.text = institution.name
         holder.location.text = institution.location
@@ -67,6 +71,7 @@ class InstitutionAdapter(private var institutions: List<Institution>) :
 
         if (institution.websiteUrl.isNotEmpty()) {
             holder.website.visibility = View.VISIBLE
+            holder.website.applyPopEffect()
             holder.website.setOnClickListener {
                 try {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(institution.websiteUrl))

@@ -22,6 +22,8 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 
+import com.example.aspirepath.utils.ViewExtensions.applyPopEffect
+
 class ProgressAnalysisFragment : Fragment() {
 
     override fun onCreateView(
@@ -122,6 +124,7 @@ class ProgressAnalysisFragment : Fragment() {
             button.visibility = View.VISIBLE
             button.text = "📊 View My Career Path"
             button.isEnabled = true
+            button.applyPopEffect()
             button.setOnClickListener {
                 showRecommendationsDialog(recommendations)
             }
