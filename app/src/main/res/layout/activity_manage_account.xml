@@ -39,26 +39,27 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="24dp"/>
 
-            <!-- Change Password Card -->
+            <!-- Personal Profile Card (Edit Profile Mode) -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvPersonalProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="16dp"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/editProfileContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp"
-                    android:visibility="gone">
+                    android:padding="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Edit Profile"
+                        android:text="Personal Details"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="@color/blue"
@@ -68,7 +69,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp">
-
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etEditName"
                             android:layout_width="match_parent"
@@ -81,20 +81,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp">
-
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etEditDOB"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Date of Birth (DD/MM/YYYY)"
-                            android:inputType="date"/>
+                            android:focusable="false"
+                            android:clickable="true"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                      <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp">
-
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etEditEmail"
                             android:layout_width="match_parent"
@@ -107,43 +106,78 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etEditStream"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Stream (e.g. Science, Commerce)"
-                            android:inputType="text"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp">
-
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etEditGender"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Gender"
                             android:focusable="false"
-                            android:clickable="true"
-                            android:inputType="none"/>
+                            android:clickable="true"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp">
-
+                        android:layout_marginBottom="12dp">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etEditTaluka"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Taluka"
                             android:focusable="false"
-                            android:clickable="true"
-                            android:inputType="none"/>
+                            android:clickable="true"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Academic Info Card (Visible in both modes) -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvAcademicInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                android:layout_marginTop="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Academic Details"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"
+                        android:layout_marginBottom="16dp"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEditQualification"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Qualification"
+                            android:focusable="false"
+                            android:clickable="true"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEditStream"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Stream"
+                            android:focusable="false"
+                            android:clickable="true"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <Button
@@ -156,6 +190,16 @@
                         app:cornerRadius="26dp"/>
 
                 </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Security Card (Manage Account Mode) -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvSecurity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                android:layout_marginTop="16dp">
 
                 <LinearLayout
                     android:id="@+id/changePasswordContainer"
@@ -173,14 +217,6 @@
                         android:textColor="@color/blue"
                         android:layout_marginBottom="8dp"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Update your password to keep your account secure."
-                        android:textSize="14sp"
-                        android:textColor="#666666"
-                        android:layout_marginBottom="16dp"/>
-
                     <Button
                         android:id="@+id/btnChangePassword"
                         android:layout_width="match_parent"
@@ -191,7 +227,6 @@
                         android:backgroundTint="@color/bblue"
                         app:cornerRadius="26dp"/>
 
-                    <!-- Password Change Form (Initially Hidden) -->
                     <LinearLayout
                         android:id="@+id/passwordChangeForm"
                         android:layout_width="match_parent"
@@ -200,92 +235,57 @@
                         android:layout_marginTop="16dp"
                         android:visibility="gone">
 
-                        <!-- Current Password -->
-                        <com.google.android.material.textfield.TextInputLayout
+                        <EditText
+                            android:id="@+id/etCurrentPassword"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="12dp"
-                            app:hintEnabled="false"
-                            app:passwordToggleEnabled="true">
+                            android:layout_height="52dp"
+                            android:hint="Current Password"
+                            android:inputType="textPassword"
+                            android:padding="12dp"
+                            android:background="@drawable/edit_text_background_transparent"
+                            android:drawableStart="@drawable/ic_lock"
+                            android:drawablePadding="8dp"/>
 
-                            <EditText
-                                android:id="@+id/etCurrentPassword"
-                                android:layout_width="match_parent"
-                                android:layout_height="52dp"
-                                android:hint="Current Password"
-                                android:inputType="textPassword"
-                                android:padding="12dp"
-                                android:background="@drawable/edit_text_background_transparent"
-                                android:textSize="16sp"
-                                android:drawableStart="@drawable/ic_lock"
-                                android:drawablePadding="8dp"
-                                android:paddingEnd="45dp"/>
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <!-- New Password -->
-                        <com.google.android.material.textfield.TextInputLayout
+                        <EditText
+                            android:id="@+id/etNewPassword"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="12dp"
-                            app:hintEnabled="false"
-                            app:passwordToggleEnabled="true">
+                            android:layout_height="52dp"
+                            android:hint="New Password"
+                            android:inputType="textPassword"
+                            android:padding="12dp"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/edit_text_background_transparent"
+                            android:drawableStart="@drawable/ic_lock"
+                            android:drawablePadding="8dp"/>
 
-                            <EditText
-                                android:id="@+id/etNewPassword"
-                                android:layout_width="match_parent"
-                                android:layout_height="52dp"
-                                android:hint="New Password"
-                                android:inputType="textPassword"
-                                android:padding="12dp"
-                                android:background="@drawable/edit_text_background_transparent"
-                                android:textSize="16sp"
-                                android:drawableStart="@drawable/ic_lock"
-                                android:drawablePadding="8dp"
-                                android:paddingEnd="45dp"/>
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <!-- Confirm Password -->
-                        <com.google.android.material.textfield.TextInputLayout
+                        <EditText
+                            android:id="@+id/etConfirmPassword"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="16dp"
-                            app:hintEnabled="false"
-                            app:passwordToggleEnabled="true">
-
-                            <EditText
-                                android:id="@+id/etConfirmPassword"
-                                android:layout_width="match_parent"
-                                android:layout_height="52dp"
-                                android:hint="Confirm Password"
-                                android:inputType="textPassword"
-                                android:padding="12dp"
-                                android:background="@drawable/edit_text_background_transparent"
-                                android:textSize="16sp"
-                                android:drawableStart="@drawable/ic_lock"
-                                android:drawablePadding="8dp"
-                                android:paddingEnd="45dp"/>
-
-                        </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_height="52dp"
+                            android:hint="Confirm Password"
+                            android:inputType="textPassword"
+                            android:padding="12dp"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/edit_text_background_transparent"
+                            android:drawableStart="@drawable/ic_lock"
+                            android:drawablePadding="8dp"/>
 
                         <Button
                             android:id="@+id/btnResetPassword"
                             android:layout_width="match_parent"
                             android:layout_height="52dp"
+                            android:layout_marginTop="16dp"
                             android:text="Reset Password"
-                            android:textAllCaps="false"
                             android:textColor="#FFFFFF"
                             android:backgroundTint="@color/bblue"
                             app:cornerRadius="26dp"/>
-
                     </LinearLayout>
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <!-- Danger Zone Card -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvDangerZone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="12dp"
@@ -301,19 +301,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Delete Account"
+                        android:text="Danger Zone"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="#D32F2F"
                         android:layout_marginBottom="8dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Once you delete your account, there is no going back. Please be certain."
-                        android:textSize="14sp"
-                        android:textColor="#666666"
-                        android:layout_marginBottom="16dp"/>
 
                     <Button
                         android:id="@+id/btnDeleteAccount"
@@ -329,5 +321,4 @@
 
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>

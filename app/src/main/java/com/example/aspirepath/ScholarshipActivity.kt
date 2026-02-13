@@ -4,14 +4,18 @@ import android.os.Bundle
 import com.example.aspirepath.R
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aspirepath.adapter.ScholarshipAdapter
 import com.example.aspirepath.models.Scholarship
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 
 class ScholarshipActivity : AppCompatActivity() {
 
@@ -20,10 +24,10 @@ class ScholarshipActivity : AppCompatActivity() {
     private var allScholarships: ArrayList<Scholarship> = ArrayList()
     private var displayedScholarships: ArrayList<Scholarship> = ArrayList()
     
-    // User Profile Data
-    private var userEligibility: String = ""
-    private var userStream: String = ""
-    private var isRecommendationActive: Boolean = true // Default to showing recommendations
+    // Filter State
+    private var selectedQualification: String = "Any"
+    private var selectedCaste: String = "Any"
+    private var selectedGender: String = "Any"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +47,6 @@ class ScholarshipActivity : AppCompatActivity() {
 
         adapter = ScholarshipAdapter(this, displayedScholarships)
         recyclerView.adapter = adapter
-        
-        // Fetch User Data for Recommendations
-        fetchUserData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -56,76 +57,80 @@ class ScholarshipActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_toggle_filter -> {
-                isRecommendationActive = !isRecommendationActive
-                if (isRecommendationActive) {
-                    item.title = "Show All"
-                    Toast.makeText(this, "Showing Recommended Scholarships", Toast.LENGTH_SHORT).show()
-                } else {
-                    item.title = "Filter Recommended"
-                    Toast.makeText(this, "Showing All Scholarships", Toast.LENGTH_SHORT).show()
-                }
-                applyFilters()
+                showFilterDialog()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun fetchUserData() {
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
-            FirebaseFirestore.getInstance().collection("users").document(user.uid)
-                .get()
-                .addOnSuccessListener { document ->
-                    if (document != null && document.exists()) {
-                        userEligibility = document.getString("eligibility") ?: ""
-                        userStream = document.getString("stream") ?: ""
-                        
-                        // After fetching, apply filters automatically
-                        applyFilters()
-                        Toast.makeText(this, "Scholarships recommended for you!", Toast.LENGTH_SHORT).show()
-                    }
-                }
+    private fun showFilterDialog() {
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.dialog_filter_scholarship, null)
+        
+        val chipGroupQual = view.findViewById<ChipGroup>(R.id.chipGroupQualification)
+        val chipGroupCaste = view.findViewById<ChipGroup>(R.id.chipGroupCaste)
+        val chipGroupGender = view.findViewById<ChipGroup>(R.id.chipGroupGender)
+        val btnApply = view.findViewById<Button>(R.id.btnApplyFilters)
+        val btnReset = view.findViewById<Button>(R.id.btnResetFilters)
+        
+        btnApply.setOnClickListener {
+            val selectedQualId = chipGroupQual.checkedChipId
+            selectedQualification = if (selectedQualId != -1) {
+                view.findViewById<Chip>(selectedQualId).text.toString()
+            } else "Any"
+
+            val selectedCasteId = chipGroupCaste.checkedChipId
+            selectedCaste = if (selectedCasteId != -1) {
+                view.findViewById<Chip>(selectedCasteId).text.toString()
+            } else "Any"
+
+            val selectedGenderId = chipGroupGender.checkedChipId
+            selectedGender = if (selectedGenderId != -1) {
+                view.findViewById<Chip>(selectedGenderId).text.toString()
+            } else "Any"
+
+            applyManualFilters()
+            dialog.dismiss()
         }
+
+        btnReset.setOnClickListener {
+            selectedQualification = "Any"
+            selectedCaste = "Any"
+            selectedGender = "Any"
+            applyManualFilters()
+            dialog.dismiss()
+        }
+
+        dialog.setContentView(view)
+        dialog.show()
     }
 
-    private fun applyFilters() {
-        if (!isRecommendationActive) {
-            adapter.updateList(allScholarships)
-            return
-        }
-
+    private fun applyManualFilters() {
         val filteredList = allScholarships.filter { scholarship ->
-            isScholarshipApplicable(scholarship)
+            val matchesQual = selectedQualification == "Any" || 
+                             scholarship.minQualification.contains(selectedQualification, true) ||
+                             scholarship.eligibleCourses.any { it.contains(selectedQualification, true) } ||
+                             (selectedQualification.contains("Graduate", true) && scholarship.eligibleCourses.any { it.contains("UG", true) }) ||
+                             (selectedQualification.contains("Postgraduate", true) && scholarship.eligibleCourses.any { it.contains("PG", true) })
+
+            val matchesCaste = selectedCaste == "Any" || 
+                              selectedCaste.contains("General", true) || 
+                              scholarship.eligibleCategories.any { it.contains(selectedCaste, true) } ||
+                              scholarship.caste.any { it.contains(selectedCaste, true) } ||
+                              scholarship.eligibleCategories.isEmpty()
+
+            val matchesGender = selectedGender == "Any" || 
+                               scholarship.gender.equals("Any", true) || 
+                               scholarship.gender.equals(selectedGender, true)
+
+            matchesQual && matchesCaste && matchesGender
         }
-        
+
+        adapter.updateList(ArrayList(filteredList))
         if (filteredList.isEmpty()) {
-             Toast.makeText(this, "No specific matches found. Showing all.", Toast.LENGTH_SHORT).show()
-             adapter.updateList(allScholarships)
-        } else {
-             adapter.updateList(ArrayList(filteredList))
+            Toast.makeText(this, "No scholarships match your filters.", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private fun isScholarshipApplicable(scholarship: Scholarship): Boolean {
-        // 1. Check Course Level Eligibility
-        var isCourseMatch = true
-        if (scholarship.eligibleCourses.isNotEmpty()) {
-            isCourseMatch = scholarship.eligibleCourses.any { course ->
-                (userEligibility.contains("10th", true) && (course.contains("11th", true) || course.contains("12th", true) || course.contains("Post-Matric", true))) ||
-                (userEligibility.contains("12th", true) && course.contains("UG", true)) ||
-                (userEligibility.contains("Graduate", true) && !userEligibility.contains("Post", true) && course.contains("PG", true)) ||
-                (userEligibility.contains("Postgraduate", true) && (course.contains("PhD", true) || course.contains("Research", true))) ||
-                course.equals("Any", true)
-            }
-        }
-
-        // 2. Check Stream Eligibility
-        var isStreamMatch = true
-        // If scholarship specifies streams (e.g. ["Science", "Tech"]), check if user stream matches
-        // Implementation omitted for now as most in list are general, but can be added here.
-        
-        return isCourseMatch && isStreamMatch
     }
 
     private fun loadScholarshipsData() {
@@ -140,7 +145,9 @@ class ScholarshipActivity : AppCompatActivity() {
                 "Financial support for students participating in international conferences.",
                 "https://www.unigoa.ac.in/uploads/confg_docs/20190927.123221~Guidelines_for_students.pdf",
                 "https://www.unigoa.ac.in/systems/c/welfare/funding-support.html",
-                eligibleCourses = listOf("PhD", "Research", "Postgraduate")
+                eligibleCourses = listOf("PhD", "Research", "Postgraduate"),
+                minQualification = "Postgraduate (PG)",
+                ageLimit = 35
             )
         )
         allScholarships.add(
@@ -151,7 +158,9 @@ class ScholarshipActivity : AppCompatActivity() {
                 "Research studentship for meritorious students.",
                 "https://www.unigoa.ac.in/uploads/confg_docs/20260116.061938~Research_Studentship_25-26.pdf",
                 "https://www.unigoa.ac.in/systems/c/welfare/funding-support.html",
-                eligibleCourses = listOf("PhD", "MPhil", "Research")
+                eligibleCourses = listOf("PhD", "MPhil", "Research"),
+                minQualification = "Postgraduate (PG)",
+                ageLimit = 30
             )
         )
         allScholarships.add(
@@ -162,7 +171,8 @@ class ScholarshipActivity : AppCompatActivity() {
                 "Scheme to help students earn while pursuing their studies.",
                 "https://www.unigoa.ac.in/uploads/confg_docs/20250904.114734~Circular_EWYL_25-26.pdf",
                 "https://www.unigoa.ac.in/systems/c/welfare/funding-support.html",
-                eligibleCourses = listOf("UG", "PG", "Any")
+                eligibleCourses = listOf("UG", "PG", "Any"),
+                minQualification = "12th"
             )
         )
         allScholarships.add(
@@ -173,7 +183,8 @@ class ScholarshipActivity : AppCompatActivity() {
                 "General scholarships offered by the University.",
                 "https://www.unigoa.ac.in/uploads/confg_docs/20251209.073123~Univ_Scholarship_Circular_25-26.pdf",
                 "https://www.unigoa.ac.in/systems/c/welfare/funding-support.html",
-                eligibleCourses = listOf("UG", "PG")
+                eligibleCourses = listOf("UG", "PG"),
+                minQualification = "12th"
             )
         )
 
@@ -187,7 +198,9 @@ class ScholarshipActivity : AppCompatActivity() {
                 "https://www.unigoa.ac.in/uploads/confg_docs/20251028.051354~Gagan_Bharari-Merit_Based_award_25.pdf",
                 "https://cmscholarship.goa.gov.in/",
                 eligibleCategories = listOf("ST"),
-                eligibleCourses = listOf("UG", "PG", "Post-Matric")
+                eligibleCourses = listOf("UG", "PG", "Post-Matric"),
+                minQualification = "10th",
+                caste = listOf("ST")
             )
         )
         allScholarships.add(
@@ -199,7 +212,9 @@ class ScholarshipActivity : AppCompatActivity() {
                 "https://scholarships.gov.in/public/schemeGuidelines/Goa/PMS_for_SCs_Scheme_Guidelines.pdf",
                 "https://scholarships.gov.in/",
                 eligibleCategories = listOf("SC"),
-                eligibleCourses = listOf("Post-Matric", "11th", "12th", "UG", "PG")
+                eligibleCourses = listOf("Post-Matric", "11th", "12th", "UG", "PG"),
+                minQualification = "10th",
+                caste = listOf("SC")
             )
         )
         allScholarships.add(
@@ -210,7 +225,8 @@ class ScholarshipActivity : AppCompatActivity() {
                 "Financial assistance for students with disabilities.",
                 "https://www.unigoa.ac.in/uploads/confg_docs/20250918.065909~Stipend_Student_Disabilities_25.pdf",
                 "https://cmscholarship.goa.gov.in/fhome.aspx",
-                eligibleCategories = listOf("PwD")
+                eligibleCategories = listOf("PwD"),
+                minQualification = "Any"
             )
         )
         allScholarships.add(
@@ -221,7 +237,9 @@ class ScholarshipActivity : AppCompatActivity() {
                 "Research fellowship in Archaeology.",
                 "https://www.unigoa.ac.in/uploads/confg_docs/20250922.090012~Scholar_Archaeo_Scheme-25.pdf",
                 "https://www.unigoa.ac.in/uploads/confg_docs/20250922.085942~Scholar_Archaeo_Appl_Form-25.pdf",
-                eligibleCourses = listOf("PhD", "Research")
+                eligibleCourses = listOf("PhD", "Research"),
+                minQualification = "Postgraduate (PG)",
+                ageLimit = 40
             )
         )
 
@@ -234,7 +252,8 @@ class ScholarshipActivity : AppCompatActivity() {
                 "For Post Graduate studies in recognized institutions.",
                 "https://scholarships.gov.in/public/schemeGuidelines/Guidelines_NATIONAL_SCHOLARSHIP_FOR_POSTGRADUATE_STUDIES_UGC_2324.pdf",
                 "https://scholarships.gov.in/",
-                eligibleCourses = listOf("PG")
+                eligibleCourses = listOf("PG"),
+                minQualification = "Graduate (UG)"
             )
         )
 
@@ -248,7 +267,10 @@ class ScholarshipActivity : AppCompatActivity() {
                 "https://www.unigoa.ac.in/uploads/confg_docs/20251010.064239~Nat_Overseas_Scholar_SC_25.pdf",
                 "https://nosmsje.gov.in/",
                 eligibleCategories = listOf("SC", "ST", "Landless"),
-                eligibleCourses = listOf("PG", "PhD")
+                eligibleCourses = listOf("PG", "PhD"),
+                minQualification = "Graduate (UG)",
+                caste = listOf("SC", "ST"),
+                ageLimit = 35
             )
         )
         allScholarships.add(
@@ -259,7 +281,8 @@ class ScholarshipActivity : AppCompatActivity() {
                 "Scholarships for meritorious students.",
                 "https://www.unigoa.ac.in/uploads/confg_docs/20250922.065942~DCT_Scholarships_2025.pdf",
                 "https://www.dempos.com/dct-scholarship-2025/",
-                eligibleCourses = listOf("UG", "PG", "Any")
+                eligibleCourses = listOf("UG", "PG", "Any"),
+                minQualification = "12th"
             )
         )
         allScholarships.add(
@@ -270,7 +293,8 @@ class ScholarshipActivity : AppCompatActivity() {
                  "For PG students. Apply via Reliance Foundation portal.",
                  "https://www.scholarships.reliancefoundation.org/PG_Scholarship.aspx#lnkScholarships",
                  "https://scholarshipportal.reliancefoundation.org/pg/LoginScholar",
-                 eligibleCourses = listOf("PG")
+                 eligibleCourses = listOf("PG"),
+                 minQualification = "Graduate (UG)"
              )
          )
     }
