@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aspirepath.adapter.InstitutionAdapter
@@ -19,6 +20,8 @@ import com.example.aspirepath.models.Institution
 import com.example.aspirepath.models.InstitutionData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+
+import com.example.aspirepath.utils.ViewExtensions.applyPopEffect
 
 class Explore : Fragment() {
 
@@ -39,6 +42,15 @@ class Explore : Fragment() {
         val recyclerViewNearYou = view.findViewById<RecyclerView>(R.id.recyclerViewNearYou)
         val tvNearYouTitle = view.findViewById<TextView>(R.id.tvNearYouTitle)
         val tvNearYouSeeMore = view.findViewById<TextView>(R.id.tvNearYouSeeMore)
+        val cardHSCTop = view.findViewById<CardView>(R.id.cardHigherSecondaryTop)
+
+        cardHSCTop.applyPopEffect()
+        cardHSCTop.setOnClickListener {
+            val intent = Intent(activity, CategoryInstitutionsActivity::class.java).apply {
+                putExtra("CATEGORY_NAME", "Higher Secondary")
+            }
+            startActivity(intent)
+        }
 
         // Setup Search Results RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -74,12 +86,20 @@ class Explore : Fragment() {
         // Loop through children of GridLayout (CardViews with tags)
         for (i in 0 until gridLayout.childCount) {
              val child = gridLayout.getChildAt(i)
-             val talukaName = child.tag?.toString()
+             val tagName = child.tag?.toString()
              
-             if (!talukaName.isNullOrEmpty()) {
+             if (!tagName.isNullOrEmpty()) {
+                 child.applyPopEffect()
                  child.setOnClickListener {
-                     val intent = Intent(activity, TalukaInstitutionsActivity::class.java)
-                     intent.putExtra("TALUKA_NAME", talukaName)
+                     val intent = if (tagName.contains("Colleges") || tagName.contains("Institutes") || tagName.contains("Secondary")) {
+                         Intent(activity, CategoryInstitutionsActivity::class.java).apply {
+                             putExtra("CATEGORY_NAME", tagName)
+                         }
+                     } else {
+                         Intent(activity, TalukaInstitutionsActivity::class.java).apply {
+                             putExtra("TALUKA_NAME", tagName)
+                         }
+                     }
                      startActivity(intent)
                  }
              }
@@ -112,7 +132,7 @@ class Explore : Fragment() {
 
                         if (nearYouInstitutions.isNotEmpty()) {
                             nearYouSection.visibility = View.VISIBLE
-                            tvNearYouTitle.text = "Near You · $userTaluka"
+                            tvNearYouTitle.text = "Personalized Picks · $userTaluka"
 
                             // See more click - opens TalukaInstitutionsActivity for user's taluka
                             tvNearYouSeeMore.setOnClickListener {

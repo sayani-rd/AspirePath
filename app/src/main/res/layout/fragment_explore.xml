@@ -14,8 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:cardCornerRadius="24dp"
-        app:cardElevation="2dp"
-        app:cardBackgroundColor="@color/white">
+        app:cardElevation="2dp">
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
@@ -34,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        android:background="#FAFAFA"
+        android:background="@android:color/transparent"
         android:padding="8dp"/>
 
     <ScrollView
@@ -46,16 +45,79 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="24dp">
+            android:orientation="vertical">
 
-            <!-- Near You Section (Dynamic based on user's taluka) -->
+            <!-- Section 1: Schooling Level -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Schooling Level"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="8dp"/>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardHigherSecondaryTop"
+                    android:tag="Higher Secondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/pastel_purple"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
+                    
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="20dp">
+                        
+                        <ImageView
+                            android:id="@+id/ivHSCTop"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/circle_background"
+                            android:backgroundTint="#FFFFFF"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_school"
+                            app:tint="#6A1B9A" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Higher Secondary Schools"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="#333333"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@id/ivHSCTop"
+                            android:layout_alignParentStart="true"/>
+                            
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <!-- Section 2: Personalized Picks -->
             <LinearLayout
                 android:id="@+id/nearYouSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:layout_marginBottom="16dp">
 
                 <!-- Near You Header -->
                 <LinearLayout
@@ -72,7 +134,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Near You"
+                        android:text="Personalized Picks"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="#333333"/>
@@ -97,292 +159,35 @@
                     android:clipToPadding="false"/>
             </LinearLayout>
 
-            <!-- Explore Regions Section -->
+            <!-- Section 3: Explore Categories -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Explore Regions"
+                android:text="Explore Colleges"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#333333"
-                android:layout_marginTop="24dp"
-                android:paddingStart="16dp"/>
-            
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Discover institutes in different parts of Goa"
-                android:textSize="14sp"
-                android:textColor="#757575"
                 android:paddingStart="16dp"
-                android:layout_marginBottom="12dp"/>
+                android:paddingEnd="16dp"
+                android:layout_marginBottom="8dp"/>
 
             <GridLayout
                 android:id="@+id/gridLayoutTalukas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnCount="2"
+                android:columnCount="3"
                 android:padding="8dp"
                 android:alignmentMode="alignMargins"
                 android:columnOrderPreserved="false">
 
-                <!-- Pernem (Spanning 2 columns to look special like in design) -->
+                <!-- Engineering -->
                 <androidx.cardview.widget.CardView
-                    android:tag="Pernem"
-                    android:layout_width="match_parent"
-                    android:layout_height="140dp"
-                    android:layout_columnSpan="2"
-                    android:layout_margin="8dp"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/pastel_blue"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground">
-                    
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="20dp">
-                        
-                        <TextView
-                            android:id="@+id/tvPernem"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Pernem"
-                            android:textSize="22sp"
-                            android:textStyle="bold"
-                            android:textColor="#333333"
-                            android:layout_centerVertical="true"/>
-                        
-
-                            
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
-
-                <!-- Bardez -->
-                <androidx.cardview.widget.CardView
-                    android:tag="Bardez"
+                    android:tag="Engineering Colleges"
                     android:layout_width="0dp"
-                    android:layout_height="160dp"
+                    android:layout_height="120dp"
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/pastel_pink"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground">
-                    
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:padding="20dp"
-                        android:gravity="center_vertical">
-                        
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/circle_background"
-                            android:backgroundTint="#FFFFFF"
-                            android:src="@drawable/ic_location_pin"
-                            app:tint="#EC407A"
-                            android:padding="8dp"/>
-                        
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Bardez"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="#333333"
-                            android:layout_marginTop="16dp"/>
-                        
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <!-- Salcete -->
-                <androidx.cardview.widget.CardView
-                    android:tag="Salcete"
-                    android:layout_width="0dp"
-                    android:layout_height="160dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/pastel_mint"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:padding="20dp"
-                        android:gravity="center_vertical">
-                        
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/circle_background"
-                            android:backgroundTint="#FFFFFF"
-                            android:src="@drawable/ic_building"
-                            app:tint="#00897B"
-                            android:padding="8dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Salcete"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="#333333"
-                            android:layout_marginTop="16dp"/>
-
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <!-- Tiswadi -->
-                <androidx.cardview.widget.CardView
-                    android:tag="Tiswadi"
-                    android:layout_width="0dp"
-                    android:layout_height="160dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/pastel_purple"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:padding="20dp"
-                        android:gravity="center_vertical">
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/circle_background"
-                            android:backgroundTint="#FFFFFF"
-                            android:src="@drawable/ic_graduation"
-                            app:tint="#7B1FA2"
-                            android:padding="8dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Tiswadi"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="#333333"
-                            android:layout_marginTop="16dp"/>
-
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <!-- Quepem -->
-                <androidx.cardview.widget.CardView
-                    android:tag="Quepem"
-                    android:layout_width="0dp"
-                    android:layout_height="160dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/pastel_orange"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground">
-                    
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:padding="20dp"
-                        android:gravity="center_vertical">
-
-                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/circle_background"
-                            android:backgroundTint="#FFFFFF"
-                            android:src="@drawable/ic_school"
-                            app:tint="#EF6C00"
-                            android:padding="8dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Quepem"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="#333333"
-                            android:layout_marginTop="16dp"/>
-
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <!-- Mormugao -->
-                <androidx.cardview.widget.CardView
-                    android:tag="Mormugao"
-                    android:layout_width="0dp"
-                    android:layout_height="160dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/pastel_yellow"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:padding="20dp"
-                        android:gravity="center_vertical">
-                        
-                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/circle_background"
-                            android:backgroundTint="#FFFFFF"
-                            android:src="@drawable/ic_ship"
-                            app:tint="#FBC02D"
-                            android:padding="8dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Mormugao"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="#333333"
-                            android:layout_marginTop="16dp"/>
-
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <!-- Ponda -->
-                <androidx.cardview.widget.CardView
-                    android:tag="Ponda"
-                    android:layout_width="0dp"
-                    android:layout_height="160dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    app:cardCornerRadius="24dp"
+                    app:cardCornerRadius="60dp"
                     app:cardElevation="0dp"
                     app:cardBackgroundColor="@color/pastel_blue"
                     android:clickable="true"
@@ -392,36 +197,33 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:padding="20dp"
-                        android:gravity="center_vertical">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/circle_background"
-                            android:backgroundTint="#FFFFFF"
-                            android:src="@drawable/ic_location_pin"
-                            app:tint="#0288D1"
-                            android:padding="8dp"/>
+                        android:gravity="center"
+                        android:padding="8dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ponda"
-                            android:textSize="18sp"
+                            android:text="⚙️"
+                            android:textSize="24sp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Engineering"
+                            android:textSize="11sp"
                             android:textStyle="bold"
                             android:textColor="#333333"
-                            android:layout_marginTop="16dp"/>
-
+                            android:gravity="center"
+                            android:layout_marginTop="4dp"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- Bicholim -->
+                <!-- Medical -->
                 <androidx.cardview.widget.CardView
-                    android:tag="Bicholim"
+                    android:tag="Medical Colleges"
                     android:layout_width="0dp"
-                    android:layout_height="160dp"
+                    android:layout_height="120dp"
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
-                    app:cardCornerRadius="24dp"
+                    app:cardCornerRadius="60dp"
                     app:cardElevation="0dp"
                     app:cardBackgroundColor="@color/pastel_pink"
                     android:clickable="true"
@@ -431,36 +233,33 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:padding="20dp"
-                        android:gravity="center_vertical">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/circle_background"
-                            android:backgroundTint="#FFFFFF"
-                            android:src="@drawable/ic_building"
-                            app:tint="#EC407A"
-                            android:padding="8dp"/>
+                        android:gravity="center"
+                        android:padding="8dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Bicholim"
-                            android:textSize="18sp"
+                            android:text="🩺"
+                            android:textSize="24sp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Medical"
+                            android:textSize="11sp"
                             android:textStyle="bold"
                             android:textColor="#333333"
-                            android:layout_marginTop="16dp"/>
-
+                            android:gravity="center"
+                            android:layout_marginTop="4dp"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- Sanguem -->
+                <!-- Degree -->
                 <androidx.cardview.widget.CardView
-                    android:tag="Sanguem"
+                    android:tag="Degree Colleges"
                     android:layout_width="0dp"
-                    android:layout_height="160dp"
+                    android:layout_height="120dp"
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
-                    app:cardCornerRadius="24dp"
+                    app:cardCornerRadius="60dp"
                     app:cardElevation="0dp"
                     app:cardBackgroundColor="@color/pastel_mint"
                     android:clickable="true"
@@ -470,36 +269,33 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:padding="20dp"
-                        android:gravity="center_vertical">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/circle_background"
-                            android:backgroundTint="#FFFFFF"
-                            android:src="@drawable/ic_school"
-                            app:tint="#00897B"
-                            android:padding="8dp"/>
+                        android:gravity="center"
+                        android:padding="8dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sanguem"
-                            android:textSize="18sp"
+                            android:text="🎓"
+                            android:textSize="24sp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Degree"
+                            android:textSize="11sp"
                             android:textStyle="bold"
                             android:textColor="#333333"
-                            android:layout_marginTop="16dp"/>
-
+                            android:gravity="center"
+                            android:layout_marginTop="4dp"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- Canacona -->
+                <!-- Diploma -->
                 <androidx.cardview.widget.CardView
-                    android:tag="Canacona"
+                    android:tag="Diploma Colleges"
                     android:layout_width="0dp"
-                    android:layout_height="160dp"
+                    android:layout_height="120dp"
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
-                    app:cardCornerRadius="24dp"
+                    app:cardCornerRadius="60dp"
                     app:cardElevation="0dp"
                     app:cardBackgroundColor="@color/pastel_purple"
                     android:clickable="true"
@@ -509,75 +305,33 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:padding="20dp"
-                        android:gravity="center_vertical">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/circle_background"
-                            android:backgroundTint="#FFFFFF"
-                            android:src="@drawable/ic_location_pin"
-                            app:tint="#7B1FA2"
-                            android:padding="8dp"/>
+                        android:gravity="center"
+                        android:padding="8dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Canacona"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="#333333"
-                            android:layout_marginTop="16dp"/>
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <!-- Sattari -->
-                <androidx.cardview.widget.CardView
-                    android:tag="Sattari"
-                    android:layout_width="0dp"
-                    android:layout_height="160dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/pastel_orange"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:padding="20dp"
-                        android:gravity="center_vertical">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/circle_background"
-                            android:backgroundTint="#FFFFFF"
-                            android:src="@drawable/ic_school"
-                            app:tint="#EF6C00"
-                            android:padding="8dp"/>
+                            android:text="📜"
+                            android:textSize="24sp"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sattari"
-                            android:textSize="18sp"
+                            android:text="Diploma"
+                            android:textSize="11sp"
                             android:textStyle="bold"
                             android:textColor="#333333"
-                            android:layout_marginTop="16dp"/>
-
+                            android:gravity="center"
+                            android:layout_marginTop="4dp"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- Dharbandora -->
+                <!-- Shipping -->
                 <androidx.cardview.widget.CardView
-                    android:tag="Dharbandora"
+                    android:tag="Shipping Institutes"
                     android:layout_width="0dp"
-                    android:layout_height="160dp"
+                    android:layout_height="120dp"
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
-                    app:cardCornerRadius="24dp"
+                    app:cardCornerRadius="60dp"
                     app:cardElevation="0dp"
                     app:cardBackgroundColor="@color/pastel_yellow"
                     android:clickable="true"
@@ -587,27 +341,62 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:padding="20dp"
-                        android:gravity="center_vertical">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/circle_background"
-                            android:backgroundTint="#FFFFFF"
-                            android:src="@drawable/ic_building"
-                            app:tint="#FBC02D"
-                            android:padding="8dp"/>
+                        android:gravity="center"
+                        android:padding="8dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Dharbandora"
-                            android:textSize="18sp"
+                            android:text="🚢"
+                            android:textSize="24sp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Shipping"
+                            android:textSize="11sp"
                             android:textStyle="bold"
                             android:textColor="#333333"
-                            android:layout_marginTop="16dp"/>
-
+                            android:gravity="center"
+                            android:layout_marginTop="4dp"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
+                <!-- Hotel Mgmt -->
+                <androidx.cardview.widget.CardView
+                    android:tag="Hotel Management Institutes"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="60dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/pastel_orange"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="4dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="👨‍🍳"
+                            android:textSize="24sp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hotel Management"
+                            android:textSize="9sp"
+                            android:textStyle="bold"
+                            android:textColor="#333333"
+                            android:gravity="center"
+                            android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
 
             </GridLayout>
         </LinearLayout>

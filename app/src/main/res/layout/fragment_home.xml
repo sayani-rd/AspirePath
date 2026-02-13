@@ -195,14 +195,14 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardShippingInstitute"
+            android:id="@+id/cardSuccessStories"
             android:layout_width="0dp"
             android:layout_height="180dp"
             android:layout_marginTop="16dp"
             android:layout_marginStart="8dp"
             app:cardCornerRadius="24dp"
             app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/card_bg_shipping"
+            app:cardBackgroundColor="@color/card_bg_quiz"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guideline_vertical"
             app:layout_constraintTop_toBottomOf="@id/cardTrendingJobs">
@@ -215,8 +215,8 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/directions_boat"
-                    app:tint="@color/icon_tint_shipping"
+                    android:src="@drawable/ic_certificate"
+                    app:tint="@color/icon_tint_success"
                     android:background="@drawable/edit_text_background_rounded"
                     android:backgroundTint="@color/white"
                     android:padding="8dp"
@@ -226,24 +226,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Shipping\nInstitute"
+                    android:text="Success Stories"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@color/text_primary"
                     android:layout_marginTop="12dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/tvShippingDesc"
-                    android:layout_marginBottom="4dp"/>
-                
-                <TextView
-                    android:id="@+id/tvShippingDesc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Explore maritime"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_secondary"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    app:layout_constraintBottom_toBottomOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
@@ -315,16 +304,18 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Grid Row 2 -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardSuccessStories"
+            android:id="@+id/cardEntranceExams"
             android:layout_width="0dp"
-            android:layout_height="140dp"
+            android:layout_height="160dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             app:cardCornerRadius="24dp"
             app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/card_bg_quiz"
+            app:cardBackgroundColor="@color/pastel_blue"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline_vertical"
             app:layout_constraintTop_toBottomOf="@id/cardDailyInsight">
@@ -332,56 +323,17 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="16dp">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_certificate"
-                    app:tint="@color/icon_tint_success"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                android:padding="20dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Success Stories"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_primary"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardEntranceExams"
-            android:layout_width="0dp"
-            android:layout_height="140dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="8dp"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/pastel_orange"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/guideline_vertical"
-            app:layout_constraintTop_toBottomOf="@id/cardDailyInsight">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:id="@+id/tvExamIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:text="📝"
                     android:textSize="24sp"
                     android:gravity="center"
+                    android:background="@drawable/circle_background"
+                    android:backgroundTint="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -389,9 +341,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Competitive\nExams"
-                    android:textSize="14sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/text_primary"
+                    android:layout_marginTop="12dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -401,67 +354,48 @@
         <!-- NEP Information Card -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardNEP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
             android:layout_marginTop="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/pastel_blue"
+            android:layout_marginStart="8dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/pastel_pink"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
-            app:layout_constraintTop_toBottomOf="@id/cardSuccessStories">
+            app:layout_constraintStart_toEndOf="@+id/guideline_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardDailyInsight">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="20dp"
-                android:gravity="center_vertical">
-                
+                android:layout_height="match_parent"
+                android:padding="20dp">
+
                 <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:text="📋"
-                    android:textSize="36sp"
+                    android:textSize="24sp"
                     android:gravity="center"
-                    android:textColor="@color/text_primary"/>
+                    android:background="@drawable/circle_background"
+                    android:backgroundTint="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="National Education Policy"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Learn about NEP 2020 and its impact"
-                        android:textSize="14sp"
-                        android:textColor="@color/text_secondary"
-                        android:layout_marginTop="4dp"/>
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/btnNEP"
+                <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:text="Click Here"
-                    android:textSize="10sp"
-                    android:backgroundTint="@color/blue"
-                    android:textColor="@android:color/white"
-                    android:padding="5dp"
-                    android:gravity="center"/>
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:text="National\nEducation Policy"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
         <!-- Entrance Exams Card -->
@@ -473,11 +407,11 @@
             android:layout_marginTop="16dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/pastel_pink"
+            app:cardBackgroundColor="@color/pastel_orange"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
-            app:layout_constraintTop_toBottomOf="@id/cardNEP">
+            app:layout_constraintTop_toBottomOf="@id/cardEntranceExams">
 
             <LinearLayout
                 android:layout_width="match_parent"

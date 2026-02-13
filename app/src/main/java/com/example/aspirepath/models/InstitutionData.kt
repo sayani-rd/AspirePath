@@ -1298,6 +1298,57 @@ object InstitutionData {
             contactNumber = "",
             email = "",
             websiteUrl = "https://www.unigoa.ac.in"
+        ),
+        // --- SHIPPING INSTITUTES (ADDTIONAL) ---
+        Institution(
+            name = "NUSI Maritime Academy (NMA)",
+            category = "Shipping Institute",
+            taluka = "Salcete",
+            location = "Sucaldem, Chinchinim, Salcete, Goa",
+            streamsOrPrograms = "GP Rating, CCMC (Maritime Catering)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = "https://nusiacademy.edu.in"
+        ),
+        Institution(
+            name = "Institute of Maritime Studies (IMS)",
+            category = "Shipping Institute",
+            taluka = "Mormugao",
+            location = "ISBT Complex, Bogda, Vasco da Gama, Goa",
+            streamsOrPrograms = "GME (Graduate Marine Engineering), DME (Diploma in Marine Engineering)",
+            contactNumber = "",
+            email = "",
+            websiteUrl = "https://imsgoa.org"
+        ),
+        Institution(
+            name = "Sea Scan Maritime Foundation",
+            category = "Shipping Institute",
+            taluka = "Mormugao",
+            location = "Verna Industrial Estate (Phase II) & Chicalim, Goa",
+            streamsOrPrograms = "GP Rating, CCMC, STCW Courses",
+            contactNumber = "",
+            email = "",
+            websiteUrl = "https://seascanmaritime.in"
+        ),
+        Institution(
+            name = "Kamaxi Maritime Academy",
+            category = "Shipping Institute",
+            taluka = "Salcete",
+            location = "Utility Plot No. 1, Phase 1A, Verna Industrial Estate, Verna",
+            streamsOrPrograms = "Basic STCW Safety Training, Cruise Ship Safety",
+            contactNumber = "",
+            email = "",
+            websiteUrl = "https://kamaximaritime.com"
+        ),
+        Institution(
+            name = "Maritime School (Captain of Ports)",
+            category = "Shipping Institute",
+            taluka = "Bardez",
+            location = "Britona, Bardez, Goa",
+            streamsOrPrograms = "New Entrants Training (Deck & Engine Room), Advanced Refresher Course",
+            contactNumber = "",
+            email = "",
+            websiteUrl = "https://ports.goa.gov.in"
         )
     )
 }
