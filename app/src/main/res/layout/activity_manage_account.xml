@@ -18,7 +18,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:padding="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,171 +28,24 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
                 android:text="Account Settings"
-                android:textSize="20sp"
-                android:textStyle="bold"
                 android:textColor="@color/blue"
-                android:shadowColor="#000000"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="2"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="24dp"/>
+                android:textSize="26sp"
+                android:textStyle="bold" />
 
-            <!-- Personal Profile Card (Edit Profile Mode) -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cvPersonalProfile"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
-                android:layout_marginTop="16dp"
-                android:visibility="gone">
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="24dp"
+                android:text="Manage your account security"
+                android:textColor="#666666"
+                android:textSize="14sp" />
 
-                <LinearLayout
-                    android:id="@+id/editProfileContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Personal Details"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/blue"
-                        android:layout_marginBottom="16dp"/>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etEditName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Full Name"
-                            android:inputType="textPersonName"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etEditDOB"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Date of Birth (DD/MM/YYYY)"
-                            android:focusable="false"
-                            android:clickable="true"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etEditEmail"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Email"
-                            android:inputType="textEmailAddress"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etEditGender"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Gender"
-                            android:focusable="false"
-                            android:clickable="true"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etEditTaluka"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Taluka"
-                            android:focusable="false"
-                            android:clickable="true"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Academic Info Card (Visible in both modes) -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cvAcademicInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
-                android:layout_marginTop="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Academic Details"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/blue"
-                        android:layout_marginBottom="16dp"/>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etEditQualification"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Qualification"
-                            android:focusable="false"
-                            android:clickable="true"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etEditStream"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Stream"
-                            android:focusable="false"
-                            android:clickable="true"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <Button
-                        android:id="@+id/btnSaveProfile"
-                        android:layout_width="match_parent"
-                        android:layout_height="52dp"
-                        android:text="Save Changes"
-                        android:textColor="#FFFFFF"
-                        android:backgroundTint="@color/bblue"
-                        app:cornerRadius="26dp"/>
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Security Card (Manage Account Mode) -->
+            <!-- Security Card -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvSecurity"
                 android:layout_width="match_parent"
@@ -215,7 +68,15 @@
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="@color/blue"
-                        android:layout_marginBottom="8dp"/>
+                        android:layout_marginBottom="4dp"/>
+                    
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Update your password to keep your account secure."
+                        android:textSize="14sp"
+                        android:textColor="@color/darker_gray"
+                        android:layout_marginBottom="16dp"/>
 
                     <Button
                         android:id="@+id/btnChangePassword"
@@ -305,7 +166,15 @@
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="#D32F2F"
-                        android:layout_marginBottom="8dp"/>
+                        android:layout_marginBottom="4dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Permanently delete your account and all associated data."
+                        android:textSize="14sp"
+                        android:textColor="@color/darker_gray"
+                        android:layout_marginBottom="16dp"/>
 
                     <Button
                         android:id="@+id/btnDeleteAccount"

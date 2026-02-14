@@ -48,7 +48,7 @@ class SignUpActivity : AppCompatActivity() {
         val tvSignIn = findViewById<TextView>(R.id.tvSignIn)
 
         // Setup Eligibility options
-        val eligibilityOptions = arrayOf("10th Completed", "12th Completed", "Graduate", "Postgraduate")
+        val eligibilityOptions = arrayOf("10th Completed", "12th Completed", "Graduate")
 
         // Eligibility Click Listener
         etEligibility.setOnClickListener {
@@ -290,7 +290,7 @@ class SignUpActivity : AppCompatActivity() {
                 "12th Completed" -> {
                     etStream.visibility = View.VISIBLE
                 }
-                "Graduate", "Postgraduate" -> {
+                "Graduate" -> {
                     etStream.visibility = View.VISIBLE
                 }
             }

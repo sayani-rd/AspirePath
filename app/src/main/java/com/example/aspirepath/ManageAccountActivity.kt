@@ -16,16 +16,6 @@ import com.google.firebase.auth.FirebaseUser
 
 class ManageAccountActivity : AppCompatActivity() {
 
-    private lateinit var etEditName: com.google.android.material.textfield.TextInputEditText
-    private lateinit var etEditDOB: com.google.android.material.textfield.TextInputEditText
-    private lateinit var etEditEmail: com.google.android.material.textfield.TextInputEditText
-    private lateinit var etEditQualification: com.google.android.material.textfield.TextInputEditText
-    private lateinit var etEditStream: com.google.android.material.textfield.TextInputEditText
-    private lateinit var etEditGender: com.google.android.material.textfield.TextInputEditText
-    private lateinit var etEditTaluka: com.google.android.material.textfield.TextInputEditText
-    private lateinit var btnSaveProfile: Button
-    private lateinit var cvPersonalProfile: androidx.cardview.widget.CardView
-    private lateinit var cvAcademicInfo: androidx.cardview.widget.CardView
     private lateinit var cvSecurity: androidx.cardview.widget.CardView
     private lateinit var cvDangerZone: androidx.cardview.widget.CardView
     private lateinit var db: com.google.firebase.firestore.FirebaseFirestore
@@ -45,99 +35,11 @@ class ManageAccountActivity : AppCompatActivity() {
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Account Settings"
         
-        val mode = intent.getStringExtra("MODE") ?: "MANAGE_ACCOUNT"
-
-        cvPersonalProfile = findViewById(R.id.cvPersonalProfile)
-        cvAcademicInfo = findViewById(R.id.cvAcademicInfo)
         cvSecurity = findViewById(R.id.cvSecurity)
         cvDangerZone = findViewById(R.id.cvDangerZone)
         
-        etEditName = findViewById(R.id.etEditName)
-        etEditDOB = findViewById(R.id.etEditDOB)
-        etEditEmail = findViewById(R.id.etEditEmail)
-        etEditQualification = findViewById(R.id.etEditQualification)
-        etEditStream = findViewById(R.id.etEditStream)
-        etEditGender = findViewById(R.id.etEditGender)
-        etEditTaluka = findViewById(R.id.etEditTaluka)
-        btnSaveProfile = findViewById(R.id.btnSaveProfile)
-
-        if (mode == "EDIT_PROFILE") {
-            supportActionBar?.title = "Edit Profile"
-            cvPersonalProfile.visibility = View.VISIBLE
-            cvAcademicInfo.visibility = View.VISIBLE
-            cvSecurity.visibility = View.GONE
-            cvDangerZone.visibility = View.GONE
-            loadProfileData()
-            
-            // Setup DOB click listener
-            etEditDOB.setOnClickListener {
-                val calendar = java.util.Calendar.getInstance()
-                val datePickerDialog = android.app.DatePickerDialog(
-                    this,
-                    { _, year, month, dayOfMonth ->
-                        val formattedDate = String.format("%02d/%02d/%d", dayOfMonth, month + 1, year)
-                        etEditDOB.setText(formattedDate)
-                    },
-                    calendar.get(java.util.Calendar.YEAR),
-                    calendar.get(java.util.Calendar.MONTH),
-                    calendar.get(java.util.Calendar.DAY_OF_MONTH)
-                )
-                datePickerDialog.show()
-            }
-
-            // Setup Qualification click listener
-            val qualificationOptions = arrayOf("10th", "12th", "Undergraduate (UG)", "Postgraduate (PG)", "PhD")
-            etEditQualification.setOnClickListener {
-                AlertDialog.Builder(this)
-                    .setTitle("Select Qualification")
-                    .setItems(qualificationOptions) { _, which ->
-                        etEditQualification.setText(qualificationOptions[which])
-                    }
-                    .show()
-            }
-
-            // Setup Stream click listener
-            val streamOptions = arrayOf("Science", "Commerce", "Arts", "Engineering", "Medical", "Other")
-            etEditStream.setOnClickListener {
-                AlertDialog.Builder(this)
-                    .setTitle("Select Stream")
-                    .setItems(streamOptions) { _, which ->
-                        etEditStream.setText(streamOptions[which])
-                    }
-                    .show()
-            }
-            
-            // Setup Gender click listener
-            val genderOptions = arrayOf("Male", "Female", "Other")
-            etEditGender.setOnClickListener {
-                AlertDialog.Builder(this)
-                    .setTitle("Select Gender")
-                    .setItems(genderOptions) { _, which ->
-                        etEditGender.setText(genderOptions[which])
-                    }
-                    .show()
-            }
-
-            // Setup Taluka click listener
-            val talukaOptions = arrayOf("Pernem", "Bardez", "Tiswadi", "Ponda", "Bicholim", "Sattari", "Dharbandora", "Quepem", "Salcete", "Mormugao", "Sanguem", "Canacona")
-            etEditTaluka.setOnClickListener {
-                AlertDialog.Builder(this)
-                    .setTitle("Select Taluka")
-                    .setItems(talukaOptions) { _, which ->
-                        etEditTaluka.setText(talukaOptions[which])
-                    }
-                    .show()
-            }
-        } else {
-            supportActionBar?.title = "Account Settings"
-            cvPersonalProfile.visibility = View.GONE
-            cvAcademicInfo.visibility = View.VISIBLE
-            cvSecurity.visibility = View.VISIBLE
-            cvDangerZone.visibility = View.VISIBLE
-            loadProfileData() // Pre-fill even in Manage Account mode
-        }
-
         val btnDeleteAccount = findViewById<Button>(R.id.btnDeleteAccount)
         btnChangePassword = findViewById(R.id.btnChangePassword)
         passwordChangeForm = findViewById(R.id.passwordChangeForm)
@@ -145,10 +47,6 @@ class ManageAccountActivity : AppCompatActivity() {
         val etCurrentPassword = findViewById<EditText>(R.id.etCurrentPassword)
         val etNewPassword = findViewById<EditText>(R.id.etNewPassword)
         val etConfirmPassword = findViewById<EditText>(R.id.etConfirmPassword)
-
-        btnSaveProfile.setOnClickListener {
-             saveProfileChanges()
-        }
 
         btnDeleteAccount.setOnClickListener {
             showDeleteConfirmationDialog()
@@ -167,73 +65,6 @@ class ManageAccountActivity : AppCompatActivity() {
                 changePassword(currentPassword, newPassword, etCurrentPassword, etNewPassword, etConfirmPassword)
             }
         }
-    }
-
-    private fun loadProfileData() {
-        val uid = auth.currentUser?.uid ?: return
-        db.collection("users").document(uid).get()
-            .addOnSuccessListener { document ->
-                if (document != null && document.exists()) {
-                    etEditName.setText(document.getString("name"))
-                    etEditDOB.setText(document.getString("dateOfBirth"))
-                    etEditEmail.setText(document.getString("email"))
-                    etEditQualification.setText(document.getString("eligibility"))
-                    etEditStream.setText(document.getString("stream"))
-                    etEditGender.setText(document.getString("gender"))
-                    etEditTaluka.setText(document.getString("taluka"))
-                }
-            }
-            .addOnFailureListener {
-                Toast.makeText(this, "Failed to load profile data", Toast.LENGTH_SHORT).show()
-            }
-    }
-
-    private fun saveProfileChanges() {
-        val uid = auth.currentUser?.uid ?: return
-        val name = etEditName.text.toString().trim()
-        val dob = etEditDOB.text.toString().trim()
-        val email = etEditEmail.text.toString().trim()
-        val qualification = etEditQualification.text.toString().trim()
-        val stream = etEditStream.text.toString().trim()
-        val gender = etEditGender.text.toString().trim()
-        val taluka = etEditTaluka.text.toString().trim()
-
-        if (name.isEmpty()) {
-            Toast.makeText(this, "Name cannot be empty", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val updates = hashMapOf<String, Any>(
-            "name" to name,
-            "dateOfBirth" to dob,
-            "email" to email,
-            "eligibility" to qualification,
-            "stream" to stream,
-            "gender" to gender,
-            "taluka" to taluka
-        )
-        // Recalculate age if DOB changed (simple logic)
-        if (dob.isNotEmpty()) {
-             try {
-                 val parts = dob.split("/")
-                 if (parts.size == 3) {
-                     val year = parts[2].toInt()
-                     val currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)
-                     updates["age"] = currentYear - year
-                 }
-             } catch (e: Exception) {
-                 // Ignore parsing errors
-             }
-        }
-
-        db.collection("users").document(uid).update(updates)
-            .addOnSuccessListener {
-                Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to update profile: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
     }
 
     private fun togglePasswordForm() {
