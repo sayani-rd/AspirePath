@@ -130,6 +130,13 @@ class Home : Fragment() {
             startActivity(intent)
         }
 
+        val cardResumeGenerator = view.findViewById<CardView>(R.id.cardResumeGenerator)
+        cardResumeGenerator.applyPopEffect()
+        cardResumeGenerator.setOnClickListener {
+            val intent = Intent(requireContext(), CVTemplateSelectionActivity::class.java)
+            startActivity(intent)
+        }
+
         // btnMenu listener removed
 
         return view

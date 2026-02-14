@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.services)
     id("kotlin-kapt")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -41,6 +42,7 @@ dependencies {
 
     implementation("com.google.firebase:firebase-auth-ktx:22.0.0")
     implementation("com.google.firebase:firebase-firestore-ktx:24.10.0")
+    implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
     implementation("androidx.core:core-splashscreen:1.0.0")
     implementation("androidx.cardview:cardview:1.0.0")
     
@@ -51,6 +53,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

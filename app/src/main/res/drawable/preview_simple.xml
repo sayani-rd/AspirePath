@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="280dp"
+    android:viewportWidth="200"
+    android:viewportHeight="280">
+    <!-- Simple: Boxed Header -->
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M50,10h100v16H50z" />
+    <path
+        android:fillColor="#333333"
+        android:pathData="M50,10h100v1H50z M50,25h100v1H50z M50,10h1v16H50z M149,10h1v16H149z" /> <!-- Border -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M80,14h40v8H80z" /> <!-- RESUME text -->
+
+    <!-- Personal Info -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M20,40h60v6H20z" /> <!-- Name -->
+    <path
+        android:fillColor="#757575"
+        android:pathData="M20,50h80v2H20z M20,55h60v2H20z" />
+
+    <!-- Section Header (Grey Bar + Bullet) -->
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M20,70h160v12H20z" />
+    <path
+        android:fillColor="#333333"
+        android:pathData="M25,74h4v4H25z" /> <!-- Bullet -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M35,74h60v4H35z" /> <!-- Title -->
+
+    <!-- Content Bullet List -->
+    <path
+        android:fillColor="#757575"
+        android:pathData="M30,90h5v2H30z M40,90h120v2H40z" />
+    <path
+        android:fillColor="#757575"
+        android:pathData="M30,100h5v2H30z M40,100h100v2H40z" />
+
+    <!-- Experience Header -->
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M20,130h160v12H20z" />
+    <path
+        android:fillColor="#333333"
+        android:pathData="M25,134h4v4H25z" />
+    <path
+        android:fillColor="#333333"
+        android:pathData="M35,134h80v4H35z" />
+
+    <!-- Content Key-Value -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M30,150h40v4H30z" /> <!-- Label -->
+    <path
+        android:fillColor="#757575"
+        android:pathData="M80,150h100v4H80z" /> <!-- Value -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M30,160h30v4H30z" />
+    <path
+        android:fillColor="#757575"
+        android:pathData="M80,160h90v4H80z" />
+</vector>

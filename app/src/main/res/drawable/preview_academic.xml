@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="280dp"
+    android:viewportWidth="200"
+    android:viewportHeight="280">
+    <!-- Academic: Header Centered -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M50,15h100v10H50z" />
+    <path
+        android:fillColor="#757575"
+        android:pathData="M60,30h80v4H60z" />
+    <path
+        android:fillColor="#757575"
+        android:pathData="M50,40h100v2H50z" />
+
+    <!-- Personal Profile -->
+    <path
+        android:fillColor="#A93226" 
+        android:pathData="M10,60h50v6H10z" /> <!-- Red Header -->
+    <path
+        android:fillColor="#E67E22" 
+        android:pathData="M10,68h180v2H10z" /> <!-- Orange Line -->
+    <path
+        android:fillColor="#AED6F1"
+        android:pathData="M10,72h180v1H10z" /> <!-- Blue Line -->
+        
+    <path
+        android:fillColor="#757575"
+        android:pathData="M10,80h180v2H10z M10,90h160v2H10z M10,100h170v2H10z" />
+
+    <!-- Achievements -->
+    <path
+        android:fillColor="#A93226" 
+        android:pathData="M10,120h40v6H10z" />
+    <path
+        android:fillColor="#E67E22" 
+        android:pathData="M10,128h180v2H10z" />
+    <path
+        android:fillColor="#AED6F1"
+        android:pathData="M10,132h180v1H10z" />
+        
+    <path
+        android:fillColor="#757575"
+        android:pathData="M10,140h10v2H10z M25,140h160v2H25z" /> <!-- Bullet -->
+    <path
+        android:fillColor="#757575"
+        android:pathData="M10,150h10v2H10z M25,150h140v2H25z" />
+
+    <!-- Education (Columns) -->
+    <path
+        android:fillColor="#A93226" 
+        android:pathData="M10,170h40v6H10z" />
+    <path
+        android:fillColor="#E67E22" 
+        android:pathData="M10,178h180v2H10z" />
+    <path
+        android:fillColor="#AED6F1"
+        android:pathData="M10,182h180v1H10z" />
+        
+    <path
+        android:fillColor="#757575"
+        android:pathData="M10,190h30v4H10z M50,190h50v4H50z M110,190h80v4H110z" />
+    <path
+        android:fillColor="#757575"
+        android:pathData="M10,200h20v2H10z M50,200h40v2H50z" /> <!-- Grade -->
+</vector>
