@@ -123,6 +123,12 @@ class Home : Fragment() {
             val intent = Intent(requireContext(), CompetitiveExamsActivity::class.java)
             startActivity(intent)
         }
+        
+        val cardJobVacancy = view.findViewById<CardView>(R.id.cardJobVacancy)
+        cardJobVacancy.setOnClickListener {
+            val intent = Intent(requireContext(), JobVacancyActivity::class.java)
+            startActivity(intent)
+        }
 
         val cardResumeGenerator = view.findViewById<CardView>(R.id.cardResumeGenerator)
         cardResumeGenerator.applyPopEffect()
