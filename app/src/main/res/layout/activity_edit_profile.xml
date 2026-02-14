@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg2"
+    tools:context=".EditProfileActivity">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/transparent"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:text="Edit Profile"
+                android:textColor="@color/blue"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="24dp"
+                android:text="Update your details below"
+                android:textColor="#666666"
+                android:textSize="14sp" />
+
+            <!-- CardView Container for Form -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Full Name -->
+                    <EditText
+                        android:id="@+id/etName"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edit_text_background_transparent"
+                        android:hint="Full Name"
+                        android:inputType="textPersonName"
+                        android:padding="12dp"
+                        android:drawableStart="@drawable/ic_person"
+                        android:drawablePadding="12dp"
+                        android:layout_marginBottom="16dp"/>
+
+                    <!-- Date of Birth -->
+                    <EditText
+                        android:id="@+id/etDateOfBirth"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edit_text_background_transparent"
+                        android:hint="Date of Birth"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:padding="12dp"
+                        android:drawableStart="@drawable/ic_calendar"
+                        android:drawablePadding="12dp"
+                        android:layout_marginBottom="16dp"/>
+
+                    <!-- Eligibility -->
+                    <EditText
+                        android:id="@+id/etEligibility"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edit_text_background_transparent"
+                        android:hint="Qualification"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:padding="12dp"
+                        android:drawableStart="@drawable/ic_graduation"
+                        android:drawablePadding="12dp"
+                        android:layout_marginBottom="16dp"
+                        android:drawableEnd="@android:drawable/arrow_down_float"/>
+
+                    <!-- Stream (Conditional) -->
+                    <EditText
+                        android:id="@+id/etStream"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edit_text_background_transparent"
+                        android:hint="Select Stream"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:padding="12dp"
+                        android:drawableStart="@drawable/ic_school"
+                        android:drawablePadding="12dp"
+                        android:drawableEnd="@android:drawable/arrow_down_float"
+                        android:visibility="gone"
+                        android:layout_marginBottom="16dp"/>
+
+                    <!-- Stream Other (Conditional) -->
+                    <EditText
+                        android:id="@+id/etStreamOther"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edit_text_background_transparent"
+                        android:hint="Please specify stream"
+                        android:padding="12dp"
+                        android:drawableStart="@drawable/ic_school"
+                        android:drawablePadding="12dp"
+                        android:visibility="gone"
+                        android:layout_marginBottom="16dp"/>
+
+                    <!-- Gender Input -->
+                    <EditText
+                        android:id="@+id/etGender"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edit_text_background_transparent"
+                        android:hint="Select Gender"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:padding="12dp"
+                        android:drawableStart="@drawable/ic_person"
+                        android:drawablePadding="12dp"
+                        android:drawableEnd="@android:drawable/arrow_down_float"
+                        android:layout_marginBottom="16dp"/>
+
+                    <!-- Taluka -->
+                    <EditText
+                        android:id="@+id/etTaluka"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edit_text_background_transparent"
+                        android:hint="Select Taluka"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:padding="12dp"
+                        android:drawableStart="@drawable/ic_location_pin"
+                        android:drawablePadding="12dp"
+                        android:drawableEnd="@android:drawable/arrow_down_float"
+                        android:layout_marginBottom="16dp"/>
+
+                    <!-- Save Button -->
+                    <Button
+                        android:id="@+id/btnSaveChanges"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="8dp"
+                        android:backgroundTint="@color/bblue"
+                        android:text="Save Changes"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        app:cornerRadius="26dp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

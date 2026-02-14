@@ -83,6 +83,11 @@
             android:name=".ManageAccountActivity"
             android:exported="false"
             android:parentActivityName=".First"/>
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
+
 
         <activity
             android:name=".WelcomeActivity"

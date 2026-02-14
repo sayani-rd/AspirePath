@@ -11,7 +11,7 @@
         android:icon="@drawable/baseline_saved_search_24"/>
     <item
         android:id="@+id/progress"
-        android:title="Progress Analysis"
+        android:title="Progress"
         android:icon="@drawable/baseline_moving_24"/>
     <item
         android:id="@+id/profile"

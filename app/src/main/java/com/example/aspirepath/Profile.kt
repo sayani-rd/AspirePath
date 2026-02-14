@@ -340,14 +340,12 @@ class Profile : Fragment() {
         popup.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_edit_profile -> {
-                    val intent = Intent(requireContext(), ManageAccountActivity::class.java)
-                    intent.putExtra("MODE", "EDIT_PROFILE")
+                    val intent = Intent(requireContext(), EditProfileActivity::class.java)
                     startActivity(intent)
                     true
                 }
                 R.id.action_manage_account -> {
                     val intent = Intent(requireContext(), ManageAccountActivity::class.java)
-                    intent.putExtra("MODE", "MANAGE_ACCOUNT")
                     startActivity(intent)
                     true
                 }
