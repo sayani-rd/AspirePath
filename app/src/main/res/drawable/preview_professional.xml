@@ -4,37 +4,78 @@
     android:height="280dp"
     android:viewportWidth="200"
     android:viewportHeight="280">
-    <!-- Professional: Top Header -->
-    <path
-        android:fillColor="#E0E0E0"
-        android:pathData="M0,0h200v50H0z" />
-    <!-- Name Centered -->
+    <!-- Professional (Timeline): Dark Header Block -->
     <path
         android:fillColor="#333333"
-        android:pathData="M50,15h100v10H50z" />
-    <!-- Subtitle -->
+        android:pathData="M10,10h50v50H10z" />
+    <!-- Photo Circle -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M35,35m-15,0a15,15 0 1,0 30,0a15,15 0 1,0 -30,0" />
+        
+    <!-- Name/Title/Contact -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M70,20h100v10H70z" />
     <path
         android:fillColor="#757575"
-        android:pathData="M70,30h60v4H70z" />
-    <!-- Section 1 -->
+        android:pathData="M70,35h80v6H70z" />
+    <!-- Contact Bar -->
     <path
-        android:fillColor="#616161"
-        android:pathData="M20,70h160v6H20z" />
+        android:fillColor="#333333"
+        android:pathData="M70,50h120v8H70z" />
+
+    <!-- Left Column Headers (Objective, Experience, etc.) -->
     <path
-        android:fillColor="#9E9E9E"
-        android:pathData="M20,85h140v2H20z M20,95h150v2H20z M20,105h120v2H20z" />
-    <!-- Section 2 -->
+        android:fillColor="#333333"
+        android:pathData="M10,80h50v6H10z" /> <!-- Objective -->
     <path
-        android:fillColor="#616161"
-        android:pathData="M20,130h160v6H20z" />
+        android:fillColor="#333333"
+        android:pathData="M10,110h50v6H10z" /> <!-- Experience -->
     <path
-        android:fillColor="#9E9E9E"
-        android:pathData="M20,145h140v2H20z M20,155h150v2H20z M20,165h120v2H20z M20,175h140v2H20z" />
-    <!-- Section 3 -->
+        android:fillColor="#333333"
+        android:pathData="M10,180h50v6H10z" /> <!-- Education -->
+
+    <!-- Right Column Content + Timeline -->
+    <!-- Timeline Vertical Line -->
     <path
-        android:fillColor="#616161"
-        android:pathData="M20,200h160v6H20z" />
+        android:fillColor="#BDBDBD"
+        android:pathData="M70,110h1v100H70z" />
+
+    <!-- Objective Text -->
     <path
-        android:fillColor="#9E9E9E"
-        android:pathData="M20,215h100v2H20z M20,225h110v2H20z" />
+        android:fillColor="#757575"
+        android:pathData="M70,80h110v2H70z M70,90h110v2H70z" />
+
+    <!-- Experience Items -->
+    <!-- Dot 1 -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M68,115h5v5H68z" />
+    <path
+        android:fillColor="#333333"
+        android:pathData="M80,115h80v6H80z" />
+    <path
+        android:fillColor="#757575"
+        android:pathData="M80,125h100v2H80z M80,135h90v2H80z" />
+
+    <!-- Dot 2 -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M68,150h5v5H68z" />
+    <path
+        android:fillColor="#333333"
+        android:pathData="M80,150h80v6H80z" />
+    <path
+        android:fillColor="#757575"
+        android:pathData="M80,160h100v2H80z" />
+
+    <!-- Education Item -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M80,180h80v6H80z" />
+    <path
+        android:fillColor="#757575"
+        android:pathData="M80,190h90v2H80z" />
+
 </vector>

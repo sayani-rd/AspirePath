@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Aspire Path</string>
+    <string-array name="proficiency_levels">
+        <item>Beginner</item>
+        <item>Intermediate</item>
+        <item>Advanced</item>
+        <item>Expert</item>
+    </string-array>
 </resources>

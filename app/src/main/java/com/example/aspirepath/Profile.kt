@@ -165,6 +165,10 @@ class Profile : Fragment() {
                     tvProfileName.text = name
                     tvProfileEmail.text = email
 
+                    // Set user details
+                    tvProfileName.text = name
+                    tvProfileEmail.text = email
+
                     // DOB field (conditional)
                     if (dob.isEmpty() || dob == "N/A") {
                         layoutDOB.visibility = View.GONE
