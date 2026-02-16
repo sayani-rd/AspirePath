@@ -138,6 +138,12 @@ class Home : Fragment() {
         }
 
         // btnMenu listener removed
+        
+        val fabChatbot = view.findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.fabChatbot)
+        fabChatbot.setOnClickListener {
+            val intent = Intent(requireContext(), ChatbotActivity::class.java)
+            startActivity(intent)
+        }
 
         return view
     }
