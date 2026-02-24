@@ -9,22 +9,26 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.aspirepath.utils.UserProfileHelper
 
 class CompetitiveExamsActivity : AppCompatActivity() {
 
-    private val categories = listOf(
-        "Medical",
-        "National Level Medical Entrance Exams",
-        "Engineering",
-        "National Level Engineering Entrance Exams",
-        "Fashion",
-        "Languages",
-        "Law",
-        "Humanities and Social Sciences",
-        "Banking",
-        "Commerce",
-        "Defence / Marine"
+    /** Map each category to the streams it is relevant for. */
+    private val categoryStreamMap = mapOf(
+        "Medical" to listOf("Science"),
+        "National Level Medical Entrance Exams" to listOf("Science"),
+        "Engineering" to listOf("Science"),
+        "National Level Engineering Entrance Exams" to listOf("Science"),
+        "Fashion" to listOf("Arts"),
+        "Languages" to listOf("Arts"),
+        "Law" to listOf("Arts"),
+        "Humanities and Social Sciences" to listOf("Arts"),
+        "Banking" to listOf("Commerce"),
+        "Commerce" to listOf("Commerce"),
+        "Defence / Marine" to listOf("Science")
     )
+
+    private val allCategories = categoryStreamMap.keys.toList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +41,28 @@ class CompetitiveExamsActivity : AppCompatActivity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewCategories)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = CategoryAdapter(categories) { category ->
-            val intent = Intent(this, ExamCategoryActivity::class.java)
-            intent.putExtra("CATEGORY_NAME", category)
-            startActivity(intent)
+
+        UserProfileHelper.fetch {
+            val filtered = filterCategoriesByStream(
+                UserProfileHelper.stream,
+                UserProfileHelper.eligibility
+            )
+            recyclerView.adapter = CategoryAdapter(filtered) { category ->
+                val intent = Intent(this, ExamCategoryActivity::class.java)
+                intent.putExtra("CATEGORY_NAME", category)
+                startActivity(intent)
+            }
+        }
+    }
+
+    private fun filterCategoriesByStream(stream: String, eligibility: String): List<String> {
+        // 10th Completed, blank stream, or "Other" → show all
+        if (eligibility == "10th Completed" || stream.isBlank() || stream.equals("Other", true)) {
+            return allCategories
+        }
+        return allCategories.filter { category ->
+            val streams = categoryStreamMap[category] ?: emptyList()
+            streams.isEmpty() || streams.any { it.equals(stream, true) }
         }
     }
 

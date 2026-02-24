@@ -18,6 +18,8 @@ import com.example.aspirepath.adapter.InstitutionAdapter
 import com.example.aspirepath.adapter.NearYouAdapter
 import com.example.aspirepath.models.Institution
 import com.example.aspirepath.models.InstitutionData
+import com.example.aspirepath.utils.SearchHistoryHelper
+import com.example.aspirepath.utils.UserProfileHelper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -44,6 +46,15 @@ class Explore : Fragment() {
         val tvNearYouSeeMore = view.findViewById<TextView>(R.id.tvNearYouSeeMore)
         val cardHSCTop = view.findViewById<CardView>(R.id.cardHigherSecondaryTop)
 
+        // Schooling Level section — hide for 12th/Graduate users
+        val schoolingLevelSection = view.findViewById<LinearLayout>(R.id.schoolingLevelSection)
+        UserProfileHelper.fetch {
+            val elig = UserProfileHelper.eligibility
+            if (elig == "12th Completed" || elig == "Graduate") {
+                schoolingLevelSection.visibility = View.GONE
+            }
+        }
+
         cardHSCTop.applyPopEffect()
         cardHSCTop.setOnClickListener {
             val intent = Intent(activity, CategoryInstitutionsActivity::class.java).apply {
@@ -61,6 +72,14 @@ class Explore : Fragment() {
         // Search Logic
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                // Save institute search to Firebase on explicit submit (keyboard search button)
+                val trimmed = query?.trim() ?: ""
+                if (trimmed.isNotBlank()) {
+                    val uid = FirebaseAuth.getInstance().currentUser?.uid
+                    if (uid != null) {
+                        SearchHistoryHelper.saveSearch(uid, trimmed, "institutes")
+                    }
+                }
                 return false
             }
 

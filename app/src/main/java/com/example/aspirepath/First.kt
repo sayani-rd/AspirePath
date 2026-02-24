@@ -27,6 +27,7 @@ class First : AppCompatActivity() {
 
         val adapter = ViewPagerAdapter(this)
         viewPager.adapter = adapter
+        viewPager.isUserInputEnabled = false  // Disable swipe between tabs
 
         // Check for navigation intent
         if (intent.getStringExtra("NAVIGATE_TO") == "PROGRESS") {

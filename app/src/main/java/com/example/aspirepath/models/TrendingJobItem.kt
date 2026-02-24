@@ -1,7 +1,7 @@
 package com.example.aspirepath.models
 
 sealed class TrendingJobItem {
-    data class Header(val title: String) : TrendingJobItem()
+    data class Header(val title: String, val streams: List<String> = emptyList()) : TrendingJobItem()
     data class Job(
         val title: String,
         val description: String,

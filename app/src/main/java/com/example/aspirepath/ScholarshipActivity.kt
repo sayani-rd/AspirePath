@@ -7,12 +7,15 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aspirepath.adapter.ScholarshipAdapter
 import com.example.aspirepath.models.Scholarship
+import com.example.aspirepath.utils.UserProfileHelper
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -24,10 +27,12 @@ class ScholarshipActivity : AppCompatActivity() {
     private var allScholarships: ArrayList<Scholarship> = ArrayList()
     private var displayedScholarships: ArrayList<Scholarship> = ArrayList()
     
-    // Filter State
-    private var selectedQualification: String = "Any"
+    // Auto-applied from profile
+    private var profileQualification: String = "Any"
+    private var profileGender: String = "Any"
+
+    // Manual caste filter
     private var selectedCaste: String = "Any"
-    private var selectedGender: String = "Any"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +48,26 @@ class ScholarshipActivity : AppCompatActivity() {
 
         // Initialize lists
         loadScholarshipsData()
-        displayedScholarships.addAll(allScholarships)
 
         adapter = ScholarshipAdapter(this, displayedScholarships)
         recyclerView.adapter = adapter
+
+        // Fetch user profile and auto-apply qualification + gender filters
+        UserProfileHelper.fetch {
+            profileGender = UserProfileHelper.gender.ifBlank { "Any" }
+            profileQualification = mapEligibilityToQualification(UserProfileHelper.eligibility)
+            applyFilters()
+        }
+    }
+
+    /** Map Firestore eligibility values to scholarship qualification filter values. */
+    private fun mapEligibilityToQualification(eligibility: String): String {
+        return when (eligibility) {
+            "10th Completed" -> "10th"
+            "12th Completed" -> "12th"
+            "Graduate" -> "Graduate (UG)"
+            else -> "Any"
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -68,37 +89,49 @@ class ScholarshipActivity : AppCompatActivity() {
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.dialog_filter_scholarship, null)
         
-        val chipGroupQual = view.findViewById<ChipGroup>(R.id.chipGroupQualification)
+        // Hide Qualification and Gender sections — they are auto-applied from profile
+        view.findViewById<ChipGroup>(R.id.chipGroupQualification).visibility = View.GONE
+        view.findViewById<ChipGroup>(R.id.chipGroupGender).visibility = View.GONE
+
+        // Also hide their labels (find by iterating parent, or by tag/id if available)
+        // The labels are plain TextViews right before each ChipGroup
+        val parentLayout = view.findViewById<LinearLayout>(view.findViewById<ChipGroup>(R.id.chipGroupCaste).parent?.let {
+            (it as? View)?.id ?: -1
+        } ?: -1) ?: (view as? LinearLayout) ?: view.findViewById<View>(android.R.id.content) as? LinearLayout
+
+        // Simpler approach: hide by iterating all children  
+        val container = (view as? androidx.core.widget.NestedScrollView)?.getChildAt(0) as? LinearLayout
+        if (container != null) {
+            // Hide Qualification label (index 1) and chipGroupQualification (index 2)
+            // Hide Gender label (index 5) and chipGroupGender (index 6)
+            for (i in 0 until container.childCount) {
+                val child = container.getChildAt(i)
+                if (child is TextView && child.text?.toString()?.equals("Qualification") == true) {
+                    child.visibility = View.GONE
+                }
+                if (child is TextView && child.text?.toString()?.equals("Gender") == true) {
+                    child.visibility = View.GONE
+                }
+            }
+        }
+
         val chipGroupCaste = view.findViewById<ChipGroup>(R.id.chipGroupCaste)
-        val chipGroupGender = view.findViewById<ChipGroup>(R.id.chipGroupGender)
         val btnApply = view.findViewById<Button>(R.id.btnApplyFilters)
         val btnReset = view.findViewById<Button>(R.id.btnResetFilters)
         
         btnApply.setOnClickListener {
-            val selectedQualId = chipGroupQual.checkedChipId
-            selectedQualification = if (selectedQualId != -1) {
-                view.findViewById<Chip>(selectedQualId).text.toString()
-            } else "Any"
-
             val selectedCasteId = chipGroupCaste.checkedChipId
             selectedCaste = if (selectedCasteId != -1) {
                 view.findViewById<Chip>(selectedCasteId).text.toString()
             } else "Any"
 
-            val selectedGenderId = chipGroupGender.checkedChipId
-            selectedGender = if (selectedGenderId != -1) {
-                view.findViewById<Chip>(selectedGenderId).text.toString()
-            } else "Any"
-
-            applyManualFilters()
+            applyFilters()
             dialog.dismiss()
         }
 
         btnReset.setOnClickListener {
-            selectedQualification = "Any"
             selectedCaste = "Any"
-            selectedGender = "Any"
-            applyManualFilters()
+            applyFilters()
             dialog.dismiss()
         }
 
@@ -106,23 +139,27 @@ class ScholarshipActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun applyManualFilters() {
+    private fun applyFilters() {
         val filteredList = allScholarships.filter { scholarship ->
-            val matchesQual = selectedQualification == "Any" || 
-                             scholarship.minQualification.contains(selectedQualification, true) ||
-                             scholarship.eligibleCourses.any { it.contains(selectedQualification, true) } ||
-                             (selectedQualification.contains("Graduate", true) && scholarship.eligibleCourses.any { it.contains("UG", true) }) ||
-                             (selectedQualification.contains("Postgraduate", true) && scholarship.eligibleCourses.any { it.contains("PG", true) })
+            // Auto-applied qualification filter from profile
+            val matchesQual = profileQualification == "Any" || 
+                             scholarship.minQualification.contains(profileQualification, true) ||
+                             scholarship.eligibleCourses.any { it.contains(profileQualification, true) } ||
+                             (profileQualification.contains("Graduate", true) && scholarship.eligibleCourses.any { it.contains("UG", true) }) ||
+                             (profileQualification.contains("Postgraduate", true) && scholarship.eligibleCourses.any { it.contains("PG", true) }) ||
+                             scholarship.minQualification.equals("Any", true)
 
+            // Manual caste filter
             val matchesCaste = selectedCaste == "Any" || 
                               selectedCaste.contains("General", true) || 
                               scholarship.eligibleCategories.any { it.contains(selectedCaste, true) } ||
                               scholarship.caste.any { it.contains(selectedCaste, true) } ||
                               scholarship.eligibleCategories.isEmpty()
 
-            val matchesGender = selectedGender == "Any" || 
+            // Auto-applied gender filter from profile
+            val matchesGender = profileGender == "Any" || 
                                scholarship.gender.equals("Any", true) || 
-                               scholarship.gender.equals(selectedGender, true)
+                               scholarship.gender.equals(profileGender, true)
 
             matchesQual && matchesCaste && matchesGender
         }
