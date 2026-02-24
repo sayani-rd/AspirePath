@@ -10,8 +10,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aspirepath.R
 import com.example.aspirepath.models.Institution
-
+import com.example.aspirepath.utils.SearchHistoryHelper
 import com.example.aspirepath.utils.ViewExtensions.applyPopEffect
+import com.google.firebase.auth.FirebaseAuth
 
 class InstitutionAdapter(private var institutions: List<Institution>) :
     RecyclerView.Adapter<InstitutionAdapter.InstitutionViewHolder>() {
@@ -41,7 +42,7 @@ class InstitutionAdapter(private var institutions: List<Institution>) :
         holder.name.text = institution.name
         holder.location.text = institution.location
         holder.taluka.text = institution.taluka
-        
+
         if (institution.streamsOrPrograms.isNotEmpty()) {
             holder.streams.text = "Streams/Programs: ${institution.streamsOrPrograms}"
             holder.streams.visibility = View.VISIBLE
@@ -73,6 +74,11 @@ class InstitutionAdapter(private var institutions: List<Institution>) :
             holder.website.visibility = View.VISIBLE
             holder.website.applyPopEffect()
             holder.website.setOnClickListener {
+                // Save institution name to Firebase search history on click
+                val uid = FirebaseAuth.getInstance().currentUser?.uid
+                if (uid != null) {
+                    SearchHistoryHelper.saveSearch(uid, institution.name, "institutes")
+                }
                 try {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(institution.websiteUrl))
                     it.context.startActivity(intent)

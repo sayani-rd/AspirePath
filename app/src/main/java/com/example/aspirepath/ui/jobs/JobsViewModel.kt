@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.aspirepath.models.JobItem
+import com.example.aspirepath.utils.UserProfileHelper
 
 class JobsViewModel : ViewModel() {
 
@@ -12,8 +13,19 @@ class JobsViewModel : ViewModel() {
 
     private val allJobs = mutableListOf<JobItem>()
 
+    /** Stream tag per job id — used to sort stream-relevant jobs first. */
+    private val jobStreamMap = mapOf(
+        "1" to "Science",   // Android Developer
+        "2" to "Science",   // Data Analyst
+        "3" to "Science",   // Full Stack Engineer
+        "4" to "Commerce",  // Product Manager
+        "5" to "Arts",      // UX Designer
+        "6" to "Science",   // Java Backend
+        "7" to "Science",   // ML Engineer
+        "8" to "Commerce"   // Marketing
+    )
+
     init {
-        // Load some dummy data for demonstration
         loadDummyData()
     }
 
@@ -27,6 +39,16 @@ class JobsViewModel : ViewModel() {
         allJobs.add(JobItem("6", "Java Backend Developer", "FinTech Systems", "Bangalore", "Spring Boot and Microservices architecture expertise needed.", "₹10L - ₹16L", "5h ago", "https://www.linkedin.com/jobs"))
         allJobs.add(JobItem("7", "Machine Learning Engineer", "AI Labs", "Bangalore", "Experience with TensorFlow and PyTorch.", "₹18L - ₹28L", "1d ago", "https://www.linkedin.com/jobs"))
         allJobs.add(JobItem("8", "Marketing Specialist", "BrandBoost", "Mumbai", " SEO and content marketing strategies.", "₹5L - ₹8L", "2d ago", "https://www.linkedin.com/jobs"))
+
+        // Sort stream-relevant jobs first
+        val stream = UserProfileHelper.stream
+        if (stream.isNotBlank() && !stream.equals("Other", true)) {
+            val sorted = allJobs.sortedByDescending { job ->
+                jobStreamMap[job.id]?.equals(stream, true) == true
+            }
+            allJobs.clear()
+            allJobs.addAll(sorted)
+        }
 
         _jobs.value = allJobs
     }
@@ -74,3 +96,4 @@ class JobsViewModel : ViewModel() {
         _jobs.value = filteredList
     }
 }
+

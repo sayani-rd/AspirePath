@@ -1,13 +1,13 @@
 package com.example.aspirepath
 
 sealed class SuccessStoryItem {
-    data class Header(val title: String) : SuccessStoryItem()
+    data class Header(val title: String, val streams: List<String> = emptyList()) : SuccessStoryItem()
     data class Story(val name: String, val description: String) : SuccessStoryItem()
 }
 
 object SuccessStoryData {
     val items = listOf(
-        SuccessStoryItem.Header("Medicine & Science"),
+        SuccessStoryItem.Header("Medicine & Science", listOf("Science")),
         SuccessStoryItem.Story(
             "Dr. P. S. Ramani",
             "A world-renowned neurosurgeon known for his pioneering work in neuro-spinal surgery and the \"PLIF\" technique. He is an alumnus of Goa Medical College (GMC)."
@@ -25,7 +25,7 @@ object SuccessStoryData {
             "The only Goan to reach the rank of General in the Portuguese Medical Corps and a former director of GMC who fought to preserve and upgrade its curriculum."
         ),
 
-        SuccessStoryItem.Header("Corporate Leadership & Entrepreneurship"),
+        SuccessStoryItem.Header("Corporate Leadership & Entrepreneurship", listOf("Commerce", "Science")),
         SuccessStoryItem.Story(
             "Balendu Shrivastava",
             "Head of Measurement at Meta (Facebook) India. He completed his management studies at the Goa Institute of Management (GIM) in 2000."
@@ -63,7 +63,7 @@ object SuccessStoryData {
             "A prominent alumnus of Goa Engineering College (GEC), currently serving as Vice President and Global Head of Enterprise Application & AI at Mphasis."
         ),
 
-        SuccessStoryItem.Header("Sports & Arts"),
+        SuccessStoryItem.Header("Sports & Arts", listOf("Arts")),
         SuccessStoryItem.Story(
             "Shikha Pandey",
             "An Indian international cricketer and a key member of the national women's team. She is a graduate of Goa Engineering College (GEC)."
@@ -86,10 +86,10 @@ object SuccessStoryData {
         ),
         SuccessStoryItem.Story(
             "Gajanan Rama Parab (Academics)",
-            "A distinguished alumnus of St. Xavier’s College, Mapusa, who has excelled in the field of Mathematics and Computer Science, completing advanced internships at IIT Goa."
+            "A distinguished alumnus of St. Xavier's College, Mapusa, who has excelled in the field of Mathematics and Computer Science, completing advanced internships at IIT Goa."
         ),
 
-        SuccessStoryItem.Header("Literature & Academics"),
+        SuccessStoryItem.Header("Literature & Academics", listOf("Arts")),
         SuccessStoryItem.Story(
             "Olivinho Gomes",
             "An eminent Konkani scholar and former acting Vice-Chancellor of Goa University."

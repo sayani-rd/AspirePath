@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aspirepath.adapter.TrendingJobsAdapter
 import com.example.aspirepath.models.TrendingJobItem
+import com.example.aspirepath.utils.UserProfileHelper
 
 class AnalysisActivity : AppCompatActivity() {
 
@@ -24,7 +25,12 @@ class AnalysisActivity : AppCompatActivity() {
 
         val rvTrendingJobs = findViewById<RecyclerView>(R.id.rvTrendingJobs)
         rvTrendingJobs.layoutManager = LinearLayoutManager(this)
-        rvTrendingJobs.adapter = TrendingJobsAdapter(getTrendingJobs())
+
+        UserProfileHelper.fetch {
+            val allJobs = getTrendingJobs()
+            val filtered = filterByStream(allJobs, UserProfileHelper.stream, UserProfileHelper.eligibility)
+            rvTrendingJobs.adapter = TrendingJobsAdapter(filtered)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -32,11 +38,43 @@ class AnalysisActivity : AppCompatActivity() {
         return true
     }
 
+    /**
+     * Keep only sections whose streams list contains the user's stream.
+     * If the user is "10th Completed" (no stream) or "Other", show everything.
+     */
+    private fun filterByStream(
+        items: List<TrendingJobItem>,
+        stream: String,
+        eligibility: String
+    ): List<TrendingJobItem> {
+        // 10th Completed has no stream — show all; "Other" or blank → show all
+        if (eligibility == "10th Completed" || stream.isBlank() || stream.equals("Other", true)) {
+            return items
+        }
+
+        val result = mutableListOf<TrendingJobItem>()
+        var includeSection = false
+
+        for (item in items) {
+            when (item) {
+                is TrendingJobItem.Header -> {
+                    includeSection = item.streams.isEmpty() ||
+                            item.streams.any { it.equals(stream, true) }
+                    if (includeSection) result.add(item)
+                }
+                is TrendingJobItem.Job -> {
+                    if (includeSection) result.add(item)
+                }
+            }
+        }
+        return result
+    }
+
     private fun getTrendingJobs(): List<TrendingJobItem> {
         val list = mutableListOf<TrendingJobItem>()
 
         // 1. Technology & Engineering
-        list.add(TrendingJobItem.Header("Technology & Engineering (Highest Growth)"))
+        list.add(TrendingJobItem.Header("Technology & Engineering (Highest Growth)", listOf("Science")))
         list.add(TrendingJobItem.Job(
             "AI & Machine Learning Engineer",
             "They build the \"brains\" behind automation. They develop and deploy AI models (like ChatGPT-style LLMs or image recognition systems) and create data pipelines that allow these models to learn from information.",
@@ -74,7 +112,7 @@ class AnalysisActivity : AppCompatActivity() {
         ))
 
         // 2. Business, Finance & Management
-        list.add(TrendingJobItem.Header("Business, Finance & Management"))
+        list.add(TrendingJobItem.Header("Business, Finance & Management", listOf("Commerce")))
         list.add(TrendingJobItem.Job(
             "Fintech Specialists & Blockchain Developers",
             "They build the future of money. Fintech Specialists manage digital payment systems and risk models, while Blockchain Developers create decentralized apps (dApps) and secure smart contracts.",
@@ -98,7 +136,7 @@ class AnalysisActivity : AppCompatActivity() {
         ))
 
         // 3. Healthcare & Life Sciences
-        list.add(TrendingJobItem.Header("Healthcare & Life Sciences"))
+        list.add(TrendingJobItem.Header("Healthcare & Life Sciences", listOf("Science")))
         list.add(TrendingJobItem.Job(
             "Nurses & Healthcare Technicians",
             "Nurses provide direct patient care, while technicians operate specialized equipment. Many nurses are moving into Nurse Practitioner (NP) roles to prescribe medications.",
@@ -110,36 +148,36 @@ class AnalysisActivity : AppCompatActivity() {
             "Doctors & Specialists",
             "They diagnose and treat complex medical conditions. Surgeons and Anesthesiologists are in high demand. Modern specialists are trained in Robotic Surgery and Precision Medicine.",
             "Advanced diagnosis, surgical precision, and interdisciplinary collaboration.",
-            "Foundation: A Bachelor’s degree (Pre-med/MBBS) followed by a Medical Degree (MD/DO). Specialization: 3-7 years Residency.",
+            "Foundation: A Bachelor's degree (Pre-med/MBBS) followed by a Medical Degree (MD/DO). Specialization: 3-7 years Residency.",
             "Board certification in their specific specialty is mandatory."
         ))
         list.add(TrendingJobItem.Job(
             "Mental Health Professionals & Therapists",
             "They provide emotional and psychological support. Includes Psychiatrists (medicine) and Psychologists/Counselors (talk therapy). Huge demand for Tele-therapy.",
             "Active listening, Cognitive Behavioral Therapy (CBT), and crisis intervention.",
-            "Psychiatrist: MD + Residency. Psychologist: Ph.D./Psy.D. Counselor: Master’s degree.",
+            "Psychiatrist: MD + Residency. Psychologist: Ph.D./Psy.D. Counselor: Master's degree.",
             "State or national licensure is strictly required."
         ))
 
         // 4. Creative, Communication & Social Sciences
-        list.add(TrendingJobItem.Header("Creative, Communication & Social Sciences"))
+        list.add(TrendingJobItem.Header("Creative, Communication & Social Sciences", listOf("Arts")))
         list.add(TrendingJobItem.Job(
             "Digital Content Creators & Strategists",
             "They engineer engagement. Creators produce assets, Strategists use SEO and analytics to reach audiences. Heavily involves AI tools for content scaling.",
             "Short-form video editing (CapCut/Premiere), SEO/SEM, UX principles, and AI-driven content tools.",
-            "Degree: Bachelor’s in Marketing, Communications, or Digital Media.",
+            "Degree: Bachelor's in Marketing, Communications, or Digital Media.",
             "Google Analytics 4, HubSpot Content Marketing, or Meta Blueprint. Portfolio is key."
         ))
         list.add(TrendingJobItem.Job(
             "Instructional Designers / EdTech Specialists",
             "They are the architects of online learning. They turn complex info into interactive digital courses and manage Learning Management Systems.",
             "The ADDIE model, e-learning authoring tools (Articulate Storyline), and UX for learning.",
-            "Degree: Bachelor’s or Master’s in Instructional Design or Educational Technology.",
+            "Degree: Bachelor's or Master's in Instructional Design or Educational Technology.",
             "Certified Professional in Learning and Performance (CPLP) or Google Certified Educator."
         ))
 
-        // 5. Emerging & Future-Focused Careers
-        list.add(TrendingJobItem.Header("Emerging & Future-Focused Careers"))
+        // 5. Emerging & Future-Focused Careers — shown to ALL streams
+        list.add(TrendingJobItem.Header("Emerging & Future-Focused Careers", listOf("Science", "Commerce", "Arts")))
         list.add(TrendingJobItem.Job(
             "Quantum Computing & Advanced Tech Specialists",
             "They work with \"non-classical\" computers to solve complex problems. Focus is on Quantum Software Engineering—writing code for quantum hardware.",
@@ -151,7 +189,7 @@ class AnalysisActivity : AppCompatActivity() {
             "AI Ethics, AI Product Managers & Data Governance Leads",
             "The \"conscience\" and \"strategists\" of AI. They ensure models aren't biased, decide what AI to build, and manage massive datasets for privacy.",
             "Algorithmic bias auditing, EU AI Act compliance, Agile management, and Data Privacy laws.",
-            "Degree: Bachelor's/Master’s in Law, Philosophy, Business, or CS.",
+            "Degree: Bachelor's/Master's in Law, Philosophy, Business, or CS.",
             "Certified AI Governance Professional (AIGP) or IAPP Privacy certifications."
         ))
         list.add(TrendingJobItem.Job(
