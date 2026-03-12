@@ -15,7 +15,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@android:color/transparent"
         app:titleTextColor="@color/black"
-        app:title="Choose a template to get started"
+        app:title="Select a Template"
         app:navigationIcon="@drawable/baseline_arrow_back_24" />
 
 
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:text="Enter Details"
         android:layout_margin="16dp"
-        android:enabled="true" 
+        android:enabled="false" 
         app:cornerRadius="8dp"
         android:backgroundTint="#7B68EE" />
 

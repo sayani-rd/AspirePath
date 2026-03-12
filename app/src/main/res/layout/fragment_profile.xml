@@ -33,9 +33,10 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="32dp"
                 android:text="My Profile"
+                android:fontFamily="serif"
+                android:textStyle="bold|italic"
                 android:textColor="@color/blue"
                 android:textSize="24sp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

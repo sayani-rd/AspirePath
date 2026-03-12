@@ -38,7 +38,6 @@ class CVDetailsInputActivity : AppCompatActivity() {
     private lateinit var btnAddCourse: Button
     private lateinit var btnAddAward: Button
     private lateinit var btnAddHobby: Button
-    private lateinit var btnGenerateSummary: Button
     private lateinit var btnPreviewCV: Button
     
     private var selectedPhotoUri: android.net.Uri? = null
@@ -81,7 +80,6 @@ class CVDetailsInputActivity : AppCompatActivity() {
         btnAddCourse = findViewById(R.id.btnAddCourse)
         btnAddAward = findViewById(R.id.btnAddAward)
         btnAddHobby = findViewById(R.id.btnAddHobby)
-        btnGenerateSummary = findViewById(R.id.btnGenerateSummary)
         btnPreviewCV = findViewById(R.id.btnPreviewCV)
     }
 
@@ -95,11 +93,6 @@ class CVDetailsInputActivity : AppCompatActivity() {
         btnAddCourse.setOnClickListener { addCourseView() }
         btnAddAward.setOnClickListener { addAwardView() }
         btnAddHobby.setOnClickListener { addHobbyView() }
-        
-        btnGenerateSummary.setOnClickListener {
-            // Placeholder for AI generation
-            Toast.makeText(this, "AI Generation coming soon!", Toast.LENGTH_SHORT).show()
-        }
         
         val btnSelectPhoto = findViewById<Button>(R.id.btnSelectPhoto)
         btnSelectPhoto.setOnClickListener {

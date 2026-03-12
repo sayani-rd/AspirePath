@@ -60,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_launcher_background"/>
+                    android:src="@drawable/person"/>
             </androidx.cardview.widget.CardView>
 
             <Button
@@ -142,15 +142,6 @@
                 android:lines="4"
                 android:gravity="top"/>
         </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/btnGenerateSummary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Generate with AI ✨"
-            android:layout_marginTop="8dp"
-            android:layout_gravity="end"
-            style="@style/Widget.MaterialComponents.Button.TextButton"/>
 
         <!-- Education -->
         <TextView
