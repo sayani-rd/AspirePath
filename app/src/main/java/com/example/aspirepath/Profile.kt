@@ -53,6 +53,8 @@ class Profile : Fragment() {
     private lateinit var layoutStream: View
     private lateinit var layoutGender: View
     private lateinit var layoutTaluka: View
+    private lateinit var layoutLatestCv: View
+    private lateinit var tvLatestCvName: TextView
 
     private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
@@ -99,6 +101,8 @@ class Profile : Fragment() {
         layoutStream = view.findViewById(R.id.layoutStream)
         layoutGender = view.findViewById(R.id.layoutGender)
         layoutTaluka = view.findViewById(R.id.layoutTaluka)
+        layoutLatestCv = view.findViewById(R.id.layoutLatestCv)
+        tvLatestCvName = view.findViewById(R.id.tvLatestCvName)
 
         // Apply Pop Effect
         tvInitials.applyPopEffect()
@@ -109,6 +113,7 @@ class Profile : Fragment() {
         layoutStream.applyPopEffect()
         layoutGender.applyPopEffect()
         layoutTaluka.applyPopEffect()
+        layoutLatestCv.applyPopEffect()
 
         // Get current user
         val currentUser = auth.currentUser
@@ -126,6 +131,8 @@ class Profile : Fragment() {
             cvProfilePicture.setOnClickListener {
                 showProfileOptions(currentUser.uid)
             }
+
+            layoutLatestCv.setOnClickListener { openSavedCvList() }
         } else {
             Toast.makeText(requireContext(), "User not logged in", Toast.LENGTH_SHORT).show()
         }
@@ -156,6 +163,7 @@ class Profile : Fragment() {
                     val stream = document.getString("stream") ?: ""
                     val gender = document.getString("gender") ?: "N/A"
                     val taluka = document.getString("taluka") ?: "N/A"
+                    val latestCv = document.get("latestCV") as? Map<*, *>
 
                     // Set initials
                     val initials = getInitials(name)
@@ -214,10 +222,49 @@ class Profile : Fragment() {
                         tvProfileTaluka.text = taluka
                         layoutTaluka.visibility = View.VISIBLE
                     }
+
+                    loadSavedCvSummary(currentUser.uid, latestCv)
                 }
             }
             .addOnFailureListener { e ->
                 Toast.makeText(requireContext(), "Error fetching profile: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun loadSavedCvSummary(uid: String, latestCvFallback: Map<*, *>?) {
+        db.collection("users").document(uid)
+            .collection("savedCVs")
+            .get()
+            .addOnSuccessListener { snapshot ->
+                val count = snapshot.size()
+                if (count > 0) {
+                    tvLatestCvName.text = "Tap to view your saved CVs"
+                    layoutLatestCv.visibility = View.VISIBLE
+                } else {
+                    val fallbackName = latestCvFallback?.get("name") as? String
+                    if (!fallbackName.isNullOrBlank()) {
+                        tvLatestCvName.text = "Tap to view your saved CVs"
+                        layoutLatestCv.visibility = View.VISIBLE
+                    } else {
+                        tvLatestCvName.text = "No CV created yet"
+                        layoutLatestCv.visibility = View.VISIBLE
+                    }
+                }
+            }
+            .addOnFailureListener {
+                if (latestCvFallback != null) {
+                    val fallbackName = latestCvFallback["name"] as? String
+                    if (!fallbackName.isNullOrBlank()) {
+                        tvLatestCvName.text = "Tap to view your saved CVs"
+                        layoutLatestCv.visibility = View.VISIBLE
+                    } else {
+                        tvLatestCvName.text = "No CV created yet"
+                        layoutLatestCv.visibility = View.VISIBLE
+                    }
+                } else {
+                    tvLatestCvName.text = "No CV created yet"
+                    layoutLatestCv.visibility = View.VISIBLE
+                }
             }
     }
 
@@ -379,5 +426,14 @@ class Profile : Fragment() {
             parts.isNotEmpty() -> parts[0].take(2).uppercase()
             else -> "U"
         }
+    }
+
+    private fun openSavedCvList() {
+        if (tvLatestCvName.text.toString() == "No CV created yet") {
+            Toast.makeText(requireContext(), "No CV created yet", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val intent = Intent(requireContext(), SavedCvListActivity::class.java)
+        startActivity(intent)
     }
 }

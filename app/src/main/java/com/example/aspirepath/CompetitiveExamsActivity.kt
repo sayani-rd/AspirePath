@@ -19,11 +19,13 @@ class CompetitiveExamsActivity : AppCompatActivity() {
         "National Level Medical Entrance Exams" to listOf("Science"),
         "Engineering" to listOf("Science"),
         "National Level Engineering Entrance Exams" to listOf("Science"),
-        "Fashion" to listOf("Arts"),
+        "Architecture and Design" to listOf("Science", "Arts", "Commerce"),
+        "Fashion" to listOf("Arts", "Commerce", "Science"),
+        "Fine Arts" to listOf("Arts"),
         "Languages" to listOf("Arts"),
-        "Law" to listOf("Arts"),
+        "Law" to listOf("Arts", "Commerce", "Science"),
         "Humanities and Social Sciences" to listOf("Arts"),
-        "Banking" to listOf("Commerce"),
+        "Banking" to listOf("Commerce", "Arts", "Science"),
         "Commerce" to listOf("Commerce"),
         "Defence / Marine" to listOf("Science")
     )

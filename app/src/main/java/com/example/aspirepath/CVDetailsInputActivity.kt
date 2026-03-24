@@ -38,7 +38,6 @@ class CVDetailsInputActivity : AppCompatActivity() {
     private lateinit var btnAddCourse: Button
     private lateinit var btnAddAward: Button
     private lateinit var btnAddHobby: Button
-    private lateinit var btnGenerateSummary: Button
     private lateinit var btnPreviewCV: Button
     
     private var selectedPhotoUri: android.net.Uri? = null
@@ -52,6 +51,7 @@ class CVDetailsInputActivity : AppCompatActivity() {
 
         initializeViews()
         setupListeners()
+        prefillIfEditing()
     }
 
     private fun initializeViews() {
@@ -81,7 +81,6 @@ class CVDetailsInputActivity : AppCompatActivity() {
         btnAddCourse = findViewById(R.id.btnAddCourse)
         btnAddAward = findViewById(R.id.btnAddAward)
         btnAddHobby = findViewById(R.id.btnAddHobby)
-        btnGenerateSummary = findViewById(R.id.btnGenerateSummary)
         btnPreviewCV = findViewById(R.id.btnPreviewCV)
     }
 
@@ -95,11 +94,6 @@ class CVDetailsInputActivity : AppCompatActivity() {
         btnAddCourse.setOnClickListener { addCourseView() }
         btnAddAward.setOnClickListener { addAwardView() }
         btnAddHobby.setOnClickListener { addHobbyView() }
-        
-        btnGenerateSummary.setOnClickListener {
-            // Placeholder for AI generation
-            Toast.makeText(this, "AI Generation coming soon!", Toast.LENGTH_SHORT).show()
-        }
         
         val btnSelectPhoto = findViewById<Button>(R.id.btnSelectPhoto)
         btnSelectPhoto.setOnClickListener {
@@ -141,17 +135,40 @@ class CVDetailsInputActivity : AppCompatActivity() {
     }
 
     private fun addEducationView() {
+        addEducationView(null)
+    }
+
+    private fun addEducationView(education: Education?) {
         val view = LayoutInflater.from(this).inflate(R.layout.item_education_entry, containerEducation, false)
+        if (education != null) {
+            view.findViewById<TextInputEditText>(R.id.etDegree).setText(education.degree)
+            view.findViewById<TextInputEditText>(R.id.etInstitution).setText(education.institution)
+            view.findViewById<TextInputEditText>(R.id.etYear).setText(education.yearOfCompletion)
+            view.findViewById<TextInputEditText>(R.id.etGrade).setText(education.grade)
+        }
         val btnDelete = view.findViewById<ImageButton>(R.id.btnDelete)
         btnDelete.setOnClickListener { containerEducation.removeView(view) }
         containerEducation.addView(view)
     }
 
     private fun addExperienceView() {
+        addExperienceView(null)
+    }
+
+    private fun addExperienceView(experience: Experience?) {
         val view = LayoutInflater.from(this).inflate(R.layout.item_experience_entry, containerExperience, false)
         val btnDelete = view.findViewById<ImageButton>(R.id.btnDelete)
         val etStartDate = view.findViewById<TextInputEditText>(R.id.etStartDate)
         val etEndDate = view.findViewById<TextInputEditText>(R.id.etEndDate)
+
+        if (experience != null) {
+            view.findViewById<TextInputEditText>(R.id.etJobTitle).setText(experience.jobTitle)
+            view.findViewById<TextInputEditText>(R.id.etCompany).setText(experience.companyName)
+            etStartDate.setText(experience.startDate)
+            etEndDate.setText(experience.endDate)
+            view.findViewById<TextInputEditText>(R.id.etDescription).setText(experience.responsibilities)
+            view.findViewById<CheckBox>(R.id.cbCurrent).isChecked = experience.isCurrent
+        }
         
         setupDatePicker(etStartDate)
         setupDatePicker(etEndDate)
@@ -175,6 +192,10 @@ class CVDetailsInputActivity : AppCompatActivity() {
     }
 
     private fun addSkillView() {
+        addSkillView(null)
+    }
+
+    private fun addSkillView(skill: Skill?) {
         val view = LayoutInflater.from(this).inflate(R.layout.item_skill_entry, containerSkills, false)
         val btnDelete = view.findViewById<ImageButton>(R.id.btnDelete)
         val spinner = view.findViewById<Spinner>(R.id.spinnerProficiency)
@@ -187,6 +208,11 @@ class CVDetailsInputActivity : AppCompatActivity() {
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
+            if (skill != null) {
+                view.findViewById<EditText>(R.id.etSkill).setText(skill.name)
+                val position = adapter.getPosition(skill.proficiency)
+                if (position >= 0) spinner.setSelection(position)
+            }
         }
 
         btnDelete.setOnClickListener { containerSkills.removeView(view) }
@@ -194,19 +220,43 @@ class CVDetailsInputActivity : AppCompatActivity() {
     }
 
     private fun addProjectView() {
+        addProjectView(null)
+    }
+
+    private fun addProjectView(project: Project?) {
         val view = LayoutInflater.from(this).inflate(R.layout.item_project_entry, containerProjects, false)
+        if (project != null) {
+            view.findViewById<EditText>(R.id.etProjectTitle).setText(project.title)
+            view.findViewById<EditText>(R.id.etDescription).setText(project.description)
+            view.findViewById<EditText>(R.id.etTechnologies).setText(project.technologies)
+            view.findViewById<EditText>(R.id.etLink).setText(project.link)
+        }
         view.findViewById<ImageButton>(R.id.btnDelete).setOnClickListener { containerProjects.removeView(view) }
         containerProjects.addView(view)
     }
 
     private fun addCertificationView() {
+        addCertificationView(null)
+    }
+
+    private fun addCertificationView(certification: Certification?) {
         val view = LayoutInflater.from(this).inflate(R.layout.item_certification_entry, containerCertifications, false)
+        if (certification != null) {
+            view.findViewById<EditText>(R.id.etName).setText(certification.name)
+            view.findViewById<EditText>(R.id.etOrganization).setText(certification.organization)
+            view.findViewById<EditText>(R.id.etDate).setText(certification.date)
+            view.findViewById<EditText>(R.id.etUrl).setText(certification.url)
+        }
         setupDatePicker(view.findViewById(R.id.etDate))
         view.findViewById<ImageButton>(R.id.btnDelete).setOnClickListener { containerCertifications.removeView(view) }
         containerCertifications.addView(view)
     }
 
     private fun addLanguageView() {
+        addLanguageView(null)
+    }
+
+    private fun addLanguageView(language: Language?) {
         val view = LayoutInflater.from(this).inflate(R.layout.item_language_entry, containerLanguages, false)
         val spinner = view.findViewById<Spinner>(R.id.spinnerProficiency)
         ArrayAdapter.createFromResource(
@@ -216,29 +266,91 @@ class CVDetailsInputActivity : AppCompatActivity() {
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
+            if (language != null) {
+                view.findViewById<EditText>(R.id.etLanguage).setText(language.name)
+                val position = adapter.getPosition(language.proficiency)
+                if (position >= 0) spinner.setSelection(position)
+            }
         }
         view.findViewById<ImageButton>(R.id.btnDelete).setOnClickListener { containerLanguages.removeView(view) }
         containerLanguages.addView(view)
     }
 
     private fun addCourseView() {
+        addCourseView(null)
+    }
+
+    private fun addCourseView(course: Course?) {
         val view = LayoutInflater.from(this).inflate(R.layout.item_course_entry, containerCourses, false)
+        if (course != null) {
+            view.findViewById<EditText>(R.id.etCourseName).setText(course.name)
+            view.findViewById<EditText>(R.id.etInstitution).setText(course.institution)
+            view.findViewById<EditText>(R.id.etCompletionDate).setText(course.completionDate)
+        }
         setupDatePicker(view.findViewById(R.id.etCompletionDate))
         view.findViewById<ImageButton>(R.id.btnDelete).setOnClickListener { containerCourses.removeView(view) }
         containerCourses.addView(view)
     }
 
     private fun addAwardView() {
+        addAwardView(null)
+    }
+
+    private fun addAwardView(award: Award?) {
         val view = LayoutInflater.from(this).inflate(R.layout.item_award_entry, containerAwards, false)
+        if (award != null) {
+            view.findViewById<EditText>(R.id.etAwardTitle).setText(award.title)
+            view.findViewById<EditText>(R.id.etOrganization).setText(award.organization)
+            view.findViewById<EditText>(R.id.etDate).setText(award.date)
+            view.findViewById<EditText>(R.id.etDescription).setText(award.description)
+        }
         setupDatePicker(view.findViewById(R.id.etDate))
         view.findViewById<ImageButton>(R.id.btnDelete).setOnClickListener { containerAwards.removeView(view) }
         containerAwards.addView(view)
     }
 
     private fun addHobbyView() {
+        addHobbyView(null)
+    }
+
+    private fun addHobbyView(hobby: String?) {
         val view = LayoutInflater.from(this).inflate(R.layout.item_hobby_entry, containerHobbies, false)
+        if (!hobby.isNullOrBlank()) {
+            view.findViewById<EditText>(R.id.etHobby).setText(hobby)
+        }
         view.findViewById<ImageButton>(R.id.btnDelete).setOnClickListener { containerHobbies.removeView(view) }
         containerHobbies.addView(view)
+    }
+
+    private fun prefillIfEditing() {
+        val incomingCvData = if (android.os.Build.VERSION.SDK_INT >= 33) {
+            intent.getParcelableExtra("CV_DATA", CVData::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getParcelableExtra("CV_DATA")
+        } ?: return
+
+        etFullName.setText(incomingCvData.personalInfo.fullName)
+        etEmail.setText(incomingCvData.personalInfo.email)
+        etPhone.setText(incomingCvData.personalInfo.phoneNumber)
+        etAddress.setText(incomingCvData.personalInfo.address)
+        etLinkedIn.setText(incomingCvData.personalInfo.linkedInUrl)
+        etSummary.setText(incomingCvData.professionalSummary)
+
+        if (incomingCvData.personalInfo.photoUri.isNotBlank()) {
+            selectedPhotoUri = android.net.Uri.parse(incomingCvData.personalInfo.photoUri)
+            findViewById<ImageView>(R.id.ivProfilePhoto).setImageURI(selectedPhotoUri)
+        }
+
+        incomingCvData.education.forEach { addEducationView(it) }
+        incomingCvData.workExperience.forEach { addExperienceView(it) }
+        incomingCvData.skills.forEach { addSkillView(it) }
+        incomingCvData.projects.forEach { addProjectView(it) }
+        incomingCvData.certifications.forEach { addCertificationView(it) }
+        incomingCvData.languages.forEach { addLanguageView(it) }
+        incomingCvData.courses.forEach { addCourseView(it) }
+        incomingCvData.awards.forEach { addAwardView(it) }
+        incomingCvData.hobbies.forEach { addHobbyView(it) }
     }
 
     private fun validateInputs(): Boolean {

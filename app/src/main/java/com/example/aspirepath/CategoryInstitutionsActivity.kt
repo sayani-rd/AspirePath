@@ -224,6 +224,7 @@ class CategoryInstitutionsActivity : AppCompatActivity() {
                     !it.name.contains("ITI", ignoreCase = true) &&
                     !it.name.contains("Ship", ignoreCase = true) &&
                     !it.name.contains("Hotel", ignoreCase = true) &&
+                    !it.name.contains("Law", ignoreCase = true) &&
                     !it.streamsOrPrograms.contains("Diploma", ignoreCase = true) &&
                     (it.streamsOrPrograms.contains("Arts", ignoreCase = true) ||
                      it.streamsOrPrograms.contains("Commerce", ignoreCase = true) ||
