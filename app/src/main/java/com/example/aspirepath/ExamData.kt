@@ -11,77 +11,83 @@ data class Exam(
 
 object ExamData {
     val medical = listOf(
-        Exam("All India Pre Medical / Pre Dental Entrance Test (AIPMT)", "Admission to MBBS / BDS", "Class 12 with PCB", "December / January", "Online", "http://aipmt.nic.in/aipmt/welcome.aspx"),
-        Exam("All India Pre Veterinary Test (AIPVT)", "Admission in Bachelor of Veterinary Science and Animal Husbandry (B.V.Sc & A.H) degree courses", "Class 12 with PCB", "January / February", "Online / Post", "www.vci.nic.in/forms/default.aspx")
+        Exam("NEET-UG", "Admission to MBBS / BDS / B.V.Sc", "Class 12 with PCB", "January / February", "Online", "https://neet.nta.nic.in/"),
+        Exam("AIPVT (via NEET)", "Bachelor of Veterinary Science", "Class 12 with PCB", "January / February", "Online", "https://vci.admissions.nic.in/")
     )
 
     val nationalMedical = listOf(
-        Exam("All India Institute of Medical Sciences (AIIMS)", "Admission to MBBS", "Class 12 with English & PCB", "June / July", "Online", "http://admissions.mccvelore.ac.in/"),
-        Exam("Christian Medical College, Ludhiana (CMC, Ludhiana)", "Admission to MBBS", "Class 12 with English & PCB", "June / July", "Online", "http://cmcludhiana.in/"),
-        Exam("Consortium of Medical, Engineering and Dental Colleges of Karnataka (COMEDK)", "Admission to MBBS", "Class 12 with English & PCB", "May", "Online", "www.comedk.org"),
-        Exam("Jawaharlal Institute of Postgraduate Medical Education and Research (JIPMER)", "Admission to MBBS", "Class 12 with PCB", "June", "Online", "http://jipmer.edu.in/"),
-        Exam("Manipal (MBBS)", "Admission to MBBS", "Class 12 with PCB", "June", "Online", "www.admissions.manipal.edu"),
-        Exam("Mahatma Gandhi Institute of Medical Sciences (MGIMS, Wardha)", "Admission to MBBS", "Class 12 with PCB", "June / August", "Online", "www.mgims.ac.in")
+        Exam("NEET-UG (All India Quota)", "Admission to AIIMS, JIPMER & Central Universities", "Class 12 with English & PCB", "January / March", "Online", "https://neet.nta.nic.in/"),
+        Exam("CMC Vellore / Ludhiana", "Admission to MBBS (via NEET Score)", "Class 12 with English & PCB", "April / May", "Online", "https://admissions.cmc.ac.in/"),
+        Exam("Manipal MET", "Admission to Health Sciences", "Class 12 with PCB", "January / March", "Online", "https://www.manipal.edu/"),
+        Exam("MGIMS Wardha", "Admission to MBBS (via NEET Score)", "Class 12 with PCB", "Year-round", "Online", "https://www.mgims.ac.in/")
     )
 
     val engineering = listOf(
-        Exam("Joint Entrance Examination (JEE) Main", "Admission in B.E / B.Tech, B.Arch, B.Planning", "Class 12", "November / December", "Online", "http://jeemain.nic.in/jeemainapp/welcome.aspx"),
-        Exam("JEE Advance", "Admission in UG programmes in IITs and ISM Dhanbad", "Class 12 with PCM", "May", "Online", "http://jeeadv.iitd.ac.in/"),
-        Exam("BITSAT", "Admission in integrated First Degree programmes in BITS Pilani, Goa & Hyderabad", "Class 12 with PCM", "January / February", "Online", "www.bitsadmission.com")
+        Exam("JEE Main", "Admission in B.E / B.Tech / B.Planning", "Class 12", "November / December", "Online", "https://jeemain.nta.nic.in/"),
+        Exam("JEE Advanced", "Admission in IITs", "Class 12 with PCM (Must qualify JEE Main)", "April / May", "Online", "https://jeeadv.ac.in/"),
+        Exam("BITSAT", "Admission in BITS Pilani, Goa & Hyderabad", "Class 12 with PCM", "January / February", "Online", "https://www.bitsadmission.com/")
     )
 
     val nationalEngineering = listOf(
-        Exam("COMEDK", "Admission in Engineering & Architecture courses", "Class 12", "May", "Online", "www.comedk.org"),
-        Exam("Manipal", "Admission to B.Tech courses", "Class 12", "May", "Online / By Post", "www.admissions.manipal.edu"),
-        Exam("AMUEEE", "Admission in Engineering courses", "Class 12", "April / May", "Online", "www.amucontrollerexams.com")
+        Exam("VITEEE", "Admission to VIT University", "Class 12 with PCM/PCB", "November / March", "Online", "https://viteee.vit.ac.in/"),
+        Exam("SRMJEEE", "Admission to SRM Institute", "Class 12 with PCM/PCB", "November / March", "Online", "https://www.srmist.edu.in/"),
+        Exam("COMEDK UGET", "Admission to Engineering (Karnataka)", "Class 12 with PCM", "February / April", "Online", "https://www.comedk.org")
+    )
+
+    val architectureAndDesign = listOf(
+        Exam("NATA", "Bachelor of Architecture (B.Arch)", "Class 12 with PCM", "March / July", "Online", "https://www.nata.in/"),
+        Exam("JEE Main Paper 2", "B.Arch / B.Planning in NITs/SPAs", "Class 12 with PCM", "November / December", "Online", "https://jeemain.nta.nic.in/"),
+        Exam("UCEED", "Bachelor of Design (IITs/IIITs)", "Class 12 (Any stream)", "October / November", "Online", "https://www.uceed.iitb.ac.in/"),
+        Exam("NID DAT", "B.Des in National Institute of Design", "Class 12 (Any stream)", "October / December", "Online", "https://admissions.nid.edu/"),
+        Exam("CEPT Entrance", "Bachelor of Design / Interior Design", "Class 12", "February / March", "Online", "https://admissions.cept.ac.in/")
     )
 
     val fashion = listOf(
-        Exam("Srishti School", website = "http://srishti.ac.in/"),
-        Exam("School of Fashion Technology", website = "www.softpune.com"),
-        Exam("Pearl Academy", website = "http://pearlacademy.com"),
-        Exam("Symbiosis Institute of Design", website = "http://sid.edu.in/"),
-        Exam("Footwear Design and Development Institute", website = "www.fddiindia.com"),
-        Exam("Maeer’s MIT Institute of Design", website = "www.mitid.edu.in"),
-        Exam("National Institute of Design", website = "www.nid.edu"),
-        Exam("National Institute of Fashion Design", website = "www.nift.ac.in"),
-        Exam("National Aptitude Test in Architecture", website = "www.nata.in"),
-        Exam("CEPT", website = "www.cept.ac.in")
+        Exam("NIFT Entrance Exam", "B.Des / B.FTech in Fashion", "Class 12", "November / December", "Online", "https://nift.nta.ac.in/"),
+        Exam("Pearl Academy Entrance", "Fashion Design / Styling", "Class 12", "Year-round", "Online", "https://pearlacademy.com/"),
+        Exam("SOFT Entrance", "School of Fashion Technology", "Class 12", "April / May", "Online", "https://softpune.com/"),
+        Exam("AIEED", "All India Entrance Examination for Design", "Class 10+2", "Year-round", "Online", "https://www.archedu.org/")
+    )
+
+    val fineArts = listOf(
+        Exam("CUET-UG (Fine Arts)", "BFA in Central Universities", "Class 12", "February / March", "Online", "https://cuet.samarth.ac.in/"),
+        Exam("JJ School of Art Entrance", "Bachelor of Fine Arts (BFA)", "Class 12", "March / April", "Online", "https://sas.maharashtracet.org/"),
+        Exam("Srishti Manipal", "BFA in Creative Arts", "Class 12", "February", "Online", "https://srishtimanipalinstitute.in/")
     )
 
     val languages = listOf(
-        Exam("EFLU Entrance Test", "Admission for BA (Hons) languages", "Class 12 / Graduate / PG", "November to January", "Online", "www.efluniversity.ac.in"),
-        Exam("JNU Entrance Exam", "Admission in BA (Hons) foreign languages", "Class 12 / Graduate / PG", "February / March", "Online / Post", "www.jnu.ac.in")
+        Exam("CUET-UG", "Admission to JNU, EFLU, etc.", "Class 12", "February / March", "Online", "https://cuet.samarth.ac.in/"),
+        Exam("EFLU Entrance", "BA (Hons) English & Foreign Languages", "Class 12", "February", "Online", "https://www.efluniversity.ac.in/")
     )
 
     val law = listOf(
-        Exam("CLAT", "Admission in BA LL.B (Hons), B.Com LL.B, BBA LL.B", "Class 12", "January to April", "Online", "http://clat.ac.in"),
-        Exam("LSAT India", "Admission in law courses", "Class 12 & Graduates", "November to April", "Online", "www.pearsonvueindia.com/lsatindia"),
-        Exam("AILET", "Admission in BA LL.B, LLM, PhD", "Class 12 / LL.B / LLM", "February to April", "Online / Post", "www.nludelhi.ac.in"),
-        Exam("Lloyd Entrance Test", "Admission in BA LL.B (5-year)", "Class 12", "January to May", "Online / Post", "www.lloydlawcollege.com")
+        Exam("CLAT", "Admission in National Law Universities", "Class 12", "August / October", "Online", "https://consortiumofnlus.ac.in/"),
+        Exam("LSAT-India", "Admission in Law Colleges", "Class 12", "Year-round", "Online", "https://www.lsatindia.in/"),
+        Exam("AILET", "Admission in NLU Delhi", "Class 12", "August / September", "Online", "https://nationallawuniversitydelhi.in/")
     )
 
     val humanities = listOf(
-        Exam("HSSEE (IIT Madras)", "Integrated MA Programme", "Class 12", "December / January", "Online", "http://hsee.iitm.ac.in"),
-        Exam("TISS-BAT", "BA Social Science Programme", "Class 12", "February to April", "Online", "http://campus.tiss.edu")
+        Exam("HSEE (IIT Madras)", "Integrated MA Programme", "Class 12", "December", "Online", "https://hsee.iitm.ac.in/"),
+        Exam("TISS-BAT (via CUET)", "BA Social Sciences", "Class 12", "February", "Online", "https://cuet.samarth.ac.in/"),
+        Exam("Ashoka Aptitude Test", "Liberal Arts & Sciences", "Class 12", "Year-round", "Online", "https://www.ashoka.edu.in/")
     )
 
     val banking = listOf(
-        Exam("IBPS-PO", "Probation Officer", "Graduation (60%)", "October / November", "Online", "www.ibps.in"),
-        Exam("SBI-PO", "Clerical Recruitment", "Graduation (60%)", "October / November", "Online", "www.sbi.co.in")
+        Exam("IBPS PO/Clerk", "Nationalized Banks Recruitment", "Graduation", "August / October", "Online", "https://www.ibps.in/"),
+        Exam("SBI PO/Clerk", "State Bank Recruitment", "Graduation", "September / November", "Online", "https://bank.sbi/careers")
     )
 
     val commerce = listOf(
-        Exam("ICAI – CA Entrance Exam", "Chartered Accountancy", "12th / Graduation (60%)", "June / December", "Online", "—"),
-        Exam("CMA Foundation Exam", "Cost Accountancy", "12th / Graduation (60%)", "June", "Online", "—")
+        Exam("ICAI CA Foundation", "Chartered Accountancy", "Class 12", "Year-round", "Online", "https://www.icai.org/"),
+        Exam("ICSI CS Foundation", "Company Secretary", "Class 12", "Year-round", "Online", "https://www.icsi.edu/"),
+        Exam("CMA Foundation", "Cost Accountancy", "Class 12", "Year-round", "Online", "https://icmai.in/")
     )
 
     val defence = listOf(
-        Exam("NDA & NA Examination", "Admission in Army, Air Force, Naval Academy", "12th Class", "—", "Online", "www.upsc.gov.in"),
-        Exam("Indian Navy B.Tech Exam", "Admission in Navy B.Tech", "Class 12", "December / January", "Online", "www.nausena-bharti.nic.in"),
-        Exam("Indian Navy Sailors Recruitment", "Basic & professional training", "Class 12 (Science)", "—", "Online / Post", "www.nausena-bharti.nic.in"),
-        Exam("IMU-CET", "Diploma in Nautical Science", "Class 12 with PCM", "November / December", "By Post", "www.imu.edu.in"),
-        Exam("TES (Indian Army)", "Technical Entry Scheme", "Class 12 with PCM", "—", "Online", "www.joinindianarmy.nic.in")
+        Exam("NDA & NA", "Army, Navy, Air Force Officers", "Class 12", "Dec / June", "Online", "https://www.upsc.gov.in/"),
+        Exam("Indian Navy B.Tech Entry", "Technical Officer Entry", "Class 12 with PCM", "June / December", "Online", "https://www.joinindiannavy.gov.in/"),
+        Exam("TES (Indian Army)", "Technical Entry Scheme", "Class 12 with PCM", "May / October", "Online", "https://joinindianarmy.nic.in/"),
+        Exam("IMU CET", "Nautical Science / Marine Engineering", "Class 12 with PCM", "April / May", "Online", "https://www.imu.edu.in/")
     )
 
     fun getExams(category: String): List<Exam> {
@@ -90,7 +96,9 @@ object ExamData {
             "National Level Medical Entrance Exams" -> nationalMedical
             "Engineering" -> engineering
             "National Level Engineering Entrance Exams" -> nationalEngineering
+            "Architecture and Design" -> architectureAndDesign
             "Fashion" -> fashion
+            "Fine Arts" -> fineArts
             "Languages" -> languages
             "Law" -> law
             "Humanities and Social Sciences" -> humanities

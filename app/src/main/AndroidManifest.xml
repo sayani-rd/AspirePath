@@ -151,6 +151,10 @@
             android:name=".CVPreviewActivity"
             android:exported="false"
             android:parentActivityName=".CVDetailsInputActivity"/>
+        <activity
+            android:name=".SavedCvListActivity"
+            android:exported="false"
+            android:parentActivityName=".First"/>
             
         <provider
             android:name="androidx.core.content.FileProvider"
